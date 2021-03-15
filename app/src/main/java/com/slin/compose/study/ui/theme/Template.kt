@@ -1,10 +1,15 @@
 package com.slin.compose.study.ui.theme
 
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,19 +34,23 @@ import dev.chrisbanes.accompanist.insets.statusBarsPadding
 @Preview
 @Composable
 fun AppBar() {
+    val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current.onBackPressedDispatcher
     Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .statusBarsHeight()
-            .statusBarsPadding()
+            .background(MaterialTheme.colors.primary)
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_baseline_arrow_back_24),
             contentDescription = null,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier
+                .padding(16.dp)
+                .clickable {
+                    backPressedDispatcher.onBackPressed()
+                }
         )
-        Text(text = stringResource(id = R.string.app_name))
+        Text(text = stringResource(id = R.string.app_name), color = MaterialTheme.colors.onPrimary)
     }
 }

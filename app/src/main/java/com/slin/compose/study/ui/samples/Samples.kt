@@ -1,5 +1,6 @@
 package com.slin.compose.study.ui.samples
 
+import android.graphics.drawable.BitmapDrawable
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -7,17 +8,21 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.slin.compose.study.R
 import com.slin.compose.study.ui.NavDestinations
+import dev.chrisbanes.accompanist.coil.CoilImage
 
 
 /**
@@ -37,15 +42,25 @@ val samples = listOf(
 @ExperimentalFoundationApi
 @Composable
 fun Samples(onClickSample: (SamplePage) -> Unit) {
-    LazyVerticalGrid(
-        cells = GridCells.Fixed(2),
-        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 16.dp)
-    ) {
-        samples.forEach { sample ->
-            item { SampleItem(sample, onClickSample = onClickSample) }
+    Scaffold(topBar = {
+        TopAppBar(
+            title = { Text(text = stringResource(id = R.string.app_name)) },
+            navigationIcon = {
+                Image(painter = painterResource(id = R.mipmap.ic_launcher), contentDescription = "")
+            },
+            actions = {
+                Text(text = "by slin")
+            })
+    }) {
+        LazyVerticalGrid(
+            cells = GridCells.Fixed(2),
+            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 16.dp)
+        ) {
+            samples.forEach { sample ->
+                item { SampleItem(sample, onClickSample = onClickSample) }
+            }
         }
     }
-
 }
 
 @Composable

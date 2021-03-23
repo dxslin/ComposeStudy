@@ -5,12 +5,10 @@ import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,24 +31,27 @@ import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
 @Preview
 @Composable
-fun AppBar() {
+fun CsAppBar(
+    isShowBack: Boolean = false,
+    title: String = stringResource(id = R.string.app_name),
+    actions: @Composable RowScope.() -> Unit = {},
+) {
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current.onBackPressedDispatcher
-    Row(
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colors.primary)
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_baseline_arrow_back_24),
-            contentDescription = null,
-            modifier = Modifier
-                .padding(16.dp)
-                .clickable {
-                    backPressedDispatcher.onBackPressed()
-                }
-        )
-        Text(text = stringResource(id = R.string.app_name), color = MaterialTheme.colors.onPrimary)
-    }
+    TopAppBar(
+        title = { Text(text = title) },
+        navigationIcon = if (isShowBack) {
+            {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_baseline_arrow_back_24),
+                    contentDescription = "back",
+                    modifier = Modifier.clickable {
+                        backPressedDispatcher.onBackPressed()
+                    }
+                )
+            }
+        } else {
+            null
+        },
+        actions = actions
+    )
 }

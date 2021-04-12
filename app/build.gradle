@@ -77,7 +77,7 @@ dependencies {
 
     androidTestImplementation Libs.AndroidX.Activity.activityCompose
 
-    androidTestImplementation Libs.JUnit.junit
+    testImplementation Libs.JUnit.junit
     androidTestImplementation Libs.AndroidX.Test.core
     androidTestImplementation Libs.AndroidX.Test.espressoCore
     androidTestImplementation Libs.AndroidX.Test.rules

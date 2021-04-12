@@ -1,8 +1,7 @@
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven {url 'https://maven.aliyun.com/repository/public'}
         google()
         mavenCentral()
     }

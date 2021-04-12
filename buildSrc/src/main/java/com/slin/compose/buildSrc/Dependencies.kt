@@ -14,7 +14,7 @@ object Versions {
 }
 
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha12"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha14"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
@@ -39,7 +39,7 @@ object Libs {
     }
 
     object JUnit {
-        private const val version = "4.13"
+        private const val version = "4.12"
         const val junit = "junit:junit:$version"
     }
 

@@ -376,9 +376,9 @@ fun RhombusTest() {
         Text(text = "text6", modifier = Modifier.padding(horizontal = 4.dp))
 
         Text(text = "text7", modifier = Modifier.padding(horizontal = 4.dp))
-//        Text(text = "text8", modifier = Modifier.padding(horizontal = 4.dp))
-//
-//        Text(text = "text9", modifier = Modifier.padding(horizontal = 4.dp))
+        Text(text = "text8", modifier = Modifier.padding(horizontal = 4.dp))
+
+        Text(text = "text9", modifier = Modifier.padding(horizontal = 4.dp))
     }
 }
 
@@ -426,6 +426,9 @@ fun Rhombus(modifier: Modifier = Modifier, centerSize: Int, content: @Composable
                 }
                 preTotalCount += lineCount
                 line++
+            } else if(index == placeables.size){
+                //如果最后一个不是行最后一个，还是需要加上一个行高
+                height += lineHeight
             }
             key
         }

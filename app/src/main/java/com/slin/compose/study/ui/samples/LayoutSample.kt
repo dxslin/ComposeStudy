@@ -1,6 +1,7 @@
 package com.slin.compose.study.ui.samples
 
 import android.widget.Toast
+import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -38,7 +39,6 @@ import kotlinx.coroutines.launch
 
 class LayoutItem(val title: String, val content: @Composable() () -> Unit)
 
-@Preview
 @Composable
 fun LayoutSample() {
     val scaffoldState = rememberScaffoldState()
@@ -64,7 +64,7 @@ fun LayoutSample() {
 
 
 @Composable
-fun TestItem(item: LayoutItem) {
+private fun TestItem(item: LayoutItem) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -383,7 +383,7 @@ fun RhombusTest() {
 }
 
 /**
- * 实现自定义布局
+ * 实现自定义布局，下面示例实现了一个菱形形状的布局方式
  * 1. 使用Layout实现自定义布局，其measurePolicy参数为布局实现方式（其layout方法）
  *
  */

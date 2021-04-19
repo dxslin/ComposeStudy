@@ -13,9 +13,13 @@ import androidx.compose.ui.unit.dp
  */
 
 object Size {
+    /**  default 4.dp */
     val mini = 4.dp
+    /** default 8.dp */
     val small = 8.dp
+    /** default 16.dp */
     val medium = 16.dp
+    /** default 24.dp */
     val large = 24.dp
 }
 

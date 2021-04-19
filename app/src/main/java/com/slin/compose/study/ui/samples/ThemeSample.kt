@@ -25,12 +25,12 @@ import dev.chrisbanes.accompanist.insets.ProvideWindowInsets
 
 val THEMES = listOf<String>("default", "pink", "blue")
 
-@Preview
+//@Preview
 @Composable
 fun ThemeSample() {
 
     val nightMode = remember { mutableStateOf(false) }
-    val themeValue = remember { mutableStateOf("") }
+    val themeValue = remember { mutableStateOf(THEMES[0]) }
 
     if (nightMode.value) {
         SelectTheme(darkTheme = nightMode.value, themeValue = themeValue) {
@@ -66,8 +66,12 @@ private fun SampleContent(nightMode: MutableState<Boolean>, themeValue: MutableS
             topBar = { CsAppBar(isShowBack = true, "ThemeSample") },
         ) {
             Column(modifier = Modifier.padding(ComposeStudyTheme.paddings.medium)) {
-                NightModeSwitch(nightMode = nightMode)
-                ThemeSpinner(themeValue = themeValue)
+                Card {
+                    NightModeSwitch(nightMode = nightMode)
+                }
+                Card(modifier = Modifier.padding(top = Size.small)) {
+                    ThemeSpinner(themeValue = themeValue)
+                }
             }
 
         }
@@ -78,9 +82,9 @@ private fun SampleContent(nightMode: MutableState<Boolean>, themeValue: MutableS
 private fun NightModeSwitch(nightMode: MutableState<Boolean>) {
     Row(
         modifier = Modifier
+            .padding(ComposeStudyTheme.paddings.small)
             .fillMaxWidth()
             .height(IntrinsicSize.Min)
-            .wrapContentHeight(align = Alignment.CenterVertically)
     ) {
         Text(
             text = "夜间模式", style = ComposeStudyTheme.typography.h5,
@@ -105,30 +109,28 @@ private fun NightModeSwitch(nightMode: MutableState<Boolean>) {
 private fun ThemeSpinner(themeValue: MutableState<String>) {
     Row(
         modifier = Modifier
+            .padding(ComposeStudyTheme.paddings.small)
             .fillMaxWidth()
             .height(IntrinsicSize.Min)
-            .wrapContentHeight(align = Alignment.CenterVertically)
     ) {
         Text(
             text = "主题切换", style = ComposeStudyTheme.typography.h5,
             modifier = Modifier
                 .weight(1f)
-                .wrapContentSize(align = Alignment.CenterStart)
+                .align(Alignment.CenterVertically)
         )
         Spinner(
             list = THEMES,
             modifier = Modifier
-                .fillMaxHeight()
-                .wrapContentSize(Alignment.CenterEnd)
-        ) { _, text ->
-            themeValue.value = text
-        }
+                .wrapContentHeight(Alignment.CenterVertically),
+            selectedText = themeValue
+        )
 
     }
 
 }
 
-@Preview
+//@Preview
 @Composable
 private fun PreviewNightModeSwitch() {
     val nightMode = remember { mutableStateOf(false) }
@@ -138,7 +140,7 @@ private fun PreviewNightModeSwitch() {
 @Preview
 @Composable
 private fun PreviewThemeSpinner() {
-    val themeValue = remember { mutableStateOf("") }
+    val themeValue = remember { mutableStateOf(THEMES[0]) }
     ThemeSpinner(themeValue = themeValue)
 }
 

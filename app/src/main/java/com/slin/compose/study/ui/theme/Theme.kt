@@ -94,13 +94,13 @@ object ComposeStudyTheme {
 private val PinkDarkColorPalette = darkColors(
     primary = Pink200,
     primaryVariant = Pink700,
-    secondary = Teal200
+    secondary = Purple200
 )
 
 private val PinkLightColorPalette = lightColors(
     primary = Pink500,
     primaryVariant = Pink700,
-    secondary = Teal200
+    secondary = Purple200
 )
 
 @Composable

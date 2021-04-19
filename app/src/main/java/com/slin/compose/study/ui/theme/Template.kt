@@ -52,7 +52,11 @@ fun CsAppBar(
         } else {
             null
         },
-        actions = actions
+        modifier = Modifier
+            .background(color = MaterialTheme.colors.primaryVariant)
+            .fillMaxWidth()
+            .statusBarsPadding(),
+        actions = actions,
     )
 }
 

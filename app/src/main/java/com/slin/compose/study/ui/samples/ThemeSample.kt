@@ -13,7 +13,10 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import com.slin.compose.study.ui.theme.*
 import com.slin.compose.study.weight.Spinner
+import com.slin.core.logger.logd
 import dev.chrisbanes.accompanist.insets.ProvideWindowInsets
+import dev.chrisbanes.accompanist.insets.navigationBarsPadding
+import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
 
 /**
@@ -60,21 +63,25 @@ private fun SelectTheme(
 
 @Composable
 private fun SampleContent(nightMode: MutableState<Boolean>, themeValue: MutableState<String>) {
-
-    ProvideWindowInsets {
-        Scaffold(
-            topBar = { CsAppBar(isShowBack = true, "ThemeSample") },
+    Scaffold(
+        topBar = { CsAppBar(isShowBack = true, "ThemeSample") },
+        backgroundColor = MaterialTheme.colors.primarySurface,
+    ) { innerPadding ->
+        logd { "innerPadding = $innerPadding" }
+        Column(
+            modifier = Modifier
+                .navigationBarsPadding()
+                .padding(innerPadding)
+                .padding(ComposeStudyTheme.paddings.medium)
         ) {
-            Column(modifier = Modifier.padding(ComposeStudyTheme.paddings.medium)) {
-                Card {
-                    NightModeSwitch(nightMode = nightMode)
-                }
-                Card(modifier = Modifier.padding(top = Size.small)) {
-                    ThemeSpinner(themeValue = themeValue)
-                }
+            Card {
+                NightModeSwitch(nightMode = nightMode)
             }
-
+            Card(modifier = Modifier.padding(top = Size.small)) {
+                ThemeSpinner(themeValue = themeValue)
+            }
         }
+
     }
 }
 

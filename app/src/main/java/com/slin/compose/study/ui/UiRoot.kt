@@ -22,16 +22,10 @@ import dev.chrisbanes.accompanist.insets.ProvideWindowInsets
 
 @ExperimentalFoundationApi
 @Composable
-fun ComposeStudyUiRoot(backPressedDispatcher: OnBackPressedDispatcherOwner){
+fun ComposeStudyUiRoot(backPressedDispatcher: OnBackPressedDispatcherOwner) {
     CompositionLocalProvider(LocalOnBackPressedDispatcherOwner provides backPressedDispatcher) {
-        ComposeStudyTheme {
-            ProvideWindowInsets {
-
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    NavGraph()
-                }
-            }
+        ProvideWindowInsets {
+            NavGraph()
         }
     }
 }
@@ -46,8 +40,8 @@ fun Greeting(name: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    ComposeStudyTheme {
-        ProvideWindowInsets {
+    ProvideWindowInsets {
+        ComposeStudyTheme {
 
             // A surface container using the 'background' color from the theme
             Surface(color = MaterialTheme.colors.background) {

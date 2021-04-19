@@ -22,7 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.slin.compose.study.R
 import com.slin.compose.study.ui.NavDestinations
+import com.slin.compose.study.ui.theme.CsAppBar
+import com.slin.core.logger.logd
 import dev.chrisbanes.accompanist.coil.CoilImage
+import dev.chrisbanes.accompanist.insets.navigationBarsPadding
+import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
 
 /**
@@ -42,22 +46,29 @@ val samples = listOf(
 @ExperimentalFoundationApi
 @Composable
 fun Samples(onClickSample: (SamplePage) -> Unit) {
-    Scaffold(topBar = {
-        TopAppBar(
-            title = { Text(text = stringResource(id = R.string.app_name)) },
-            navigationIcon = {
-                Image(painter = painterResource(id = R.mipmap.ic_launcher), contentDescription = "")
-            },
-            actions = {
-                Text(text = "by slin")
-            })
-    }) {
-        LazyVerticalGrid(
-            cells = GridCells.Fixed(2),
-            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 16.dp)
+    Scaffold(
+        topBar = {
+            CsAppBar(
+                title = stringResource(id = R.string.app_name),
+                actions = {
+                    Text(text = "by slin")
+                })
+        },
+        backgroundColor = MaterialTheme.colors.primarySurface,
+    ) { innerPadding ->
+        logd { "innerPadding = $innerPadding" }
+        Column(
+            modifier = Modifier
+                .navigationBarsPadding()
+                .padding(innerPadding)
         ) {
-            samples.forEach { sample ->
-                item { SampleItem(sample, onClickSample = onClickSample) }
+            LazyVerticalGrid(
+                cells = GridCells.Fixed(2),
+                contentPadding = PaddingValues(horizontal = 10.dp, vertical = 16.dp)
+            ) {
+                samples.forEach { sample ->
+                    item { SampleItem(sample, onClickSample = onClickSample) }
+                }
             }
         }
     }

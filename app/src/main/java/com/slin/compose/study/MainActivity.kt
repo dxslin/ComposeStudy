@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
 import com.slin.compose.study.ui.ComposeStudyUiRoot
 import com.slin.compose.study.ui.NavGraph
 import com.slin.compose.study.ui.theme.ComposeStudyTheme
@@ -23,6 +24,9 @@ class MainActivity : ComponentActivity() {
     @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         setContent {
             ComposeStudyUiRoot(this)
         }

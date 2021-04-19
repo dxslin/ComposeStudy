@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.slin.compose.study.ui.theme.CsAppBar
 import com.slin.core.logger.logd
+import dev.chrisbanes.accompanist.insets.navigationBarsPadding
+import dev.chrisbanes.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -52,11 +54,21 @@ fun LayoutSample() {
 
         )
 
-    Scaffold(scaffoldState = scaffoldState,
-        topBar = { CsAppBar(isShowBack = true, title = "LayoutSample") }) {
-        LazyColumn {
-            items(layoutItems) { item ->
-                TestItem(item = item)
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = { CsAppBar(isShowBack = true, title = "LayoutSample") },
+        backgroundColor = MaterialTheme.colors.background,
+    ) { innerPadding ->
+        logd { "innerPadding = $innerPadding" }
+        Column(
+            modifier = Modifier
+                .navigationBarsPadding()
+                .padding(innerPadding)
+        ) {
+            LazyColumn {
+                items(layoutItems) { item ->
+                    TestItem(item = item)
+                }
             }
         }
     }
@@ -426,7 +438,7 @@ fun Rhombus(modifier: Modifier = Modifier, centerSize: Int, content: @Composable
                 }
                 preTotalCount += lineCount
                 line++
-            } else if(index == placeables.size){
+            } else if (index == placeables.size) {
                 //如果最后一个不是行最后一个，还是需要加上一个行高
                 height += lineHeight
             }

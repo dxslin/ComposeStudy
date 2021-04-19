@@ -2,11 +2,18 @@ package com.slin.compose.study.ui
 
 import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavDeepLink
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.*
 import com.slin.compose.study.ui.samples.LayoutSample
 import com.slin.compose.study.ui.samples.Samples
 import com.slin.compose.study.ui.samples.ThemeSample
+import com.slin.compose.study.ui.theme.ComposeStudyTheme
+import dev.chrisbanes.accompanist.insets.ProvideWindowInsets
 
 
 /**
@@ -40,17 +47,34 @@ fun NavGraph(startDestination: String = NavDestinations.ROUTE_SAMPLES) {
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable(route = NavDestinations.ROUTE_SAMPLES) {
-            Samples { sample ->
-                navController.navigate(sample.destination)
+            WithTheme {
+                Samples { sample ->
+                    navController.navigate(sample.destination)
+                }
             }
         }
-        composable(route = NavDestinations.ROUTE_LAYOUT){
-            LayoutSample()
+        composable(route = NavDestinations.ROUTE_LAYOUT) {
+            WithTheme {
+                LayoutSample()
+            }
         }
-        composable(route = NavDestinations.ROUTE_THEME){
+        composable(route = NavDestinations.ROUTE_THEME) {
             ThemeSample()
         }
 
     }
 
 }
+
+
+@Composable
+private fun WithTheme(
+    content: @Composable () -> Unit
+) {
+    ComposeStudyTheme {
+            content()
+
+    }
+}
+
+

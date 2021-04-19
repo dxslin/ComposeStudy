@@ -46,7 +46,7 @@ fun Spinner(
             },
             colors = spinnerButtonColors(),
             border = BorderStroke(0.5.dp, MaterialTheme.colors.onSurface),
-            shape = MaterialTheme.shapes.medium,
+            shape = MaterialTheme.shapes.small,
             contentPadding = PaddingValues(top = 8.dp, bottom = 8.dp, start = 16.dp, end = 8.dp)
         ) {
             Row(

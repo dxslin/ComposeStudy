@@ -29,15 +29,19 @@ class Paddings(
     medium: PaddingValues,
     large: PaddingValues,
 ) {
+    /**  default 4.dp */
     var mini by mutableStateOf(mini, structuralEqualityPolicy())
         internal set
 
+    /** default 8.dp */
     var small by mutableStateOf(small, structuralEqualityPolicy())
         internal set
 
+    /** default 16.dp */
     var medium by mutableStateOf(medium, structuralEqualityPolicy())
         internal set
 
+    /** default 24.dp */
     var large by mutableStateOf(large, structuralEqualityPolicy())
         internal set
 

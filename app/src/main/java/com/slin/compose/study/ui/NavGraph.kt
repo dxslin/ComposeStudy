@@ -12,6 +12,7 @@ import androidx.navigation.compose.*
 import com.slin.compose.study.ui.samples.LayoutSample
 import com.slin.compose.study.ui.samples.Samples
 import com.slin.compose.study.ui.samples.ThemeSample
+import com.slin.compose.study.ui.samples.samples
 import com.slin.compose.study.ui.theme.ComposeStudyTheme
 import dev.chrisbanes.accompanist.insets.ProvideWindowInsets
 
@@ -53,13 +54,16 @@ fun NavGraph(startDestination: String = NavDestinations.ROUTE_SAMPLES) {
                 }
             }
         }
-        composable(route = NavDestinations.ROUTE_LAYOUT) {
-            WithTheme {
-                LayoutSample()
+        samples.forEach { page ->
+            composable(route = page.destination) {
+                if (page.withTheme) {
+                    WithTheme {
+                        page.content()
+                    }
+                } else {
+                    page.content()
+                }
             }
-        }
-        composable(route = NavDestinations.ROUTE_THEME) {
-            ThemeSample()
         }
 
     }
@@ -72,7 +76,7 @@ private fun WithTheme(
     content: @Composable () -> Unit
 ) {
     ComposeStudyTheme {
-            content()
+        content()
 
     }
 }

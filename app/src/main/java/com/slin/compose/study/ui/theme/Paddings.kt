@@ -54,7 +54,7 @@ class Paddings(
 
 }
 
-internal fun defaultPadding(
+private fun defaultPadding(
     mini: PaddingValues = PaddingValues(Size.mini),
     small: PaddingValues = PaddingValues(Size.small),
     medium: PaddingValues = PaddingValues(Size.medium),

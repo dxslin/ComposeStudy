@@ -24,7 +24,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.slin.compose.study.ui.theme.ComposeStudyTheme
 import com.slin.compose.study.ui.theme.CsAppBar
+import com.slin.compose.study.ui.theme.ScaffoldWithCsAppBar
 import com.slin.core.logger.logd
 import dev.chrisbanes.accompanist.insets.navigationBarsPadding
 import dev.chrisbanes.accompanist.insets.statusBarsPadding
@@ -35,7 +37,7 @@ import kotlinx.coroutines.launch
 /**
  * author: slin
  * date: 2021/3/12
- * description:
+ * description:常用布局
  *
  */
 
@@ -43,7 +45,6 @@ class LayoutItem(val title: String, val content: @Composable() () -> Unit)
 
 @Composable
 fun LayoutSample() {
-    val scaffoldState = rememberScaffoldState()
 
     val layoutItems = listOf(
         LayoutItem("1. RowTest") { RowTest() },
@@ -54,11 +55,7 @@ fun LayoutSample() {
 
         )
 
-    Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = { CsAppBar(isShowBack = true, title = "LayoutSample") },
-        backgroundColor = MaterialTheme.colors.background,
-    ) { innerPadding ->
+    ScaffoldWithCsAppBar(title = "LayoutSample") { innerPadding ->
         logd { "innerPadding = $innerPadding" }
         Column(
             modifier = Modifier
@@ -76,26 +73,30 @@ fun LayoutSample() {
 
 
 @Composable
-private fun TestItem(item: LayoutItem) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
+fun TestItem(item: LayoutItem) {
+    Card(
+        elevation = 5.dp, modifier = Modifier
             .padding(start = 16.dp, end = 16.dp, top = 16.dp)
-            .background(color = Color.Gray, shape = MaterialTheme.shapes.medium)
-            .padding(16.dp)
+            .fillMaxWidth()
     ) {
-        Text(
-            text = item.title,
-            style = MaterialTheme.typography.h6,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        item.content()
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(ComposeStudyTheme.paddings.medium)
+        ) {
+            Text(
+                text = item.title,
+                style = MaterialTheme.typography.h6,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            item.content()
+        }
     }
 }
 
 //@Preview
 @Composable
-fun RowTest() {
+private fun RowTest() {
     val context = LocalContext.current
     val (text, setValue) = remember(calculation = { mutableStateOf("row 2") })
     Row(
@@ -117,7 +118,7 @@ fun RowTest() {
 
 //@Preview
 @Composable
-fun ColumnTest() {
+private fun ColumnTest() {
     val context = LocalContext.current
     val scrollState = ScrollState(0)
     val scope = rememberCoroutineScope()
@@ -216,7 +217,7 @@ fun ColumnTest() {
  */
 @Preview
 @Composable
-fun ConstraintTest() {
+private fun ConstraintTest() {
     ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
         val (startRef, topRef, endRef, bottomRef, centerRef) = createRefs()
         Text(text = "top", modifier = Modifier.constrainAs(topRef) {
@@ -270,7 +271,7 @@ fun ConstraintTest() {
  */
 @Preview
 @Composable
-fun BoxTest() {
+private fun BoxTest() {
     Column(modifier = Modifier.fillMaxWidth()) {
         Box(
             modifier = Modifier
@@ -348,7 +349,11 @@ fun BoxTest() {
 
 //@Preview
 @Composable
-fun TwoTexts(modifier: Modifier = Modifier, text1: String = "text1", text2: String = "text2") {
+private fun TwoTexts(
+    modifier: Modifier = Modifier,
+    text1: String = "text1",
+    text2: String = "text2"
+) {
     Row(modifier = modifier.background(color = Color.DarkGray)) {
         Text(
             modifier = Modifier
@@ -376,7 +381,7 @@ fun TwoTexts(modifier: Modifier = Modifier, text1: String = "text1", text2: Stri
 
 @Preview
 @Composable
-fun RhombusTest() {
+private fun RhombusTest() {
     Rhombus(centerSize = 3) {
         Text(text = "text1", modifier = Modifier.padding(horizontal = 4.dp))
 
@@ -400,7 +405,11 @@ fun RhombusTest() {
  *
  */
 @Composable
-fun Rhombus(modifier: Modifier = Modifier, centerSize: Int, content: @Composable() () -> Unit) {
+private fun Rhombus(
+    modifier: Modifier = Modifier,
+    centerSize: Int,
+    content: @Composable() () -> Unit
+) {
     Layout(
         modifier = modifier,
         content = content

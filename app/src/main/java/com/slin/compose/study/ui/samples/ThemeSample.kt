@@ -22,7 +22,7 @@ import dev.chrisbanes.accompanist.insets.statusBarsPadding
 /**
  * author: slin
  * date: 2021/3/12
- * description:
+ * description: 主题
  *
  */
 
@@ -63,9 +63,8 @@ private fun SelectTheme(
 
 @Composable
 private fun SampleContent(nightMode: MutableState<Boolean>, themeValue: MutableState<String>) {
-    Scaffold(
-        topBar = { CsAppBar(isShowBack = true, "ThemeSample") },
-        backgroundColor = MaterialTheme.colors.primarySurface,
+    ScaffoldWithCsAppBar(
+        title = "ThemeSample"
     ) { innerPadding ->
         logd { "innerPadding = $innerPadding" }
         Column(

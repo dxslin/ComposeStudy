@@ -36,6 +36,7 @@ fun CsAppBar(
     title: String = stringResource(id = R.string.app_name),
     actions: @Composable RowScope.() -> Unit = {},
 ) {
+    val colors = MaterialTheme.colors
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current.onBackPressedDispatcher
     TopAppBar(
         title = { Text(text = title) },
@@ -53,7 +54,7 @@ fun CsAppBar(
             null
         },
         modifier = Modifier
-            .background(color = MaterialTheme.colors.primaryVariant)
+            .background(color = if(colors.isLight) colors.primaryVariant else colors.surface)
             .fillMaxWidth()
             .statusBarsPadding(),
         actions = actions,

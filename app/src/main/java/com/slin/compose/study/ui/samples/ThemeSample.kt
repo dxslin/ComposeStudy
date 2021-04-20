@@ -26,7 +26,7 @@ import dev.chrisbanes.accompanist.insets.statusBarsPadding
  *
  */
 
-val THEMES = listOf<String>("default", "pink", "blue")
+val THEMES = listOf("default", "pink", "blue")
 
 //@Preview
 @Composable

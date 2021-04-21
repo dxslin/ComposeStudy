@@ -52,7 +52,7 @@ val samples = listOf(
         ThemeSample()
     },
     SamplePage("List", R.drawable.img_cartoon_3, NavDestinations.ROUTE_LIST) { ListSample() },
-    SamplePage("Text", R.drawable.img_cartoon_bear, NavDestinations.ROUTE_TEXT) { },
+    SamplePage("Text", R.drawable.img_cartoon_bear, NavDestinations.ROUTE_TEXT) { TextSample() },
 
     )
 

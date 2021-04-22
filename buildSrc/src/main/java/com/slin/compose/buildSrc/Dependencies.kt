@@ -1,7 +1,5 @@
 package com.slin.compose.buildSrc
 
-import org.gradle.api.JavaVersion
-
 object Versions {
 
 
@@ -51,7 +49,7 @@ object Libs {
 
         object Compose {
             const val snapshot = ""
-            const val version = "1.0.0-beta01"
+            const val version = "1.0.0-beta03"
 
             const val animation = "androidx.compose.animation:animation:$version"
             const val foundation = "androidx.compose.foundation:foundation:$version"

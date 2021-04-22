@@ -46,8 +46,10 @@ val samples = listOf(
     },
     SamplePage("List", R.drawable.img_cartoon_3, NavDestinations.ROUTE_LIST) { ListSample() },
     SamplePage("Text", R.drawable.img_cartoon_bear, NavDestinations.ROUTE_TEXT) { TextSample() },
-
-    )
+    SamplePage("Graphic", R.drawable.img_cartoon_car, NavDestinations.ROUTE_GRAPHIC) {
+        GraphicSample()
+    },
+)
 
 @ExperimentalFoundationApi
 @Composable

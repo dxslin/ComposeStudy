@@ -224,7 +224,7 @@ fun SimpleClickableText() {
  */
 @Composable
 fun SimpleTextField(name: MutableState<String>, password: MutableState<String>) {
-    val passwordFocus = remember { FocusRequester() }
+    val passwordFocus = FocusRequester()
 
     Column {
         TextField(

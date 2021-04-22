@@ -1,7 +1,6 @@
 package com.slin.compose.study.ui.samples
 
 import android.widget.Toast
-import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.ClickableText
@@ -13,13 +12,12 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.FocusState
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -28,7 +26,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontSynthesis
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.*
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextIndent
@@ -52,13 +52,14 @@ import dev.chrisbanes.accompanist.insets.navigationBarsPadding
 @Preview
 @Composable
 fun TextSample() {
-
+    val name = remember { mutableStateOf("") }
+    val password = remember { mutableStateOf("") }
     val textItems = listOf(
         LayoutItem("1. TextFont") { TextFont() },
         LayoutItem("2. TextAnnotatedString") { TextAnnotatedString() },
         LayoutItem("3. SelectableText") { SelectableText() },
-        LayoutItem("3. SimpleClickableText") { SimpleClickableText() },
-        LayoutItem("4. SimpleTextField") { SimpleTextField() },
+        LayoutItem("4. SimpleClickableText") { SimpleClickableText() },
+        LayoutItem("5. SimpleTextField") { SimpleTextField(name, password) },
     )
 
     ScaffoldWithCsAppBar(title = "TextSample") { innerPadding ->
@@ -221,11 +222,8 @@ fun SimpleClickableText() {
  * 1. TextField中keyboardOptions参数可以设置键盘模式和键盘行为（需要设置singleLine=true），keyboardActions中处理键盘行为事件
  * 2. FocusRequester可以用来处理焦点切换和请求焦点
  */
-@Preview
 @Composable
-fun SimpleTextField() {
-    val name = remember { mutableStateOf("") }
-    val password = remember { mutableStateOf("") }
+fun SimpleTextField(name: MutableState<String>, password: MutableState<String>) {
     val passwordFocus = remember { FocusRequester() }
 
     Column {
@@ -262,4 +260,11 @@ fun SimpleTextField() {
             singleLine = true,
         )
     }
+}
+
+@Preview
+@Composable
+fun PreviewSimpleTextField() {
+    SimpleTextField(name = remember { mutableStateOf("") },
+        password = remember { mutableStateOf("") })
 }

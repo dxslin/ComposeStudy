@@ -39,7 +39,7 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion Libs.AndroidX.Compose.version
-        kotlinCompilerVersion Libs.Kotlin.version
+//        kotlinCompilerVersion Libs.Kotlin.version
     }
     packagingOptions {
         exclude "META-INF/licenses/**"

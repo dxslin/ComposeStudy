@@ -1,25 +1,22 @@
 package com.slin.compose.study.ui.theme
 
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalTextToolbar
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.slin.compose.study.R
-import dev.chrisbanes.accompanist.insets.statusBarsHeight
 import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
 
@@ -38,7 +35,7 @@ fun CsAppBar(
     actions: @Composable RowScope.() -> Unit = {},
 ) {
     val colors = MaterialTheme.colors
-    val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current.onBackPressedDispatcher
+    val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     TopAppBar(
         title = { Text(text = title) },
         navigationIcon = if (isShowBack) {
@@ -47,7 +44,7 @@ fun CsAppBar(
                     painter = painterResource(id = R.drawable.ic_baseline_arrow_back_24),
                     contentDescription = "back",
                     modifier = Modifier.clickable {
-                        backPressedDispatcher.onBackPressed()
+                        backPressedDispatcher?.onBackPressed()
                     }
                 )
             }

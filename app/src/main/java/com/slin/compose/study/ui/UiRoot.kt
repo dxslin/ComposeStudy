@@ -2,6 +2,7 @@ package com.slin.compose.study.ui
 
 import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -20,6 +21,7 @@ import dev.chrisbanes.accompanist.insets.ProvideWindowInsets
  *
  */
 
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Composable
 fun ComposeStudyUiRoot(backPressedDispatcher: OnBackPressedDispatcherOwner) {
@@ -36,6 +38,7 @@ fun Greeting(name: String) {
     Text(text = "Hello $name!")
 }
 
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Preview(showBackground = true)
 @Composable

@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.slin.compose.study.R
+import dev.chrisbanes.accompanist.insets.ProvideWindowInsets
 import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
 
@@ -66,10 +67,12 @@ fun ScaffoldWithCsAppBar(
     actions: @Composable (RowScope.() -> Unit) = {},
     content: @Composable (PaddingValues) -> Unit
 ) {
-    Scaffold(
-        topBar = { CsAppBar(isShowBack = isShowBack, title = title, actions = actions) },
-        content = content
-    )
+    ProvideWindowInsets {
+        Scaffold(
+            topBar = { CsAppBar(isShowBack = isShowBack, title = title, actions = actions) },
+            content = content
+        )
+    }
 
 }
 

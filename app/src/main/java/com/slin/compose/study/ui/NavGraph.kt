@@ -1,20 +1,15 @@
 package com.slin.compose.study.ui
 
-import androidx.activity.OnBackPressedDispatcher
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavDeepLink
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.*
-import com.slin.compose.study.ui.samples.LayoutSample
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigate
+import androidx.navigation.compose.rememberNavController
 import com.slin.compose.study.ui.samples.Samples
-import com.slin.compose.study.ui.samples.ThemeSample
 import com.slin.compose.study.ui.samples.samples
 import com.slin.compose.study.ui.theme.ComposeStudyTheme
-import dev.chrisbanes.accompanist.insets.ProvideWindowInsets
 
 
 /**
@@ -41,6 +36,7 @@ object NavDestinations {
 }
 
 
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Composable
 fun NavGraph(startDestination: String = NavDestinations.ROUTE_SAMPLES) {

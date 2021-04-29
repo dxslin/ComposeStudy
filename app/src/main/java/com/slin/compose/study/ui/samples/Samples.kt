@@ -1,5 +1,6 @@
 package com.slin.compose.study.ui.samples
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -38,6 +39,7 @@ data class SamplePage(
     val content: @Composable () -> Unit
 )
 
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 val samples = listOf(
     SamplePage("Layout", R.drawable.img_cartoon_1, NavDestinations.ROUTE_LAYOUT) { LayoutSample() },
@@ -49,8 +51,12 @@ val samples = listOf(
     SamplePage("Graphic", R.drawable.img_cartoon_car, NavDestinations.ROUTE_GRAPHIC) {
         GraphicSample()
     },
+    SamplePage("AnimationSample", R.drawable.img_cartoon_car, NavDestinations.ROUTE_GRAPHIC) {
+        AnimationSample()
+    },
 )
 
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Composable
 fun Samples(onClickSample: (SamplePage) -> Unit) {
@@ -105,6 +111,7 @@ fun SampleItem(samplePage: SamplePage, onClickSample: (SamplePage) -> Unit) {
 
 }
 
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Preview
 @Composable
@@ -114,6 +121,7 @@ fun SampleItemPreview() {
     }
 }
 
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Preview
 @Composable

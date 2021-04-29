@@ -1,14 +1,16 @@
 package com.slin.compose.study.ui.samples
 
 import android.graphics.BitmapFactory
-import android.graphics.Path
-import android.graphics.PathMeasure
+import android.graphics.Paint
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -16,13 +18,18 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.*
 import com.slin.compose.study.R
 import com.slin.compose.study.ui.theme.ScaffoldWithCsAppBar
+import com.slin.core.logger.logd
 import dev.chrisbanes.accompanist.insets.navigationBarsPadding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import java.lang.Float.min
+import java.util.*
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
  * author: slin
@@ -34,7 +41,7 @@ import java.lang.Float.min
 fun GraphicSample() {
     val testItems = listOf(
         LayoutItem("1. SimpleDraw") { SimpleDraw() },
-        LayoutItem("2. Clock") { Clock() },
+        LayoutItem("2. Clock") { SimpleClock() },
     )
 
     ScaffoldWithCsAppBar(title = "CanvasSample") { innerPadding ->
@@ -191,13 +198,66 @@ fun SimpleDraw() {
     }
 }
 
+//@Preview
+@Composable
+fun SimpleClock() {
+    val calendar = remember { mutableStateOf(Calendar.getInstance()) }
+
+    Row {
+        Clock(
+            modifier = Modifier.size(200.dp, 200.dp),
+            second = calendar.value.get(Calendar.SECOND),
+            minute = calendar.value.get(Calendar.MINUTE),
+            hour = calendar.value.get(Calendar.HOUR_OF_DAY),
+            fontSize = 10.sp
+        )
+
+        Clock(
+            modifier = Modifier
+                .padding(start = 16.dp)
+                .size(100.dp, 100.dp),
+            second = calendar.value.get(Calendar.SECOND),
+            minute = calendar.value.get(Calendar.MINUTE),
+            hour = calendar.value.get(Calendar.HOUR_OF_DAY),
+            fontSize = 8.sp
+        )
+
+    }
+
+    LaunchedEffect(calendar.value) {
+        launch {
+            while (isActive) {
+                calendar.value = Calendar.getInstance()
+                logd { "clock: ${calendar.value.time}" }
+                delay(1000)
+            }
+        }
+    }
+
+}
+
 @Preview
 @Composable
-fun Clock(modifier: Modifier = Modifier.size(100.dp, 100.dp)) {
+fun Clock(
+    modifier: Modifier = Modifier.size(100.dp, 100.dp),
+    calendar: Calendar = Calendar.getInstance(),
+    second: Int = calendar.get(Calendar.SECOND),
+    minute: Int = calendar.get(Calendar.MINUTE),
+    hour: Int = calendar.get(Calendar.HOUR_OF_DAY),
+    fontSize: TextUnit = 8.sp,
+) {
 
-//    val dialPointerColor = listOf(Color(0xFFE53935), Color(0xFFD81B60), Color(0xFF8E24AA), Color(0xFFF4511E))
+//    val dialPointerColor =
+//        listOf(Color(0xFFE53935), Color(0xFF00897B), Color(0xFF8E24AA), Color(0xFF1E88E5))
     val dialPointerColor =
-        listOf(Color(0xFFE53935), Color(0xFF00897B), Color(0xFF8E24AA), Color(0xFF1E88E5))
+        listOf(Color(0xFF43A047), Color(0xFFD81B51), Color(0xFFFB8C00), Color(0xFF00ACC1))
+
+    val computeCirclePoint: (center: Offset, radius: Float, angle: Float) -> Offset =
+        { center: Offset, radius: Float, angle: Float ->
+            val ang = (angle / 180 * Math.PI).toFloat()
+            Offset(center.x + radius * cos(ang), center.y + radius * sin(ang))
+        }
+
 
     Canvas(
         modifier = modifier
@@ -206,23 +266,6 @@ fun Clock(modifier: Modifier = Modifier.size(100.dp, 100.dp)) {
     ) {
         val diameter = min(size.width, size.height)
         val radius = diameter / 2f
-        val perimeter = (Math.PI * diameter).toFloat()
-
-//        val brush = Brush.radialGradient(dialPointerColor, center = center, radius =  radius, tileMode = TileMode.Repeated)
-
-//        val brush = Brush.linearGradient(
-//            dialPointerColor,
-//            start = Offset(0f, 0f),
-//            end = Offset(size.width / 2, size.height / 2),
-//            tileMode = TileMode.Mirror
-//        )
-
-//        val brush = Brush.horizontalGradient(
-//            dialPointerColor,
-//            startX = 0f,
-//            endX = radius,
-//            tileMode = TileMode.Mirror
-//        )
 
         val brush = Brush.sweepGradient(
             0f to dialPointerColor[0],
@@ -233,8 +276,6 @@ fun Clock(modifier: Modifier = Modifier.size(100.dp, 100.dp)) {
             center = center
         )
 
-//        drawRect(brush = brush, )
-
         //绘制表盘外圆
         drawCircle(
             brush = brush,
@@ -243,41 +284,109 @@ fun Clock(modifier: Modifier = Modifier.size(100.dp, 100.dp)) {
             style = Stroke(width = 2f)
         )
 
-
         val primaryDailLength = radius / 5
         val minorDialLength = primaryDailLength / 2
 
-        val outPath = Path()
-        outPath.addCircle(center.x, center.y, radius, Path.Direction.CW)
-        val outMeasure = PathMeasure(outPath, true)
-
-        val midPath = Path()
-        midPath.addCircle(center.x, center.y, radius - minorDialLength, Path.Direction.CW)
-        val midMeasure = PathMeasure(midPath, true)
-
-        val innPath = Path()
-        innPath.addCircle(center.x, center.y, radius - primaryDailLength, Path.Direction.CW)
-        val innMeasure = PathMeasure(innPath, true)
-
-        val point = FloatArray(2)
         for (i in 0..35) {
             if (i % 3 == 0) {
-                outMeasure.getPosTan(outMeasure.length / 36 * i, point, null)
-                val start = Offset(point[0], point[1])
-                innMeasure.getPosTan(innMeasure.length / 36 * i, point, null)
-                val end = Offset(point[0], point[1])
-                drawLine(brush = brush, start = start, end = end, strokeWidth = 5f)
+                drawLine(
+                    brush = brush,
+                    start = computeCirclePoint(center, radius, 10f * i),
+                    end = computeCirclePoint(center, radius - primaryDailLength, 10f * i),
+                    strokeWidth = 6f,
+                )
+
             } else {
-                outMeasure.getPosTan(outMeasure.length / 36 * i, point, null)
-                val start = Offset(point[0], point[1])
-                midMeasure.getPosTan(midMeasure.length / 36 * i, point, null)
-                val end = Offset(point[0], point[1])
-                drawLine(brush = brush, start = start, end = end, strokeWidth = 3f)
+                drawLine(
+                    brush = brush,
+                    start = computeCirclePoint(center, radius, 10f * i),
+                    end = computeCirclePoint(center, radius - minorDialLength, 10f * i),
+                    strokeWidth = 4f,
+                )
             }
         }
+
+        val nativeCanvas = drawContext.canvas.nativeCanvas
+        //绘制文字
+        val paint = Paint()
+        paint.color = android.graphics.Color.BLACK
+        paint.textSize = fontSize.toPx()
+
+        val fontHeight = paint.textSize
+        val fontDailMargin = 5
+        nativeCanvas.drawText(
+            "3",
+            center.x + radius - primaryDailLength - paint.measureText("3") - fontDailMargin,
+            center.y + fontHeight / 2 - paint.fontMetrics.descent,
+            paint
+        )
+        nativeCanvas.drawText(
+            "6",
+            center.x - paint.measureText("6") / 2,
+            center.y + radius - primaryDailLength - paint.fontMetrics.descent - fontDailMargin,
+            paint
+        )
+        nativeCanvas.drawText(
+            "9",
+            center.x - radius + primaryDailLength + fontDailMargin,
+            center.y + fontHeight / 2 - paint.fontMetrics.descent,
+            paint
+        )
+        nativeCanvas.drawText(
+            "12",
+            center.x - paint.measureText("12") / 2,
+            center.y - radius + primaryDailLength + fontHeight - paint.fontMetrics.descent + fontDailMargin,
+            paint
+        )
+
+        val text = String.format("%02d:%02d:%02d", hour, minute, second)
+        nativeCanvas.drawText(
+            text,
+            center.x - paint.measureText(text) / 2,
+            center.y + radius * 0.55f - paint.fontMetrics.descent,
+            paint
+        )
+
+
+        val centerCircleSize = radius / 15
+        //秒针
+        var angle = 6f * second - 90
+        drawLine(
+            brush = brush,
+            start = computeCirclePoint(center, centerCircleSize, angle),
+            end = computeCirclePoint(center, radius - primaryDailLength * 2, angle),
+            strokeWidth = 4f,
+            cap = StrokeCap.Butt,
+            alpha = 0.7f
+        )
+        //分针
+        angle = 6f * (minute + second / 60f) - 90
+        drawLine(
+            brush = brush,
+            start = computeCirclePoint(center, centerCircleSize, angle),
+            end = computeCirclePoint(center, radius - primaryDailLength * 2.5f, angle),
+            strokeWidth = 6f,
+            cap = StrokeCap.Round,
+            alpha = 0.8f
+        )
+        //时针
+        angle = 30f * (hour + minute / 60f) - 90
+        drawLine(
+            brush = brush,
+            start = computeCirclePoint(center, centerCircleSize, angle),
+            end = computeCirclePoint(center, radius - primaryDailLength * 3.2f, angle),
+            strokeWidth = 10f,
+            cap = StrokeCap.Square,
+            alpha = 0.9f
+        )
+        drawCircle(brush, centerCircleSize, center, style = Fill)
 
 
     }
 
 
 }
+
+
+
+

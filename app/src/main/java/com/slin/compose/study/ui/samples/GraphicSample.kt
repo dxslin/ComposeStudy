@@ -21,7 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import com.slin.compose.study.R
 import com.slin.compose.study.ui.theme.ScaffoldWithCsAppBar
-import com.slin.core.logger.logd
 import dev.chrisbanes.accompanist.insets.navigationBarsPadding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -228,7 +227,7 @@ fun SimpleClock() {
         launch {
             while (isActive) {
                 calendar.value = Calendar.getInstance()
-                logd { "clock: ${calendar.value.time}" }
+//                logd { "clock: ${calendar.value.time}" }
                 delay(1000)
             }
         }

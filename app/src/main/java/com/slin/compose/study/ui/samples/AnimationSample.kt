@@ -1,16 +1,23 @@
 package com.slin.compose.study.ui.samples
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Slider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.slin.compose.study.ui.theme.ScaffoldWithCsAppBar
@@ -24,13 +31,14 @@ import dev.chrisbanes.accompanist.insets.navigationBarsPadding
  *
  */
 
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Preview
 @Composable
 fun AnimationSample() {
     val testItems = listOf(
         LayoutItem("1. SimpleAnim") { SimpleAnim() },
-        LayoutItem("2. Clock") { SimpleClock() },
+        LayoutItem("2. SimpleAnimAsState") { SimpleAnimAsState() },
     )
 
 
@@ -88,3 +96,34 @@ fun SimpleAnim() {
 
 }
 
+@ExperimentalMaterialApi
+@Preview
+@Composable
+fun SimpleAnimAsState() {
+    val progress = remember { mutableStateOf(0f) }
+    val alpha = animateFloatAsState(targetValue = progress.value)
+    val color = remember { Animatable(Color.Blue) }
+    Column {
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Slider(value = progress.value, onValueChange = {
+                progress.value = it
+            }, modifier = Modifier.weight(1f))
+            Text(
+                text = String.format("%.2f", progress.value),
+                modifier = Modifier.wrapContentHeight(Alignment.CenterVertically)
+            )
+        }
+        Box(
+            modifier = Modifier
+                .alpha(alpha = alpha.value)
+                .background(color = color.value)
+                .size(50.dp, 50.dp)
+        )
+
+        LaunchedEffect(key1 = progress) {
+            color.animateTo(if (progress.value > 0.5f) Color.Blue else Color.Red)
+        }
+
+    }
+
+}

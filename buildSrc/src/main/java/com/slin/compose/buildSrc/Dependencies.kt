@@ -12,7 +12,7 @@ object Versions {
 }
 
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha14"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha15"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
@@ -49,7 +49,7 @@ object Libs {
 
         object Compose {
             const val snapshot = ""
-            const val version = "1.0.0-beta05"
+            const val version = "1.0.0-beta06"
 
             const val animation = "androidx.compose.animation:animation:$version"
             const val foundation = "androidx.compose.foundation:foundation:$version"

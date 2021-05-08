@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -39,6 +40,7 @@ data class SamplePage(
     val content: @Composable () -> Unit
 )
 
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @ExperimentalFoundationApi
 val samples = listOf(
@@ -56,6 +58,7 @@ val samples = listOf(
     },
 )
 
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Composable
@@ -111,6 +114,7 @@ fun SampleItem(samplePage: SamplePage, onClickSample: (SamplePage) -> Unit) {
 
 }
 
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Preview
@@ -121,6 +125,7 @@ fun SampleItemPreview() {
     }
 }
 
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Preview

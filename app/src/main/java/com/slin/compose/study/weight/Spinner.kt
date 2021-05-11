@@ -1,9 +1,6 @@
 package com.slin.compose.study.weight
 
-import android.widget.Space
-import android.widget.Spinner
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -11,14 +8,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.slin.compose.study.R
 import com.slin.compose.study.ui.samples.THEMES
-import com.slin.core.logger.logd
 
 
 /**
@@ -31,18 +26,19 @@ import com.slin.core.logger.logd
 fun Spinner(
     modifier: Modifier = Modifier,
     list: List<String>,
+    defaultText: String = if (list.isNotEmpty()) list[0] else "",
+    onTextChange: (String) -> Unit,
     dismiss: () -> Unit = {},
-    selectedText: MutableState<String>,
 ) {
-    val (expanded, setExpanded) = remember { mutableStateOf(false) }
-
+    var expanded by remember { mutableStateOf(false) }
+    var selectedText by remember { mutableStateOf(defaultText) }
     Column(modifier) {
         Button(
             modifier = Modifier
-                .requiredWidth(IntrinsicSize.Max)
+                .fillMaxWidth()
                 .padding(8.dp),
             onClick = {
-                setExpanded(expanded.not())
+                expanded = expanded.not()
             },
             colors = spinnerButtonColors(),
             border = BorderStroke(0.5.dp, MaterialTheme.colors.onSurface),
@@ -51,13 +47,14 @@ fun Spinner(
         ) {
             Row(
                 modifier = Modifier
-                    .requiredWidth(IntrinsicSize.Max)
+                    .fillMaxWidth()
             ) {
                 Text(
-                    text = selectedText.value,
+                    text = selectedText,
                     modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .wrapContentWidth(Alignment.Start),
+                        .weight(1f)
+                        .wrapContentWidth(Alignment.CenterHorizontally)
+                        .align(Alignment.CenterVertically),
                     textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.width(4.dp))
@@ -69,7 +66,9 @@ fun Spinner(
                             R.drawable.ic_baseline_arrow_drop_down_24
                         }
                     ), contentDescription = "expanded",
-                    modifier = Modifier.width(24.dp).wrapContentHeight()
+                    modifier = Modifier
+                        .width(24.dp)
+                        .wrapContentHeight()
                 )
             }
         }
@@ -78,14 +77,15 @@ fun Spinner(
             expanded = expanded,
             onDismissRequest = {
                 dismiss()
-                setExpanded(false)
+                expanded = false
             }
         ) {
             list.forEach { text ->
                 DropdownMenuItem(modifier = modifier.wrapContentHeight(), onClick = {
                     dismiss()
-                    selectedText.value = text
-                    setExpanded(false)
+                    selectedText = text
+                    onTextChange(text)
+                    expanded = false
                 }) {
                     Row(modifier = Modifier.fillMaxWidth()) {
                         Text(text = text, modifier = Modifier.wrapContentWidth(Alignment.Start))
@@ -161,7 +161,9 @@ private fun SpannerDemo() {
         modifier = Modifier
             .requiredWidth(IntrinsicSize.Min)
             .wrapContentHeight(Alignment.CenterVertically),
-        selectedText = themeValue
+        onTextChange = {
+            themeValue.value = it
+        }
     )
 
 }

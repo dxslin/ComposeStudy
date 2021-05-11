@@ -53,7 +53,7 @@ val samples = listOf(
     SamplePage("Graphic", R.drawable.img_cartoon_car, NavDestinations.ROUTE_GRAPHIC) {
         GraphicSample()
     },
-    SamplePage("AnimationSample", R.drawable.img_cartoon_car, NavDestinations.ROUTE_GRAPHIC) {
+    SamplePage("AnimationSample", R.drawable.img_cartoon_cat, NavDestinations.ROUTE_GRAPHIC) {
         AnimationSample()
     },
 )

@@ -1,22 +1,21 @@
 package com.slin.compose.study.ui.samples
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.Switch
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.slin.compose.study.ui.theme.*
 import com.slin.compose.study.weight.Spinner
 import com.slin.core.logger.logd
-import dev.chrisbanes.accompanist.insets.ProvideWindowInsets
 import dev.chrisbanes.accompanist.insets.navigationBarsPadding
-import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
 
 /**
@@ -128,8 +127,12 @@ private fun ThemeSpinner(themeValue: MutableState<String>) {
         Spinner(
             list = THEMES,
             modifier = Modifier
+                .width(150.dp)
+                .wrapContentWidth(Alignment.CenterHorizontally)
                 .wrapContentHeight(Alignment.CenterVertically),
-            selectedText = themeValue
+            onTextChange = {
+                themeValue.value = it
+            }
         )
 
     }

@@ -497,6 +497,10 @@ fun Modifier.swipeToDismiss(
                             change.uptimeMillis,
                             change.position
                         )
+                        logd {
+                            "change: ${change.position} ${change.type} ${change.pressed} " +
+                                    "${velocityTracker.calculateVelocity()}"
+                        }
                     }
                 }
                 val velocity = velocityTracker.calculateVelocity().x
@@ -509,6 +513,7 @@ fun Modifier.swipeToDismiss(
                     lowerBound = -size.width.toFloat(),
                     upperBound = size.width.toFloat()
                 )
+                logd { "velocity: $velocity targetOffsetX: $targetOffsetX" }
                 launch {
                     if (targetOffsetX.absoluteValue <= size.width) {
                         // Not enough velocity; Slide back.

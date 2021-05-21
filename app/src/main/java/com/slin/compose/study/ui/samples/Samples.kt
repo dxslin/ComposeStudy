@@ -56,6 +56,9 @@ val samples = listOf(
     SamplePage("AnimationSample", R.drawable.img_cartoon_cat, NavDestinations.ROUTE_GRAPHIC) {
         AnimationSample()
     },
+    SamplePage("GestureSample", R.drawable.img_cartoon_man, NavDestinations.ROUTE_GRAPHIC) {
+        GestureSample()
+    },
 )
 
 @ExperimentalMaterialApi

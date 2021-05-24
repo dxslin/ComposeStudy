@@ -3,19 +3,23 @@ package com.slin.compose.study.ui.samples
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.slin.compose.study.ui.theme.ComposeStudyTheme
 import com.slin.compose.study.ui.theme.ScaffoldWithCsAppBar
-import com.slin.compose.study.ui.theme.Size
 import dev.chrisbanes.accompanist.insets.navigationBarsPadding
 import java.lang.Float.max
 import java.lang.Float.min
@@ -27,6 +31,7 @@ import kotlin.math.roundToInt
  * description: 手势事件
  *
  */
+@ExperimentalMaterialApi
 @Preview
 @Composable
 fun GestureSample() {
@@ -37,6 +42,8 @@ fun GestureSample() {
 //        LayoutItem("3. SimpleNestScroll") { SimpleNestScroll() },
         LayoutItem("4. SimpleDrag") { SimpleDrag() },
         LayoutItem("5. SimpleDrag2") { SimpleDrag2() },
+        LayoutItem("6. SimpleSwipeable") { SimpleSwipeable() },
+        LayoutItem("7. SimpleTransformable") { SimpleTransformable() },
     )
 
 
@@ -46,7 +53,7 @@ fun GestureSample() {
                 .navigationBarsPadding()
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
-                .padding(bottom = Size.medium),
+                .padding(bottom = com.slin.compose.study.ui.theme.Size.medium),
 //            contentPadding = PaddingValues(bottom = Size.medium)
         ) {
 //            items(testItems) {
@@ -84,7 +91,7 @@ private fun SimpleClick() {
                     onLongPress = { text = "OnLongPress" },
                     onTap = { text = "OnTap" })
             }
-            .padding(top = Size.small)
+            .padding(top = com.slin.compose.study.ui.theme.Size.small)
             .background(color = Color.Gray)
             .padding(ComposeStudyTheme.paddings.small))
 
@@ -179,33 +186,100 @@ fun SimpleDrag() {
 fun SimpleDrag2() {
     var offsetX by remember { mutableStateOf(0f) }
     var offsetY by remember { mutableStateOf(0f) }
+    var boxSize by remember { mutableStateOf(IntSize(0, 0)) }
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
             .background(color = Color.Gray)
+            .onSizeChanged { boxSize = it },
     ) {
-        Text(text = "Drag me", modifier = Modifier
-            .fillMaxSize()
-            .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
-            .pointerInput(Unit) {
-                detectDragGestures { change, dragAmount ->
-                    change.consumeAllChanges()
-                    offsetX += dragAmount.x
-                    offsetY += dragAmount.y
+        Text(
+            text = "Drag me",
+            modifier = Modifier
+                .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+                .pointerInput(Unit) {
+                    detectDragGestures { change, dragAmount ->
+                        change.consumeAllChanges()
+                        offsetX += dragAmount.x
+                        offsetY += dragAmount.y
 
-                    offsetX = max(offsetX, 0f)
-                    offsetX = min(offsetX, size.width.toFloat())
+                        offsetX = max(offsetX, 0f)
+                        offsetX = min(offsetX, boxSize.width.toFloat() - size.width)
 
-                    offsetY = max(offsetY, 0f)
-                    offsetY = min(offsetY, size.height.toFloat())
+                        offsetY = max(offsetY, 0f)
+                        offsetY = min(offsetY, boxSize.height.toFloat() - size.height)
 
-                }
-            }
+                    }
+                },
         )
+
     }
 }
 
+@ExperimentalMaterialApi
+@Preview
+@Composable
+fun SimpleSwipeable() {
+    val width = 96.dp
+    val squareSize = 48.dp
+    val swipeableState = rememberSwipeableState(initialValue = 0)
+    val sizePx = with(LocalDensity.current) { squareSize.toPx() }
+    val anchors = mapOf(0f to 0, sizePx to 1)// Maps anchor points (in px) to states
+
+    Box(
+        modifier = Modifier
+            .width(width = width)
+            .swipeable(
+                state = swipeableState,
+                anchors = anchors,
+                orientation = Orientation.Horizontal,
+                thresholds = { _, _ -> FractionalThreshold(0.3f) }
+            )
+            .background(Color.LightGray)
+    ) {
+        Box(
+            modifier = Modifier
+                .offset {
+                    IntOffset(swipeableState.offset.value.roundToInt(), 0)
+                }
+                .size(squareSize)
+                .background(Color.DarkGray)
+        )
+    }
+
+}
+
+@Preview
+@Composable
+fun SimpleTransformable() {
+    var scale by remember { mutableStateOf(0.5f) }
+    var rotation by remember { mutableStateOf(0f) }
+    var offset by remember { mutableStateOf(Offset.Zero) }
+    val state = rememberTransformableState { zoomChange, panChange, rotationChange ->
+        scale *= zoomChange
+        rotation += rotationChange
+        offset += panChange
+    }
+    Box(
+        modifier = Modifier
+            // apply other transformations like rotation and zoom
+            // on the pizza slice emoji
+            .graphicsLayer(
+                scaleX = scale,
+                scaleY = scale,
+                rotationZ = rotation,
+                translationX = offset.x,
+                translationY = offset.y
+            )
+            // add transformable to listen to multitouch transformation events
+            // after offset
+            .transformable(state = state)
+            .fillMaxWidth()
+            .height(100.dp)
+            .background(Color.Cyan)
+    )
+}
 
 
 

@@ -215,9 +215,7 @@ fun SimpleClock() {
             modifier = Modifier
                 .padding(start = 16.dp)
                 .size(100.dp, 100.dp),
-            second = calendar.value.get(Calendar.SECOND),
-            minute = calendar.value.get(Calendar.MINUTE),
-            hour = calendar.value.get(Calendar.HOUR_OF_DAY),
+            calendar = calendar.value,
             fontSize = 8.sp
         )
 

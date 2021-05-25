@@ -22,6 +22,8 @@ import com.slin.compose.study.R
 import com.slin.compose.study.ui.NavDestinations
 import com.slin.compose.study.ui.theme.ScaffoldWithCsAppBar
 import com.slin.compose.study.ui.theme.Size
+import com.slin.compose.study.ui.unite.NavigationTest
+import com.slin.compose.study.ui.unite.ViewModelTest
 import com.slin.core.logger.logd
 import dev.chrisbanes.accompanist.insets.navigationBarsPadding
 
@@ -53,11 +55,21 @@ val samples = listOf(
     SamplePage("Graphic", R.drawable.img_cartoon_car, NavDestinations.ROUTE_GRAPHIC) {
         GraphicSample()
     },
-    SamplePage("AnimationSample", R.drawable.img_cartoon_cat, NavDestinations.ROUTE_GRAPHIC) {
+    SamplePage("AnimationSample", R.drawable.img_cartoon_cat, NavDestinations.ROUTE_ANIM) {
         AnimationSample()
     },
-    SamplePage("GestureSample", R.drawable.img_cartoon_man, NavDestinations.ROUTE_GRAPHIC) {
+    SamplePage("GestureSample", R.drawable.img_cartoon_man, NavDestinations.ROUTE_GESTURE) {
         GestureSample()
+    },
+    SamplePage("NavigationTest", R.drawable.img_cartoon_pig1, NavDestinations.ROUTE_NAV_TEST) {
+        NavigationTest()
+    },
+    SamplePage(
+        "ViewModelTest",
+        R.drawable.img_cartoon_pig2,
+        NavDestinations.ROUTE_VIEW_MODEL_TEST
+    ) {
+        ViewModelTest()
     },
 )
 

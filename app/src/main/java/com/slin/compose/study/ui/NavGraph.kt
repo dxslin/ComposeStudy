@@ -4,6 +4,9 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigate
@@ -34,8 +37,12 @@ object NavDestinations {
     const val ROUTE_ANIM = "route_anim"
     const val ROUTE_GESTURE = "route_gesture"
 
+    const val ROUTE_NAV_TEST = "route_nav_test"
+    const val ROUTE_VIEW_MODEL_TEST = "ROUTE_VIEW_MODEL_TEST"
+
 }
 
+val LocalNavController = compositionLocalOf<NavController?> { null }
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
@@ -44,26 +51,27 @@ object NavDestinations {
 fun NavGraph(startDestination: String = NavDestinations.ROUTE_SAMPLES) {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = startDestination) {
-        composable(route = NavDestinations.ROUTE_SAMPLES) {
-            WithTheme {
-                Samples { sample ->
-                    navController.navigate(sample.destination)
+    CompositionLocalProvider(LocalNavController provides navController) {
+        NavHost(navController = navController, startDestination = startDestination) {
+            composable(route = NavDestinations.ROUTE_SAMPLES) {
+                WithTheme {
+                    Samples { sample ->
+                        navController.navigate(sample.destination)
+                    }
                 }
             }
-        }
-        samples.forEach { page ->
-            composable(route = page.destination) {
-                if (page.withTheme) {
-                    WithTheme {
+            samples.forEach { page ->
+                composable(route = page.destination) {
+                    if (page.withTheme) {
+                        WithTheme {
+                            page.content()
+                        }
+                    } else {
                         page.content()
                     }
-                } else {
-                    page.content()
                 }
             }
         }
-
     }
 
 }

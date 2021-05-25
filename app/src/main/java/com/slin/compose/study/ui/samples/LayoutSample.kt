@@ -1,7 +1,6 @@
 package com.slin.compose.study.ui.samples
 
 import android.widget.Toast
-import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,18 +18,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.slin.compose.study.ui.theme.ComposeStudyTheme
-import com.slin.compose.study.ui.theme.CsAppBar
 import com.slin.compose.study.ui.theme.ScaffoldWithCsAppBar
 import com.slin.compose.study.ui.theme.Size
 import com.slin.core.logger.logd
 import dev.chrisbanes.accompanist.insets.navigationBarsPadding
-import dev.chrisbanes.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -56,15 +52,19 @@ fun LayoutSample() {
 
         )
 
-    ScaffoldWithCsAppBar(title = "LayoutSample") { innerPadding ->
-        logd { "innerPadding = $innerPadding" }
+    MultiTestPage(title = "LayoutSample", testItems = layoutItems)
+}
+
+@Composable
+fun MultiTestPage(title: String, testItems: List<LayoutItem>) {
+    ScaffoldWithCsAppBar(title = title) { innerPadding ->
         LazyColumn(
             modifier = Modifier
                 .navigationBarsPadding()
                 .padding(innerPadding),
             contentPadding = PaddingValues(bottom = Size.medium)
         ) {
-            items(layoutItems) { item ->
+            items(testItems) { item ->
                 TestItem(item = item)
             }
         }

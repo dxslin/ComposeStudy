@@ -1,12 +1,14 @@
 package com.slin.compose.study.ui.samples
 
-import android.graphics.BitmapFactory
+import android.graphics.*
 import android.graphics.Paint
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -15,13 +17,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.*
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import com.slin.compose.study.R
-import com.slin.compose.study.ui.theme.ScaffoldWithCsAppBar
-import dev.chrisbanes.accompanist.insets.navigationBarsPadding
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -29,6 +33,7 @@ import java.lang.Float.min
 import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
+import kotlin.math.sqrt
 
 /**
  * author: slin
@@ -41,20 +46,10 @@ fun GraphicSample() {
     val testItems = listOf(
         LayoutItem("1. SimpleDraw") { SimpleDraw() },
         LayoutItem("2. Clock") { SimpleClock() },
+        LayoutItem("3. InkColorCanvas") { InkColorCanvas() },
     )
 
-    ScaffoldWithCsAppBar(title = "CanvasSample") { innerPadding ->
-        LazyColumn(
-            modifier = Modifier
-                .navigationBarsPadding()
-                .padding(innerPadding),
-            contentPadding = PaddingValues(bottom = com.slin.compose.study.ui.theme.Size.medium)
-        ) {
-            items(testItems) {
-                TestItem(item = it)
-            }
-        }
-    }
+    MultiTestPage(title = "CanvasSample", testItems = testItems)
 }
 
 /**
@@ -384,6 +379,67 @@ fun Clock(
 
 }
 
+@Preview
+@Composable
+fun InkColorCanvas() {
+    val imageBitmap = ImageBitmap.imageResource(id = R.drawable.img_fate_arthur3)
+    val imageBitmapDefault = ImageBitmap.imageResource(id = R.drawable.img_fate_arthur1)
+    val animal = remember {
+        Animatable(0f)
+    }
+    var xLength = 0f
+    Canvas(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(400.dp)
+            .pointerInput(Unit) {
+                coroutineScope {
+                    while (true) {
+                        val offset = awaitPointerEventScope { awaitFirstDown().position }
+                        launch {
+                            animal.animateTo(
+                                targetValue = xLength,
+                                animationSpec = spring(stiffness = Spring.DampingRatioLowBouncy)
+                            )
+                        }
+                    }
+                }
+            }
+    ) {
+        drawIntoCanvas { canva ->
+            //彩色图片，获取新的bitmap，宽高和画布宽高一致适配画布
+            val multiColorBitmpa = Bitmap.createScaledBitmap(
+                imageBitmap.asAndroidBitmap(),
+                size.width.toInt(),
+                size.height.toInt(), false
+            )
+            //黑白图片
+            val blackColorBitmpa = Bitmap.createScaledBitmap(
+                imageBitmapDefault.asAndroidBitmap(),
+                size.width.toInt(),
+                size.height.toInt(),
+                false
+            )
+            //新建画笔
+            val paint = androidx.compose.ui.graphics.Paint().asFrameworkPaint()
+            //绘制图片到画布上
+            canva.nativeCanvas.drawBitmap(multiColorBitmpa, 0f, 0f, paint)
+            //保存图层到堆栈
+            val layerId = canva.nativeCanvas.saveLayer(0f, 0f, size.width, size.height, paint)
+
+            canva.nativeCanvas.drawBitmap(blackColorBitmpa, 0f, 0f, paint)
+
+            //PorterDuffXfermode 设置画笔的图形混合模式
+            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
+            //画圆
+            canva.nativeCanvas.drawCircle(center.x, center.y, animal.value, paint)
+
+            xLength = sqrt(size.width * size.width + size.height * size.height)
+            paint.xfermode = null
+            canva.nativeCanvas.restoreToCount(layerId)
 
 
+        }
+    }
+}
 

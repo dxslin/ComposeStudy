@@ -21,10 +21,8 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import com.slin.compose.study.R
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
+import com.slin.compose.study.utils.gray
+import kotlinx.coroutines.*
 import java.lang.Float.min
 import java.util.*
 import kotlin.math.cos
@@ -379,7 +377,21 @@ fun Clock(
 @Composable
 fun InkColorCanvas() {
     val imageBitmap = ImageBitmap.imageResource(id = R.drawable.img_fate_arthur1)
-    val imageBitmapGray = ImageBitmap.imageResource(id = R.drawable.img_fate_arthur1_gray)
+//    val imageBitmapGray = ImageBitmap.imageResource(id = R.drawable.img_fate_arthur1_gray)
+    var imageBitmapGray by remember { mutableStateOf(imageBitmap) }
+
+
+    LaunchedEffect(Unit) {
+        if (isActive) {
+            launch(Dispatchers.IO) {
+                val gray = imageBitmap.gray()
+                withContext(Dispatchers.Main) {
+                    imageBitmapGray = gray
+                }
+            }
+        }
+    }
+
     var animalState by remember { mutableStateOf(false) }
     val animal by animateFloatAsState(
         targetValue = if (animalState) 1f else 0f,

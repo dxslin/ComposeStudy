@@ -2,17 +2,13 @@ package com.slin.compose.study.ui.samples
 
 import android.graphics.*
 import android.graphics.Paint
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -368,7 +364,7 @@ fun Clock(
             start = computeCirclePoint(center, centerCircleSize, angle),
             end = computeCirclePoint(center, radius - primaryDailLength * 3.2f, angle),
             strokeWidth = 10f,
-            cap = StrokeCap.Square,
+            cap = StrokeCap.Butt,
             alpha = 0.9f
         )
         drawCircle(brush, centerCircleSize, center, style = Fill)
@@ -382,11 +378,14 @@ fun Clock(
 @Preview
 @Composable
 fun InkColorCanvas() {
-    val imageBitmap = ImageBitmap.imageResource(id = R.drawable.img_fate_arthur3)
-    val imageBitmapDefault = ImageBitmap.imageResource(id = R.drawable.img_fate_arthur1)
-    val animal = remember {
-        Animatable(0f)
-    }
+    val imageBitmap = ImageBitmap.imageResource(id = R.drawable.img_fate_arthur1)
+    val imageBitmapGray = ImageBitmap.imageResource(id = R.drawable.img_fate_arthur1_gray)
+    var animalState by remember { mutableStateOf(false) }
+    val animal by animateFloatAsState(
+        targetValue = if (animalState) 1f else 0f,
+        animationSpec = tween(3000)
+    )
+    var screenOffset by remember { mutableStateOf(Offset.Zero) }
     var xLength = 0f
     Canvas(
         modifier = Modifier
@@ -395,12 +394,10 @@ fun InkColorCanvas() {
             .pointerInput(Unit) {
                 coroutineScope {
                     while (true) {
-                        val offset = awaitPointerEventScope { awaitFirstDown().position }
+                        val position = awaitPointerEventScope { awaitFirstDown().position }
                         launch {
-                            animal.animateTo(
-                                targetValue = xLength,
-                                animationSpec = spring(stiffness = Spring.DampingRatioLowBouncy)
-                            )
+                            screenOffset = Offset(position.x, position.y)
+                            animalState = animalState.not()
                         }
                     }
                 }
@@ -415,7 +412,7 @@ fun InkColorCanvas() {
             )
             //黑白图片
             val blackColorBitmpa = Bitmap.createScaledBitmap(
-                imageBitmapDefault.asAndroidBitmap(),
+                imageBitmapGray.asAndroidBitmap(),
                 size.width.toInt(),
                 size.height.toInt(),
                 false
@@ -431,10 +428,11 @@ fun InkColorCanvas() {
 
             //PorterDuffXfermode 设置画笔的图形混合模式
             paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
-            //画圆
-            canva.nativeCanvas.drawCircle(center.x, center.y, animal.value, paint)
 
             xLength = sqrt(size.width * size.width + size.height * size.height)
+            //画圆
+            canva.nativeCanvas.drawCircle(screenOffset.x, screenOffset.y, animal * xLength, paint)
+
             paint.xfermode = null
             canva.nativeCanvas.restoreToCount(layerId)
 

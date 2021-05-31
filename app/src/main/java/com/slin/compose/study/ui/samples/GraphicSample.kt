@@ -1,6 +1,7 @@
 package com.slin.compose.study.ui.samples
 
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Paint
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -11,21 +12,23 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.*
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import com.slin.compose.study.R
-import com.slin.compose.study.utils.gray
+import com.slin.compose.study.utils.gray2
 import kotlinx.coroutines.*
 import java.lang.Float.min
 import java.util.*
 import kotlin.math.cos
+import kotlin.math.roundToInt
 import kotlin.math.sin
 import kotlin.math.sqrt
 
@@ -375,19 +378,17 @@ fun Clock(
 
 @Preview
 @Composable
-fun InkColorCanvas() {
-    val imageBitmap = ImageBitmap.imageResource(id = R.drawable.img_fate_arthur1)
+fun InkColorCanvas(image: ImageBitmap = ImageBitmap.imageResource(R.drawable.img_fate_arthur)) {
+    val density = LocalDensity.current
 //    val imageBitmapGray = ImageBitmap.imageResource(id = R.drawable.img_fate_arthur1_gray)
+    val imageBitmap by remember { mutableStateOf(image) }
     var imageBitmapGray by remember { mutableStateOf(imageBitmap) }
 
-
-    LaunchedEffect(Unit) {
+    LaunchedEffect(key1 = imageBitmap) {
         if (isActive) {
             launch(Dispatchers.IO) {
-                val gray = imageBitmap.gray()
-                withContext(Dispatchers.Main) {
-                    imageBitmapGray = gray
-                }
+                val gray = imageBitmap.gray2()
+                imageBitmapGray = gray
             }
         }
     }
@@ -398,11 +399,13 @@ fun InkColorCanvas() {
         animationSpec = tween(3000)
     )
     var screenOffset by remember { mutableStateOf(Offset.Zero) }
+    var height by remember { mutableStateOf(imageBitmap.height) }
     var xLength = 0f
+
     Canvas(
         modifier = Modifier
             .fillMaxWidth()
-            .height(400.dp)
+            .height((height / density.density).dp)
             .pointerInput(Unit) {
                 coroutineScope {
                     while (true) {
@@ -415,38 +418,38 @@ fun InkColorCanvas() {
                 }
             }
     ) {
-        drawIntoCanvas { canva ->
+        drawIntoCanvas { canvas ->
             //彩色图片，获取新的bitmap，宽高和画布宽高一致适配画布
-            val multiColorBitmpa = Bitmap.createScaledBitmap(
+            val multiColorBitmap = Bitmap.createScaledBitmap(
                 imageBitmap.asAndroidBitmap(),
                 size.width.toInt(),
-                size.height.toInt(), false
-            )
-            //黑白图片
-            val blackColorBitmpa = Bitmap.createScaledBitmap(
-                imageBitmapGray.asAndroidBitmap(),
-                size.width.toInt(),
-                size.height.toInt(),
+                (size.width / imageBitmap.width * imageBitmap.height).roundToInt(),
                 false
-            )
-            //新建画笔
-            val paint = androidx.compose.ui.graphics.Paint().asFrameworkPaint()
+            ).asImageBitmap()
+            height = multiColorBitmap.height
+            //黑白图片
+            val blackColorBitmap = Bitmap.createScaledBitmap(
+                imageBitmapGray.asAndroidBitmap(),
+                multiColorBitmap.width,
+                multiColorBitmap.height,
+                false
+            ).asImageBitmap()
+
+            val paint = androidx.compose.ui.graphics.Paint()
             //绘制图片到画布上
-            canva.nativeCanvas.drawBitmap(multiColorBitmpa, 0f, 0f, paint)
+            canvas.drawImage(multiColorBitmap, Offset.Zero, paint)
             //保存图层到堆栈
-            val layerId = canva.nativeCanvas.saveLayer(0f, 0f, size.width, size.height, paint)
+            canvas.saveLayer(Rect(0f, 0f, size.width, size.height), paint)
 
-            canva.nativeCanvas.drawBitmap(blackColorBitmpa, 0f, 0f, paint)
-
-            //PorterDuffXfermode 设置画笔的图形混合模式
-            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
-
+            canvas.drawImage(blackColorBitmap, Offset.Zero, paint = paint)
+            //设置画笔的图形混合模式
+            paint.blendMode = BlendMode.DstOut
             xLength = sqrt(size.width * size.width + size.height * size.height)
             //画圆
-            canva.nativeCanvas.drawCircle(screenOffset.x, screenOffset.y, animal * xLength, paint)
+            canvas.drawCircle(screenOffset, animal * xLength, paint)
 
-            paint.xfermode = null
-            canva.nativeCanvas.restoreToCount(layerId)
+            paint.blendMode = BlendMode.Clear
+            canvas.restore()
 
 
         }

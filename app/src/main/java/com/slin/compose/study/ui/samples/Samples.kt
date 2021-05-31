@@ -24,7 +24,6 @@ import com.slin.compose.study.ui.theme.ScaffoldWithCsAppBar
 import com.slin.compose.study.ui.theme.Size
 import com.slin.compose.study.ui.unite.NavigationTest
 import com.slin.compose.study.ui.unite.ViewModelTest
-import com.slin.core.logger.logd
 import dev.chrisbanes.accompanist.insets.navigationBarsPadding
 
 
@@ -83,7 +82,6 @@ fun Samples(onClickSample: (SamplePage) -> Unit) {
         title = stringResource(id = R.string.app_name),
         actions = { Text(text = "by slin") }
     ) { innerPadding ->
-        logd { "innerPadding = $innerPadding" }
         Column(
             modifier = Modifier
                 .navigationBarsPadding()

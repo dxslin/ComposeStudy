@@ -14,7 +14,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.slin.compose.study.ui.theme.*
 import com.slin.compose.study.weight.Spinner
-import com.slin.core.logger.logd
 import dev.chrisbanes.accompanist.insets.navigationBarsPadding
 
 
@@ -65,7 +64,6 @@ private fun SampleContent(nightMode: MutableState<Boolean>, themeValue: MutableS
     ScaffoldWithCsAppBar(
         title = "ThemeSample"
     ) { innerPadding ->
-        logd { "innerPadding = $innerPadding" }
         Column(
             modifier = Modifier
                 .navigationBarsPadding()

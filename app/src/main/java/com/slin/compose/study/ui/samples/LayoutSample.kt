@@ -9,6 +9,7 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -16,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalContext
@@ -114,6 +116,13 @@ private fun RowTest() {
             Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
             setValue("text clicked")
         })
+        Text(
+            text = "background clip", modifier = Modifier
+                .padding(start = 16.dp)
+                .clip(shape = RoundedCornerShape(4.dp))
+                .background(Color.Gray)
+                .padding(4.dp)
+        )
     }
 }
 
@@ -383,20 +392,31 @@ private fun TwoTexts(
 @Preview
 @Composable
 private fun RhombusTest() {
-    Rhombus(centerSize = 3) {
-        Text(text = "text1", modifier = Modifier.padding(horizontal = 4.dp))
+    Row() {
+        Rhombus(centerSize = 3, modifier = Modifier.weight(0.7f)) {
+            Text(text = "text1", modifier = Modifier.padding(horizontal = 4.dp))
 
-        Text(text = "text2", modifier = Modifier.padding(horizontal = 4.dp))
-        Text(text = "text3", modifier = Modifier.padding(horizontal = 4.dp))
+            Text(text = "text2", modifier = Modifier.padding(horizontal = 4.dp))
+            Text(text = "text3", modifier = Modifier.padding(horizontal = 4.dp))
 
-        Text(text = "text4", modifier = Modifier.padding(horizontal = 4.dp))
-        Text(text = "text5", modifier = Modifier.padding(horizontal = 4.dp))
-        Text(text = "text6", modifier = Modifier.padding(horizontal = 4.dp))
+            Text(text = "text4", modifier = Modifier.padding(horizontal = 4.dp))
+            Text(text = "text5", modifier = Modifier.padding(horizontal = 4.dp))
+            Text(text = "text6", modifier = Modifier.padding(horizontal = 4.dp))
 
-        Text(text = "text7", modifier = Modifier.padding(horizontal = 4.dp))
-        Text(text = "text8", modifier = Modifier.padding(horizontal = 4.dp))
+            Text(text = "text7", modifier = Modifier.padding(horizontal = 4.dp))
+            Text(text = "text8", modifier = Modifier.padding(horizontal = 4.dp))
 
-        Text(text = "text9", modifier = Modifier.padding(horizontal = 4.dp))
+            Text(text = "text9", modifier = Modifier.padding(horizontal = 4.dp))
+        }
+        Rhombus(centerSize = 2, modifier = Modifier.weight(0.3f)) {
+            Text(text = "text1", modifier = Modifier.padding(horizontal = 4.dp))
+
+            Text(text = "text2", modifier = Modifier.padding(horizontal = 4.dp))
+            Text(text = "text3", modifier = Modifier.padding(horizontal = 4.dp))
+
+            Text(text = "text4", modifier = Modifier.padding(horizontal = 4.dp))
+        }
+
     }
 }
 

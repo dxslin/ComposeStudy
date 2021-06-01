@@ -71,6 +71,13 @@ object Libs {
             const val activityCompose = "androidx.activity:activity-compose:1.3.0-alpha07"
         }
 
+        object Jetpack {
+            private const val version = "2.3.1"
+
+            const val livedata = "androidx.lifecycle:lifecycle-livedata:${version}"
+            const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${version}"
+        }
+
         object ConstraintLayout {
             const val constraintLayoutCompose =
                 "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha05"

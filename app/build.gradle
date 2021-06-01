@@ -71,6 +71,8 @@ dependencies {
     implementation Libs.AndroidX.Compose.tooling
     implementation Libs.AndroidX.Compose.livedata
 
+    implementation Libs.AndroidX.Jetpack.livedataKtx
+
     implementation Libs.Accompanist.coil
     implementation Libs.Accompanist.insets
 

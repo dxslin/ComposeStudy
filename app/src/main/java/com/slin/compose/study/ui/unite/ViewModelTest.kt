@@ -10,13 +10,11 @@ import androidx.compose.material.Button
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.observeAsStateAny
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.slin.compose.study.ui.samples.LayoutItem
 import com.slin.compose.study.ui.samples.MultiTestPage
@@ -44,7 +42,7 @@ fun ViewModelTest() {
     val testItems = listOf(
         LayoutItem("ViewModel") { UserModel() },
         LayoutItem("ShowViewModel") { ShowViewModel() },
-        LayoutItem("RememberListBug") { RememberListBug() },
+        LayoutItem("RememberListBug") { RememberListTest() },
     )
     MultiTestPage(title = "ViewModelTest", testItems = testItems)
 }
@@ -61,9 +59,9 @@ fun UserModel() {
 
     //如果需要使用observeAsState方法，需要导入compose-runtime/runtime-livedata
     val userName by userViewModel.userName.observeAsState("empty")
-    val samplePages by homeViewModel.samples.observeAsState()
+    val samplePages by homeViewModel.samples.observeAsStateAny()
 
-    val sampleVersion by homeViewModel.samplesVersion.observeAsState()
+//    val sampleVersion by homeViewModel.samplesVersion.observeAsState()
 
     Column {
 
@@ -90,7 +88,7 @@ fun UserModel() {
                 Text(text = "Add State")
             }
         }
-        Text(text = "samples version: $sampleVersion")
+//        Text(text = "samples version: $sampleVersion")
 
         Text(
             text = "Samples",
@@ -138,10 +136,11 @@ fun ShowViewModel() {
     }
 }
 
+val names = mutableListOf(1, 2, 3)
+
 @Composable
-fun RememberListBug() {
-    val names = mutableListOf(1, 2, 3)
-    var version = 0
+fun RememberListTest() {
+    var version by remember { mutableStateOf(0) }
     val remNames by remember(version) { mutableStateOf(names) }
 
     Column {
@@ -150,17 +149,10 @@ fun RememberListBug() {
                 onClick = {
                     remNames.add(names.last() + 1)
                     version++
-
                 },
             ) {
-                Text(text = "Add")
+                Text(text = "Add ")
             }
-//            Button(
-//                onClick = { homeViewModel.addSamples() },
-//                modifier = Modifier.padding(start = Size.small)
-//            ) {
-//                Text(text = "Add Sample")
-//            }
         }
         Column {
             remNames.forEach { item ->

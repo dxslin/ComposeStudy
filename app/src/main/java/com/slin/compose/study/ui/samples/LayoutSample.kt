@@ -11,10 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,6 +24,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.slin.compose.study.ui.theme.ComposeStudyTheme
 import com.slin.compose.study.ui.theme.ScaffoldWithCsAppBar
 import com.slin.compose.study.ui.theme.Size
+import com.slin.compose.study.weight.FlowArrangement
+import com.slin.compose.study.weight.FlowLayout
+import com.slin.compose.study.weight.Spinner
 import com.slin.core.logger.logd
 import dev.chrisbanes.accompanist.insets.navigationBarsPadding
 import kotlinx.coroutines.flow.collect
@@ -51,6 +51,7 @@ fun LayoutSample() {
         LayoutItem("3. ConstraintTest") { ConstraintTest() },
         LayoutItem("4. BoxTest") { BoxTest() },
         LayoutItem("4. RhombusTest") { RhombusTest() },
+        LayoutItem("5. FlowLayoutTest") { FlowLayoutTest() },
 
         )
 
@@ -101,7 +102,7 @@ fun TestItem(item: LayoutItem) {
 @Composable
 private fun RowTest() {
     val context = LocalContext.current
-    val (text, setValue) = remember(calculation = { mutableStateOf("row 2") })
+    var text by remember { mutableStateOf("row 2") }
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
@@ -114,7 +115,7 @@ private fun RowTest() {
 
         Text(text = text, Modifier.clickable {
             Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
-            setValue("text clicked")
+            text = "text clicked"
         })
         Text(
             text = "background clip", modifier = Modifier
@@ -389,26 +390,41 @@ private fun TwoTexts(
     }
 }
 
+val texts: @Composable () -> Unit = {
+    Text(
+        text = "text1", modifier = Modifier
+            .height(28.dp)
+            .padding(horizontal = 4.dp)
+    )
+
+    Text(text = "text2", modifier = Modifier.padding(horizontal = 4.dp))
+    Text(text = "text3", modifier = Modifier.padding(horizontal = 4.dp))
+
+    Text(text = "text4", modifier = Modifier.padding(horizontal = 4.dp))
+    Text(text = "text5", modifier = Modifier.padding(horizontal = 4.dp))
+    Text(text = "text6", modifier = Modifier.padding(horizontal = 4.dp))
+
+    Text(text = "text7", modifier = Modifier.padding(horizontal = 4.dp))
+    Text(
+        text = "text8", modifier = Modifier
+            .padding(horizontal = 4.dp)
+            .height(40.dp)
+    )
+
+    Text(text = "text9", modifier = Modifier.padding(horizontal = 4.dp))
+}
+
 @Preview
 @Composable
 private fun RhombusTest() {
-    Row() {
-        Rhombus(centerSize = 3, modifier = Modifier.weight(0.7f)) {
-            Text(text = "text1", modifier = Modifier.padding(horizontal = 4.dp))
+    Row(modifier = Modifier.fillMaxWidth()) {
+        Rhombus(centerSize = 3, modifier = Modifier.weight(0.7f), content = texts)
 
-            Text(text = "text2", modifier = Modifier.padding(horizontal = 4.dp))
-            Text(text = "text3", modifier = Modifier.padding(horizontal = 4.dp))
-
-            Text(text = "text4", modifier = Modifier.padding(horizontal = 4.dp))
-            Text(text = "text5", modifier = Modifier.padding(horizontal = 4.dp))
-            Text(text = "text6", modifier = Modifier.padding(horizontal = 4.dp))
-
-            Text(text = "text7", modifier = Modifier.padding(horizontal = 4.dp))
-            Text(text = "text8", modifier = Modifier.padding(horizontal = 4.dp))
-
-            Text(text = "text9", modifier = Modifier.padding(horizontal = 4.dp))
-        }
-        Rhombus(centerSize = 2, modifier = Modifier.weight(0.3f)) {
+        Rhombus(
+            centerSize = 2, modifier = Modifier
+                .padding(start = 16.dp)
+                .weight(0.3f)
+        ) {
             Text(text = "text1", modifier = Modifier.padding(horizontal = 4.dp))
 
             Text(text = "text2", modifier = Modifier.padding(horizontal = 4.dp))
@@ -417,6 +433,67 @@ private fun RhombusTest() {
             Text(text = "text4", modifier = Modifier.padding(horizontal = 4.dp))
         }
 
+    }
+}
+
+@Preview
+@Composable
+private fun FlowLayoutTest() {
+    var arrangement by remember { mutableStateOf<FlowArrangement>(FlowArrangement.Spread) }
+    var childVerticalAlignment by remember { mutableStateOf(Alignment.Top) }
+
+    Column {
+        Row {
+            Spinner(list = listOf("Spread", "SpreadInside", "Packed"), onTextChange = {
+                arrangement = when (it) {
+                    "Spread" -> FlowArrangement.Spread
+                    "SpreadInside" -> FlowArrangement.SpreadInside
+                    "Packed" -> FlowArrangement.Packed(Alignment.Start)
+                    else -> FlowArrangement.Spread
+                }
+            }, modifier = Modifier.width(140.dp))
+            Spinner(
+                list = listOf("Top", "CenterVertically", "Bottom"), onTextChange = {
+                    childVerticalAlignment = when (it) {
+                        "Top" -> Alignment.Top
+                        "CenterVertically" -> Alignment.CenterVertically
+                        "Bottom" -> Alignment.Bottom
+                        else -> Alignment.Top
+                    }
+                }, modifier = Modifier
+                    .padding(start = 16.dp)
+                    .width(140.dp)
+            )
+        }
+
+        Text(text = "Single line", style = ComposeStudyTheme.typography.subtitle2)
+        FlowLayout(
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
+            arrangement = arrangement,
+            childVerticalAlignment = childVerticalAlignment,
+            content = texts
+        )
+        Text(text = "Flow", style = ComposeStudyTheme.typography.subtitle2)
+        Row(modifier = Modifier.fillMaxWidth()) {
+            FlowLayout(
+                modifier = Modifier.weight(0.7f),
+                arrangement = arrangement,
+                childVerticalAlignment = childVerticalAlignment, content = texts
+            )
+            FlowLayout(
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .weight(0.3f)
+            ) {
+                Text(text = "text1", modifier = Modifier.padding(horizontal = 4.dp))
+
+                Text(text = "text2", modifier = Modifier.padding(horizontal = 4.dp))
+                Text(text = "text3", modifier = Modifier.padding(horizontal = 4.dp))
+
+                Text(text = "text4", modifier = Modifier.padding(horizontal = 4.dp))
+            }
+        }
     }
 }
 
@@ -429,7 +506,7 @@ private fun RhombusTest() {
 private fun Rhombus(
     modifier: Modifier = Modifier,
     centerSize: Int,
-    content: @Composable() () -> Unit
+    content: @Composable () -> Unit
 ) {
     Layout(
         modifier = modifier,
@@ -440,7 +517,7 @@ private fun Rhombus(
         check(measurables.size >= centerOffset) { "centerSize太大，而子布局数量不足" }
 
         val placeables = measurables.map { measurable ->
-            measurable.measure(constraints = constraints.copy(minHeight = 0))
+            measurable.measure(constraints = constraints.copy(minWidth = 0, minHeight = 0))
         }
 
         var line = 1
@@ -485,13 +562,13 @@ private fun Rhombus(
                     lineWidth += placeable.width
                 }
                 var x = (constraints.maxWidth - lineWidth) / 2
+                var height = 0
                 linePlaceable.forEachIndexed { index, placeable ->
                     placeable.place(x, yPosition)
                     x += placeable.width
-                    if (index == linePlaceable.size - 1) {
-                        yPosition += placeable.height
-                    }
+                    height = maxOf(height, placeable.height)
                 }
+                yPosition += height
             }
 
         }

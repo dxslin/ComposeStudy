@@ -11,9 +11,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -27,11 +25,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.slin.compose.study.R
-import com.slin.compose.study.ui.unite.viewmodel.HomeViewModel
 import com.slin.compose.study.utils.gray2
-import com.slin.core.logger.logd
 import kotlinx.coroutines.*
 import java.lang.Float.min
 import java.util.*
@@ -55,7 +50,6 @@ fun GraphicSample() {
         LayoutItem("1. SimpleDraw") { SimpleDraw() },
         LayoutItem("2. Clock") { SimpleClock() },
         LayoutItem("3. InkColorCanvas") { InkColorCanvas() },
-        LayoutItem("3. SimpleWaterDrop") { SimpleWaterDrop() },
     )
 
     MultiTestPage(title = "CanvasSample", testItems = testItems)
@@ -466,22 +460,6 @@ fun InkColorCanvas(image: ImageBitmap = ImageBitmap.imageResource(R.drawable.img
 
         }
     }
-}
-
-@ExperimentalFoundationApi
-@ExperimentalAnimationApi
-@ExperimentalMaterialApi
-@Composable
-fun SimpleWaterDrop() {
-    val homeViewModel = viewModel<HomeViewModel>()
-    logd { "SimpleWaterDrop: HomeViewModel: $homeViewModel" }
-    Column {
-        Button(onClick = { homeViewModel.updateSamples(samples) }) {
-            Text(text = "Update")
-        }
-    }
-
-
 }
 
 

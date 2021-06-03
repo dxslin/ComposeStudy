@@ -16,7 +16,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
  * 比如，更新列表里面的数据之后，在[LiveData]里面再次设置改列表对象，可以[Observer]中能监听到设置，
  * 但是[observeAsState]不会更新，而[observeAsStateAny]总是会更新
  *
- * @sample _root_ide_package_.com.slin.compose.study.ui.samples.UserModel
+ * @sample com.slin.compose.study.ui.samples.UserModel
  */
 @Composable
 fun <T> LiveData<T>.observeAsStateAny(): State<T?> = observeAsStateAny(value)

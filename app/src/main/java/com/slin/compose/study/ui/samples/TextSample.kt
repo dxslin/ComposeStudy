@@ -36,11 +36,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.insets.navigationBarsPadding
 import com.slin.compose.study.ui.theme.ComposeStudyTheme
 import com.slin.compose.study.ui.theme.ScaffoldWithCsAppBar
 import com.slin.compose.study.ui.theme.Size
 import com.slin.core.logger.logd
-import dev.chrisbanes.accompanist.insets.navigationBarsPadding
+
 
 /**
  * author: slin

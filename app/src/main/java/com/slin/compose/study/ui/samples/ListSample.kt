@@ -13,12 +13,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.navigationBarsPadding
 import com.slin.compose.study.R
 import com.slin.compose.study.ui.theme.ComposeStudyTheme
 import com.slin.compose.study.ui.theme.ScaffoldWithCsAppBar
 import com.slin.compose.study.ui.theme.Size
 import com.slin.core.logger.logd
-import dev.chrisbanes.accompanist.insets.navigationBarsPadding
+
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 

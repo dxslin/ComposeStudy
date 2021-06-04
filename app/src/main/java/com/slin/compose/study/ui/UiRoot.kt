@@ -11,8 +11,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.tooling.preview.Preview
+import com.google.accompanist.insets.ProvideWindowInsets
 import com.slin.compose.study.ui.theme.ComposeStudyTheme
-import dev.chrisbanes.accompanist.insets.ProvideWindowInsets
 
 
 /**

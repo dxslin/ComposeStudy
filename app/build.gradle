@@ -75,6 +75,10 @@ dependencies {
 
     implementation Libs.Accompanist.coil
     implementation Libs.Accompanist.insets
+    implementation Libs.Accompanist.theme
+    implementation Libs.Accompanist.systemuicontroller
+    implementation Libs.Accompanist.flowlayout
+    implementation Libs.Accompanist.pager
 
     implementation Libs.timber
 

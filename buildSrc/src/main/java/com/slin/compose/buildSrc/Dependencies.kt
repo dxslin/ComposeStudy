@@ -16,10 +16,18 @@ object Libs {
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
+    /**
+     * Google Compose 扩展库
+     * doc:https://google.github.io/accompanist/
+     */
     object Accompanist {
-        private const val version = "0.6.0"
-        const val coil = "dev.chrisbanes.accompanist:accompanist-coil:$version"
-        const val insets = "dev.chrisbanes.accompanist:accompanist-insets:$version"
+        private const val version = "0.11.1"
+        const val coil = "com.google.accompanist:accompanist-coil:$version"
+        const val insets = "com.google.accompanist:accompanist-insets:$version"
+        const val theme = "com.google.accompanist:accompanist-appcompat-theme:$version"
+        const val systemuicontroller = "com.google.accompanist:accompanist-systemuicontroller:$version"
+        const val flowlayout = "com.google.accompanist:accompanist-flowlayout:$version"
+        const val pager = "com.google.accompanist:accompanist-pager:$version"
     }
 
     object Kotlin {

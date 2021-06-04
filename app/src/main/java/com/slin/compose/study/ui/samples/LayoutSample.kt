@@ -21,14 +21,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.google.accompanist.insets.navigationBarsPadding
 import com.slin.compose.study.ui.theme.ComposeStudyTheme
 import com.slin.compose.study.ui.theme.ScaffoldWithCsAppBar
 import com.slin.compose.study.ui.theme.Size
 import com.slin.compose.study.weight.FlowArrangement
 import com.slin.compose.study.weight.FlowLayout
+import com.slin.compose.study.weight.NetworkImage
 import com.slin.compose.study.weight.Spinner
 import com.slin.core.logger.logd
-import dev.chrisbanes.accompanist.insets.navigationBarsPadding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -98,7 +99,7 @@ fun TestItem(item: LayoutItem) {
     }
 }
 
-//@Preview
+@Preview
 @Composable
 private fun RowTest() {
     val context = LocalContext.current
@@ -124,6 +125,11 @@ private fun RowTest() {
                 .background(Color.Gray)
                 .padding(4.dp)
         )
+        NetworkImage(
+            url = "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
+            contentDescription = ""
+        )
+
     }
 }
 

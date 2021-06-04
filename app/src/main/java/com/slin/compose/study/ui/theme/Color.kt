@@ -1,6 +1,9 @@
 package com.slin.compose.study.ui.theme
 
+import androidx.compose.material.Colors
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
 
 val Purple200 = Color(0xFFBB86FC)
 val Purple500 = Color(0xFF6200EE)
@@ -22,3 +25,14 @@ val Red700 = Color(0xffba000d)
 val Pink200 = Color(0xffff6090)
 val Pink500 = Color(0xffe91e63)
 val Pink700 = Color(0xffb0003a)
+
+
+
+/**
+ * Return the fully opaque color that results from compositing [onSurface] atop [surface] with the
+ * given [alpha]. Useful for situations where semi-transparent colors are undesirable.
+ */
+@Composable
+fun Colors.compositedOnSurface(alpha: Float): Color {
+    return onSurface.copy(alpha = alpha).compositeOver(surface)
+}

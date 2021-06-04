@@ -73,7 +73,7 @@ fun Spinner(
             }
         }
         DropdownMenu(
-            modifier = modifier.wrapContentHeight(),
+            modifier = Modifier.wrapContentHeight(),
             expanded = expanded,
             onDismissRequest = {
                 dismiss()
@@ -81,7 +81,7 @@ fun Spinner(
             }
         ) {
             list.forEach { text ->
-                DropdownMenuItem(modifier = modifier.wrapContentHeight(), onClick = {
+                DropdownMenuItem(modifier = Modifier.wrapContentHeight(), onClick = {
                     dismiss()
                     selectedText = text
                     onTextChange(text)

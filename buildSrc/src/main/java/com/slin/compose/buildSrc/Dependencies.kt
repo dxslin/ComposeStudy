@@ -12,26 +12,32 @@ object Versions {
 }
 
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.0-alpha01"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.0-alpha02"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
+
+    object Slin {
+        private const val version = "1.0.0"
+        const val score = "com.github.dxslin.SlinLibrary:Score:$version"
+    }
 
     /**
      * Google Compose 扩展库
      * doc:https://google.github.io/accompanist/
      */
     object Accompanist {
-        private const val version = "0.11.1"
+        private const val version = "0.11.0"
         const val coil = "com.google.accompanist:accompanist-coil:$version"
         const val insets = "com.google.accompanist:accompanist-insets:$version"
         const val theme = "com.google.accompanist:accompanist-appcompat-theme:$version"
-        const val systemuicontroller = "com.google.accompanist:accompanist-systemuicontroller:$version"
+        const val systemuicontroller =
+            "com.google.accompanist:accompanist-systemuicontroller:$version"
         const val flowlayout = "com.google.accompanist:accompanist-flowlayout:$version"
         const val pager = "com.google.accompanist:accompanist-pager:$version"
     }
 
     object Kotlin {
-        const val version = "1.4.32"
+        private const val version = "1.5.10"
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
@@ -57,7 +63,7 @@ object Libs {
 
         object Compose {
             const val snapshot = ""
-            const val version = "1.0.0-beta06"
+            const val version = "1.0.0-beta08"
 
             const val animation = "androidx.compose.animation:animation:$version"
             const val foundation = "androidx.compose.foundation:foundation:$version"

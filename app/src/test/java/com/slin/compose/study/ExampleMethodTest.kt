@@ -1,6 +1,7 @@
 package com.slin.compose.study
 
 import org.junit.Test
+import kotlin.random.Random
 
 /**
  * author: slin
@@ -12,23 +13,36 @@ class ExampleMethodTest {
 
     @Test
     fun methodTest() {
+        repeat(10) {
+            println("slin: ${Random.nextInt(0, 10)}")
+        }
 
-        val tt: (Int) -> Unit = { i -> println("haha $i") }
+    }
 
-        tt(1)
+    @Test
+    fun finallyReturnTest() {
+        println("test: ${finallyReturn()}")
+    }
 
+    class Person(var name: String) {
+        override fun toString(): String {
+            return "Person(name='$name')"
+        }
+    }
 
-        val func23: (
-            Int, Int, Int, Int, Int, Int, Int, Int, Int,
-            Int, Int, Int, Int, Int, Int, Int, Int, Int,
-            Int, Int, Int, Int, Int, Int, Int, Int, Int
-        ) -> Unit =
-            { i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16, i17, i18, i19, i20, i21, i22, i23, i24, i25, i26, i27 ->
-                println("slin: $i1, $i2")
-            }
+    fun finallyReturn(): Person? {
 
-        func23(1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7)
+        var a: Person = Person("a")
+        try {
+            a = Person("b")
+            return a
+        } catch (e: Exception) {
 
+        } finally {
+            a.name = "c"
+            println("finally $a")
+        }
+        return null
     }
 
 

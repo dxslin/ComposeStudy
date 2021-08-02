@@ -3,6 +3,7 @@ package com.slin.splayandroid
 import android.app.Application
 import com.slin.core.SCore
 import com.slin.core.logger.initLogger
+import dagger.hilt.android.HiltAndroidApp
 
 /**
  * author: slin
@@ -10,6 +11,7 @@ import com.slin.core.logger.initLogger
  * description:
  *
  */
+@HiltAndroidApp
 class SPlayAndroidApplication : Application() {
 
     override fun onCreate() {

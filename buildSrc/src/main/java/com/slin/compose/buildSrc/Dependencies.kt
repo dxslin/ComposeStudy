@@ -12,7 +12,7 @@ object Versions {
 }
 
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.0-alpha04"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.0-alpha05"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
@@ -87,9 +87,20 @@ object Libs {
 
         object Jetpack {
             private const val version = "2.3.1"
+            private const val hiltVersion = "2.38.1"
+            private const val hiltViewModelVersion = "1.0.0-alpha02"
 
             const val livedata = "androidx.lifecycle:lifecycle-livedata:${version}"
             const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${version}"
+
+            const val hilt = "com.google.dagger:hilt-android:${hiltVersion}"
+            const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${hiltVersion}"
+            const val hiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:${hiltVersion}"
+            const val hiltViewModel =
+                "androidx.hilt:hilt-lifecycle-viewmodel:${hiltViewModelVersion}"
+            const val hiltViewModelCompiler = "androidx.hilt:hilt-compiler:${hiltViewModelVersion}"
+
+
         }
 
         object ConstraintLayout {

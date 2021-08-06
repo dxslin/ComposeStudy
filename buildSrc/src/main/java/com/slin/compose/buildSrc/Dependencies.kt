@@ -12,13 +12,14 @@ object Versions {
 }
 
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.0-alpha05"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.0-alpha06"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
     object Slin {
         private const val version = "1.0.0"
-        const val score = "com.github.dxslin.SlinLibrary:Score:$version"
+        private const val version_snapshot = "score_snapshot"
+        const val score = "com.github.dxslin.SlinLibrary:Score:$version_snapshot"
     }
 
     /**

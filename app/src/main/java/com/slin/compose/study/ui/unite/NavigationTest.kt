@@ -7,7 +7,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.navigate
 import com.slin.compose.study.R
 import com.slin.compose.study.ui.LocalNavController
 import com.slin.compose.study.ui.NavDestinations

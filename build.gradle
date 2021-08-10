@@ -5,12 +5,12 @@ import com.slin.compose.buildSrc.Versions
 buildscript {
 
     repositories {
+        google()
+        mavenCentral()
         maven { url 'https://jitpack.io' }
         maven { url 'https://maven.aliyun.com/repository/public' }
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
-        google()
-        mavenCentral()
     }
     dependencies {
         classpath Libs.androidGradlePlugin

@@ -7,23 +7,18 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import coil.ImageLoader
 import coil.annotation.ExperimentalCoilApi
+import coil.compose.ImagePainter
+import coil.compose.rememberImagePainter
 import coil.intercept.Interceptor
 import coil.request.ImageResult
 import coil.size.PixelSize
-import com.google.accompanist.coil.LocalImageLoader
-import com.google.accompanist.coil.rememberCoilPainter
-import com.google.accompanist.imageloading.ImageLoadState
 import com.slin.compose.study.R
 import com.slin.compose.study.ui.theme.compositedOnSurface
-import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 
 /**
  * author: slin
@@ -33,9 +28,10 @@ import okhttp3.HttpUrl
  */
 
 /**
- * A wrapper around [Image] and [rememberCoilPainter], setting a
+ * A wrapper around [Image] and [rememberImagePainter], setting a
  * default [contentScale] and showing content while loading.
  */
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun NetworkImage(
     url: String,
@@ -45,9 +41,11 @@ fun NetworkImage(
     placeholderColor: Color? = MaterialTheme.colors.compositedOnSurface(0.2f)
 ) {
     Box(modifier) {
-        val painter = rememberCoilPainter(
-            request = url,
-            previewPlaceholder = R.drawable.img_ice_princess,
+        val painter = rememberImagePainter(
+            data = url,
+            builder = {
+                placeholder(R.drawable.img_ice_princess)
+            },
         )
 
         Image(
@@ -57,7 +55,7 @@ fun NetworkImage(
             modifier = Modifier.fillMaxSize()
         )
 
-        if (painter.loadState is ImageLoadState.Loading && placeholderColor != null) {
+        if (painter.state is ImagePainter.State.Loading && placeholderColor != null) {
             Spacer(
                 modifier = Modifier
                     .matchParentSize()
@@ -65,19 +63,6 @@ fun NetworkImage(
             )
         }
     }
-}
-
-@ExperimentalCoilApi
-@Composable
-fun ProvideImageLoader(content: @Composable () -> Unit) {
-    val context = LocalContext.current
-    val loader = remember(context) {
-        ImageLoader.Builder(context)
-            .componentRegistry {
-                add(UnsplashSizingInterceptor)
-            }.build()
-    }
-    CompositionLocalProvider(LocalImageLoader provides loader, content = content)
 }
 
 /**
@@ -94,11 +79,11 @@ object UnsplashSizingInterceptor : Interceptor {
             size.width > 0 &&
             size.height > 0
         ) {
-            val url = HttpUrl.parse(data)!!
-                .newBuilder()
-                .addQueryParameter("w", size.width.toString())
-                .addQueryParameter("h", size.height.toString())
-                .build()
+            val url = data.toHttpUrlOrNull()
+                ?.newBuilder()
+                ?.addQueryParameter("w", size.width.toString())
+                ?.addQueryParameter("h", size.height.toString())
+                ?.build()
             val request = chain.request.newBuilder().data(url).build()
             return chain.proceed(request)
         }

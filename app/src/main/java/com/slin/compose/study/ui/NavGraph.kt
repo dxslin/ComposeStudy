@@ -9,7 +9,6 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.slin.compose.study.ui.samples.Samples
 import com.slin.compose.study.ui.samples.samples

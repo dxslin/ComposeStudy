@@ -6,6 +6,7 @@ import coil.ImageLoaderFactory
 import com.slin.compose.study.weight.UnsplashSizingInterceptor
 import com.slin.core.logger.initLogger
 
+@Suppress("unused")
 class ComposeStudyApplication : Application(), ImageLoaderFactory {
 
     override fun onCreate() {

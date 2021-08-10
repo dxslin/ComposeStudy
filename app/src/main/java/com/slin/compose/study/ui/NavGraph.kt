@@ -59,6 +59,7 @@ fun NavGraph(startDestination: String = NavDestinations.ROUTE_SAMPLES) {
                     }
                 }
             }
+
             samples.forEach { page ->
                 composable(route = page.destination) {
                     if (page.withTheme) {

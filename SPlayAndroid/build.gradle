@@ -44,7 +44,7 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion Libs.AndroidX.Compose.version
-        kotlinCompilerVersion Libs.Kotlin.version
+//        kotlinCompilerVersion Libs.Kotlin.version
     }
     packagingOptions {
         exclude "META-INF/licenses/**"
@@ -82,7 +82,7 @@ dependencies {
     kapt Libs.AndroidX.Jetpack.hiltCompiler
     kapt Libs.AndroidX.Jetpack.hiltViewModelCompiler
 
-    implementation Libs.Accompanist.coil
+    implementation Libs.Coil.coilCompose
     implementation Libs.Accompanist.insets
 
     implementation Libs.timber

@@ -8,17 +8,26 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.slin.splayandroid.ui.home.HomePage
-import com.slin.splayandroid.ui.theme.ComposeStudyTheme
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.slin.splayandroid.nav.NavGraphs
+import com.slin.splayandroid.ui.theme.AppTheme
+
+/**
+ * register compose view
+ *
+ */
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ComposeStudyTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    HomePage()
+            AppTheme {
+                ProvideWindowInsets {
+                    // A surface container using the 'background' color from the theme
+                    Surface(color = MaterialTheme.colors.background) {
+                        NavGraphs()
+                    }
                 }
             }
         }
@@ -34,7 +43,7 @@ fun Greeting(name: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    ComposeStudyTheme {
+    AppTheme {
         Greeting("Android")
     }
 }

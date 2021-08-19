@@ -10,14 +10,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.slin.splayandroid.R
+import com.slin.splayandroid.widget.NetworkImage
 
 /**
  * author: slin
@@ -25,19 +29,34 @@ import com.slin.splayandroid.R
  * description:
  *
  */
-@Preview
+@Preview()
 @Composable
 fun Welcome() {
     val context = LocalContext.current
-    val bottomBoxHeight = 100.dp
-    Box {
+    val bottomBoxHeight = 200.dp
+
+    val welcomeViewModel: WelcomeViewModel = viewModel()
+
+    val adImageUrl by welcomeViewModel.adImageUrl.collectAsState()
+
+    Box(modifier = Modifier) {
         Image(
-            painter = painterResource(id = R.drawable.img_fate_arthur1),
+            painter = painterResource(id = R.drawable.img_splay_android_bg),
+//            bitmap = ContextCompat.getDrawable(context, R.drawable.img_fate_arthur1)!!
+//                .toBitmap()
+//                .asImageBitmap(),
+            contentDescription = "WindowBackground",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.FillBounds
+        )
+        NetworkImage(
+            url = adImageUrl,
             contentDescription = "ad",
             modifier = Modifier
                 .padding(bottom = bottomBoxHeight)
                 .fillMaxSize()
-                .align(Alignment.TopCenter)
+                .align(Alignment.TopCenter),
+            contentScale = ContentScale.FillBounds
         )
 
         Box(
@@ -68,14 +87,13 @@ fun Welcome() {
                 .fillMaxWidth()
                 .height(bottomBoxHeight)
                 .align(Alignment.BottomCenter)
-                .background(MaterialTheme.colors.surface)
         ) {
 
-            Text(
-                text = stringResource(id = R.string.app_name),
-                style = MaterialTheme.typography.h4,
-                modifier = Modifier.align(Alignment.Center)
-            )
+//                Text(
+//                    text = stringResource(id = R.string.app_name),
+//                    style = MaterialTheme.typography.h5,
+//                    modifier = Modifier.align(Alignment.Center)
+//                )
 
             Text(
                 text = "跳过",

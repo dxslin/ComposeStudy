@@ -12,7 +12,7 @@ object Versions {
 }
 
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.0-alpha07"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.0-alpha08"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 

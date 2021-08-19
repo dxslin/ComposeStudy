@@ -8,19 +8,22 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.slin.splayandroid.nav.NavGraphs
 import com.slin.splayandroid.ui.theme.AppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * register compose view
  *
  */
 
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             AppTheme {
                 ProvideWindowInsets {

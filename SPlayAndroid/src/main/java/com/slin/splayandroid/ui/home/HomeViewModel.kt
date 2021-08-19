@@ -1,4 +1,4 @@
-package com.slin.splayandroid.vm
+package com.slin.splayandroid.ui.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

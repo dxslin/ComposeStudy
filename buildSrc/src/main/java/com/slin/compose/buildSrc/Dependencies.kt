@@ -61,7 +61,6 @@ object Libs {
 
     object AndroidX {
         const val coreKtx = "androidx.core:core-ktx:1.6.0"
-        const val navigation = "androidx.navigation:navigation-compose:2.4.0-alpha06"
         const val material = "com.google.android.material:material:1.4.0"
         const val appcompat = "androidx.appcompat:appcompat:1.3.1"
 
@@ -106,6 +105,14 @@ object Libs {
             const val hiltViewModelCompiler = "androidx.hilt:hilt-compiler:${hiltViewModelVersion}"
 
 
+        }
+
+        object Navigation {
+            private const val version = "2.3.5"
+            const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
+            const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
+
+            const val navigation = "androidx.navigation:navigation-compose:2.4.0-alpha06"
         }
 
         object ConstraintLayout {

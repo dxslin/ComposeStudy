@@ -38,13 +38,12 @@ fun Welcome() {
     val welcomeViewModel: WelcomeViewModel = viewModel()
 
     val adImageUrl by welcomeViewModel.adImageUrl.collectAsState()
+    val countDown by welcomeViewModel.countDown.collectAsState(5)
+
 
     Box(modifier = Modifier) {
         Image(
             painter = painterResource(id = R.drawable.img_splay_android_bg),
-//            bitmap = ContextCompat.getDrawable(context, R.drawable.img_fate_arthur1)!!
-//                .toBitmap()
-//                .asImageBitmap(),
             contentDescription = "WindowBackground",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillBounds
@@ -96,7 +95,7 @@ fun Welcome() {
 //                )
 
             Text(
-                text = "跳过",
+                text = "跳过 $countDown",
                 modifier = Modifier
                     .padding(end = 8.dp)
                     .background(
@@ -105,6 +104,9 @@ fun Welcome() {
                     )
                     .padding(horizontal = 16.dp, vertical = 8.dp)
                     .align(Alignment.CenterEnd)
+                    .clickable {
+                        welcomeViewModel.exitCountDown()
+                    }
             )
 
         }

@@ -18,7 +18,7 @@ import coil.request.ImageResult
 import coil.size.PixelSize
 import com.slin.compose.study.R
 import com.slin.compose.study.ui.theme.compositedOnSurface
-import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import okhttp3.HttpUrl.Companion.toHttpUrl
 
 /**
  * author: slin
@@ -68,22 +68,20 @@ fun NetworkImage(
 /**
  * A Coil [Interceptor] which appends query params to Unsplash urls to request sized images.
  */
-@ExperimentalCoilApi
+@OptIn(ExperimentalCoilApi::class)
 object UnsplashSizingInterceptor : Interceptor {
     override suspend fun intercept(chain: Interceptor.Chain): ImageResult {
         val data = chain.request.data
         val size = chain.size
         if (data is String &&
             data.startsWith("https://images.unsplash.com/photo-") &&
-            size is PixelSize &&
-            size.width > 0 &&
-            size.height > 0
+            size is PixelSize
         ) {
-            val url = data.toHttpUrlOrNull()
-                ?.newBuilder()
-                ?.addQueryParameter("w", size.width.toString())
-                ?.addQueryParameter("h", size.height.toString())
-                ?.build()
+            val url = data.toHttpUrl()
+                .newBuilder()
+                .addQueryParameter("w", size.width.toString())
+                .addQueryParameter("h", size.height.toString())
+                .build()
             val request = chain.request.newBuilder().data(url).build()
             return chain.proceed(request)
         }

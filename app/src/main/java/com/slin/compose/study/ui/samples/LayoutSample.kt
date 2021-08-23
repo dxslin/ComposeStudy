@@ -1,9 +1,7 @@
 package com.slin.compose.study.ui.samples
 
 import android.widget.Toast
-import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
@@ -16,19 +14,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.google.accompanist.insets.navigationBarsPadding
+import com.slin.compose.study.R
 import com.slin.compose.study.ui.theme.ComposeStudyTheme
 import com.slin.compose.study.ui.theme.ScaffoldWithCsAppBar
 import com.slin.compose.study.ui.theme.Size
-import com.slin.compose.study.weight.FlowArrangement
-import com.slin.compose.study.weight.FlowLayout
-import com.slin.compose.study.weight.NetworkImage
-import com.slin.compose.study.weight.Spinner
+import com.slin.compose.study.weight.*
 import com.slin.core.logger.logd
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -53,6 +57,7 @@ fun LayoutSample() {
         LayoutItem("4. BoxTest") { BoxTest() },
         LayoutItem("4. RhombusTest") { RhombusTest() },
         LayoutItem("5. FlowLayoutTest") { FlowLayoutTest() },
+        LayoutItem("6. ImageTest") { ImageTest() },
 
         )
 
@@ -124,10 +129,6 @@ private fun RowTest() {
                 .clip(shape = RoundedCornerShape(4.dp))
                 .background(Color.Gray)
                 .padding(4.dp)
-        )
-        NetworkImage(
-            url = "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
-            contentDescription = ""
         )
 
     }
@@ -582,3 +583,62 @@ private fun Rhombus(
 
 }
 
+@Composable
+private fun ImageTest() {
+    val context = LocalContext.current
+
+    val borderImage: @Composable (content: @Composable () -> Unit) -> Unit = { content ->
+        Surface(border = BorderStroke(1.dp, Color.Red)) {
+            content()
+        }
+    }
+
+    Column() {
+        NetworkImage(
+            url = "https://images.unsplash.com/photo-1629206896310-68433de7ded1?auto=format&fit=crop&w=500&q=60",
+            contentDescription = "000",
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp),
+        )
+        borderImage {
+            Image(
+                bitmap = ImageBitmap.imageResource(id = R.drawable.img_cartoon_1),
+                contentDescription = "只支持BitmapDrawable"
+            )
+        }
+        borderImage {
+            Image(
+                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+//            painter = painterResource(id = R.drawable.img_cartoon_1),
+                contentDescription = "图片或者Vector"
+            )
+        }
+        borderImage {
+            Image(
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_star_24),
+                contentDescription = "Vector"
+            )
+        }
+        borderImage {
+            //如果是Shape的话，需要转化为Bitmap
+            Image(
+                bitmap = ContextCompat.getDrawable(context, R.drawable.shape_round_rect_primary)
+                !!.toBitmap(100, 60).asImageBitmap(),
+                contentDescription = "Shape"
+            )
+        }
+        borderImage {
+            Box(
+                modifier = Modifier
+                    .size(100.dp)
+                    .background(id = R.drawable.img_cartoon_1)
+            ) {
+                Text(text = "Image Background")
+
+            }
+        }
+
+
+    }
+}

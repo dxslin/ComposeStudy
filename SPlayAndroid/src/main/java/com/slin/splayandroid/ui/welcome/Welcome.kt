@@ -38,7 +38,7 @@ fun Welcome() {
     val welcomeViewModel: WelcomeViewModel = viewModel()
 
     val adImageUrl by welcomeViewModel.adImageUrl.collectAsState()
-    val countDown by welcomeViewModel.countDown.collectAsState(5)
+    val countDown by welcomeViewModel.countDown.collectAsState()
 
 
     Box(modifier = Modifier) {
@@ -102,7 +102,7 @@ fun Welcome() {
                         MaterialTheme.colors.onSurface.copy(alpha = 0.2f),
                         shape = RoundedCornerShape(50)
                     )
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
                     .align(Alignment.CenterEnd)
                     .clickable {
                         welcomeViewModel.exitCountDown()

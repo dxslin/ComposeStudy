@@ -1,7 +1,6 @@
 package com.slin.splayandroid
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -10,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.slin.core.ui.CoreActivity
 import com.slin.splayandroid.ext.hide
 import com.slin.splayandroid.ext.show
 import com.slin.splayandroid.ui.theme.AppTheme
@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : CoreActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -34,6 +34,7 @@ class MainActivity : ComponentActivity() {
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
                     R.id.home_fragment -> navView.show()
+                    R.id.welcome_fragment -> navView.hide(false)
                     else -> navView.hide()
                 }
             }

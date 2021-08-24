@@ -18,11 +18,13 @@ import kotlinx.coroutines.launch
 const val TestImageUrl =
     "https://images.unsplash.com/photo-1629206896310-68433de7ded1?auto=format&fit=crop&w=500&q=60"
 
+const val COUNT_DOWN_NUM = 5
+
 class WelcomeViewModel : @HiltViewModel ViewModel() {
 
     val adImageUrl: StateFlow<String> = MutableStateFlow(TestImageUrl)
 
-    private val _countDown = MutableStateFlow(5)
+    private val _countDown = MutableStateFlow(COUNT_DOWN_NUM)
     val countDown: StateFlow<Int> = _countDown
 
     private var countDownJob: Job? = null
@@ -30,8 +32,13 @@ class WelcomeViewModel : @HiltViewModel ViewModel() {
 
     suspend fun startCountDown() {
         countDownJob = viewModelScope.launch {
-            _countDown.emit(_countDown.value - 1)
-            delay(1000)
+            while (_countDown.value > 0) {
+                _countDown.emit(_countDown.value - 1)
+                delay(1000)
+            }
+        }.apply {
+            _countDown.value = COUNT_DOWN_NUM
+            start()
         }
     }
 

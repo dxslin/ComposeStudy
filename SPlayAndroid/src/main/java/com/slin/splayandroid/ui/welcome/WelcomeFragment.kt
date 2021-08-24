@@ -61,12 +61,12 @@ class WelcomeFragment : BaseFragment() {
 
     private fun countDown() {
         lifecycleScope.launchWhenCreated {
+            viewModel.startCountDown()
             viewModel.countDown.collect {
                 if (it <= 0) {
                     navigate(Screen.Home)
                 }
             }
-            viewModel.startCountDown()
         }
     }
 

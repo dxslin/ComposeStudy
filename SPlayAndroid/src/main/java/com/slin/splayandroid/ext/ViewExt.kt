@@ -42,7 +42,6 @@ import androidx.dynamicanimation.animation.DynamicAnimation.ViewProperty
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.slin.core.logger.logd
 import com.slin.splayandroid.R
 
 /**
@@ -180,42 +179,36 @@ fun View.findAncestorById(@IdRes ancestorId: Int): View {
 fun BottomNavigationView.show() {
     if (visibility == VISIBLE) return
 
-    logd { "show: $isLaidOut" }
+    val parent = parent as ViewGroup
+    // View needs to be laid out to create a snapshot & know position to animate. If view isn't
+    // laid out yet, need to do this manually.
+    if (!isLaidOut) {
+        measure(
+            MeasureSpec.makeMeasureSpec(parent.width, MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(parent.height, MeasureSpec.AT_MOST)
+        )
+        layout(parent.left, parent.height - measuredHeight, parent.right, parent.height)
+    }
 
-    doAfterLaidOut {
-
-
-        val parent = parent as ViewGroup
-        // View needs to be laid out to create a snapshot & know position to animate. If view isn't
-        // laid out yet, need to do this manually.
-        if (!isLaidOut) {
-            measure(
-                MeasureSpec.makeMeasureSpec(parent.width, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(parent.height, MeasureSpec.AT_MOST)
-            )
-            layout(parent.left, parent.height - measuredHeight, parent.right, parent.height)
+    val drawable = BitmapDrawable(context.resources, drawToBitmap())
+    drawable.setBounds(left, parent.height, right, parent.height + height)
+    parent.overlay.add(drawable)
+    ValueAnimator.ofInt(parent.height, top).apply {
+        startDelay = 100L
+        duration = 300L
+        interpolator = AnimationUtils.loadInterpolator(
+            context,
+            android.R.interpolator.linear_out_slow_in
+        )
+        addUpdateListener {
+            val newTop = it.animatedValue as Int
+            drawable.setBounds(left, newTop, right, newTop + height)
         }
-
-        val drawable = BitmapDrawable(context.resources, drawToBitmap())
-        drawable.setBounds(left, parent.height, right, parent.height + height)
-        parent.overlay.add(drawable)
-        ValueAnimator.ofInt(parent.height, top).apply {
-            startDelay = 100L
-            duration = 300L
-            interpolator = AnimationUtils.loadInterpolator(
-                context,
-                android.R.interpolator.linear_out_slow_in
-            )
-            addUpdateListener {
-                val newTop = it.animatedValue as Int
-                drawable.setBounds(left, newTop, right, newTop + height)
-            }
-            doOnEnd {
-                parent.overlay.remove(drawable)
-                visibility = VISIBLE
-            }
-            start()
+        doOnEnd {
+            parent.overlay.remove(drawable)
+            visibility = VISIBLE
         }
+        start()
     }
 }
 
@@ -228,31 +221,35 @@ fun BottomNavigationView.show() {
  * Instead, take a snapshot, instantly hide the view (so content lays out to fill), then animate
  * out the snapshot.
  */
-fun BottomNavigationView.hide() {
+fun BottomNavigationView.hide(animated: Boolean = true) {
     if (visibility == GONE) return
 
-    doAfterLaidOut {
-        val drawable = BitmapDrawable(context.resources, drawToBitmap())
-        val parent = parent as ViewGroup
-        drawable.setBounds(left, top, right, bottom)
-        parent.overlay.add(drawable)
-        visibility = GONE
-        ValueAnimator.ofInt(top, parent.height).apply {
-            startDelay = 100L
-            duration = 200L
-            interpolator = AnimationUtils.loadInterpolator(
-                context,
-                android.R.interpolator.fast_out_linear_in
-            )
-            addUpdateListener {
-                val newTop = it.animatedValue as Int
-                drawable.setBounds(left, newTop, right, newTop + height)
+    if (animated) {
+        doAfterLaidOut {
+            val drawable = BitmapDrawable(context.resources, drawToBitmap())
+            val parent = parent as ViewGroup
+            drawable.setBounds(left, top, right, bottom)
+            parent.overlay.add(drawable)
+            visibility = GONE
+            ValueAnimator.ofInt(top, parent.height).apply {
+                startDelay = 100L
+                duration = 200L
+                interpolator = AnimationUtils.loadInterpolator(
+                    context,
+                    android.R.interpolator.fast_out_linear_in
+                )
+                addUpdateListener {
+                    val newTop = it.animatedValue as Int
+                    drawable.setBounds(left, newTop, right, newTop + height)
+                }
+                doOnEnd {
+                    parent.overlay.remove(drawable)
+                }
+                start()
             }
-            doOnEnd {
-                parent.overlay.remove(drawable)
-            }
-            start()
         }
+    } else {
+        visibility = GONE
     }
 
 }

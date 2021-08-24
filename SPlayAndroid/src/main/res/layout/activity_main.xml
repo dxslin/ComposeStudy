@@ -17,9 +17,11 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         style="@style/Widget.MaterialComponents.NavigationView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:background="?attr/colorSecondary"
+        app:menu="@menu/bottom_nav_menu"
         android:fitsSystemWindows="true" />
 
 </LinearLayout>

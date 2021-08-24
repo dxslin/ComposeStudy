@@ -3,6 +3,7 @@ package com.slin.splayandroid.ui.home
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 
@@ -17,8 +18,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 fun HomePage() {
     val homeViewModel: HomeViewModel = viewModel()
 
-    val name = homeViewModel.name.observeAsState()
-    val count = homeViewModel.count.observeAsState()
+    val name by homeViewModel.name.observeAsState()
+    val count by homeViewModel.count.observeAsState()
 
 
     Column() {

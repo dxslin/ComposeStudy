@@ -7,6 +7,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -94,20 +96,19 @@ fun Welcome() {
 //                    modifier = Modifier.align(Alignment.Center)
 //                )
 
-            Text(
-                text = "跳过 $countDown",
+            Button(
+                onClick = { welcomeViewModel.exitCountDown() },
                 modifier = Modifier
                     .padding(end = 8.dp)
-                    .background(
-                        MaterialTheme.colors.onSurface.copy(alpha = 0.2f),
-                        shape = RoundedCornerShape(50)
-                    )
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
-                    .align(Alignment.CenterEnd)
-                    .clickable {
-                        welcomeViewModel.exitCountDown()
-                    }
-            )
+                    .align(Alignment.CenterEnd),
+                shape = RoundedCornerShape(50),
+                elevation = ButtonDefaults.elevation(0.dp)
+            ) {
+                Text(
+                    text = "跳过 $countDown",
+                    modifier = Modifier
+                )
+            }
 
         }
 

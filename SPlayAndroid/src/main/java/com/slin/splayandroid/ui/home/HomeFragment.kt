@@ -2,7 +2,6 @@ package com.slin.splayandroid.ui.home
 
 import androidx.compose.runtime.Composable
 import com.slin.splayandroid.base.ComposeFragment
-import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * author: slin
@@ -10,7 +9,6 @@ import dagger.hilt.android.AndroidEntryPoint
  * description:
  *
  */
-@AndroidEntryPoint
 class HomeFragment : ComposeFragment() {
 
     @Composable

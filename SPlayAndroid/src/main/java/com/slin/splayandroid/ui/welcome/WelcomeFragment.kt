@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import com.slin.splayandroid.base.ComposeFragment
 import com.slin.splayandroid.nav.Screen
 import com.slin.splayandroid.nav.navigate
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 /**
@@ -17,7 +16,6 @@ import kotlinx.coroutines.flow.collect
  * description:
  *
  */
-@AndroidEntryPoint
 class WelcomeFragment : ComposeFragment() {
 
     private val viewModel: WelcomeViewModel by viewModels()

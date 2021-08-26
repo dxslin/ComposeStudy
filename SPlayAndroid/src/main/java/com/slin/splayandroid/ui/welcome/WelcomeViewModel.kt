@@ -2,7 +2,6 @@ package com.slin.splayandroid.ui.welcome
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +19,7 @@ const val TestImageUrl =
 
 const val COUNT_DOWN_NUM = 5
 
-class WelcomeViewModel : @HiltViewModel ViewModel() {
+class WelcomeViewModel : ViewModel() {
 
     val adImageUrl: StateFlow<String> = MutableStateFlow(TestImageUrl)
 

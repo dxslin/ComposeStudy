@@ -3,7 +3,6 @@ package com.slin.splayandroid.ui.home
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.slin.core.logger.logd
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 /**
  * author: slin
@@ -11,7 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
  * description:
  *
  */
-class HomeViewModel : @HiltViewModel ViewModel() {
+class HomeViewModel : ViewModel() {
 
     val count: MutableLiveData<Int> = MutableLiveData(0)
 

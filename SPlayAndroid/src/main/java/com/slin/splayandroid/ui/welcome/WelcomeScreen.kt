@@ -33,7 +33,7 @@ import com.slin.splayandroid.widget.NetworkImage
  */
 @Preview()
 @Composable
-fun Welcome() {
+fun WelcomeScreen() {
     val context = LocalContext.current
     val bottomBoxHeight = 200.dp
 

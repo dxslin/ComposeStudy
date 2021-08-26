@@ -18,7 +18,9 @@ import com.slin.splayandroid.ui.theme.AppTheme
  * description:
  *
  */
-abstract class BaseFragment : CoreFragment() {
+abstract class ComposeFragment : CoreFragment() {
+
+    protected var composeView: ComposeView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +28,7 @@ abstract class BaseFragment : CoreFragment() {
         savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireContext()).apply {
+            composeView = this
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
@@ -36,7 +39,7 @@ abstract class BaseFragment : CoreFragment() {
                     ProvideWindowInsets {
                         // A surface container using the 'background' color from the theme
                         Surface(color = MaterialTheme.colors.background) {
-                            ContentView()
+                            this@ComposeFragment.Content()
                         }
                     }
                 }
@@ -45,6 +48,6 @@ abstract class BaseFragment : CoreFragment() {
     }
 
     @Composable
-    abstract fun ComposeView.ContentView()
+    protected abstract fun ComposeFragment.Content()
 
 }

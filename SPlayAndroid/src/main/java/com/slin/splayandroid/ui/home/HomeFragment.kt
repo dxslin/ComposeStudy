@@ -1,8 +1,8 @@
 package com.slin.splayandroid.ui.home
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.ComposeView
-import com.slin.splayandroid.base.BaseFragment
+import com.slin.splayandroid.base.ComposeFragment
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * author: slin
@@ -10,12 +10,12 @@ import com.slin.splayandroid.base.BaseFragment
  * description:
  *
  */
-class HomeFragment : BaseFragment() {
-
+@AndroidEntryPoint
+class HomeFragment : ComposeFragment() {
 
     @Composable
-    override fun ComposeView.ContentView() {
-        HomePage()
+    override fun ComposeFragment.Content() {
+        HomeScreen()
     }
 
 }

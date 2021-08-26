@@ -31,14 +31,14 @@ class WelcomeViewModel : @HiltViewModel ViewModel() {
 
 
     suspend fun startCountDown() {
-        countDownJob = viewModelScope.launch {
+        viewModelScope.launch {
             while (_countDown.value > 0) {
                 _countDown.emit(_countDown.value - 1)
                 delay(1000)
             }
         }.apply {
+            countDownJob = this
             _countDown.value = COUNT_DOWN_NUM
-            start()
         }
     }
 

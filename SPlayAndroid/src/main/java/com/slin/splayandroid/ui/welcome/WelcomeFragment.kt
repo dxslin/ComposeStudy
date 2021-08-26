@@ -3,10 +3,9 @@ package com.slin.splayandroid.ui.welcome
 import android.os.Bundle
 import android.view.View
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.slin.splayandroid.base.BaseFragment
+import com.slin.splayandroid.base.ComposeFragment
 import com.slin.splayandroid.nav.Screen
 import com.slin.splayandroid.nav.navigate
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,17 +18,13 @@ import kotlinx.coroutines.flow.collect
  *
  */
 @AndroidEntryPoint
-class WelcomeFragment : BaseFragment() {
+class WelcomeFragment : ComposeFragment() {
 
     private val viewModel: WelcomeViewModel by viewModels()
 
-
     @Composable
-    override fun ComposeView.ContentView() {
-        fitsSystemWindows = false
-
-        Welcome()
-
+    override fun ComposeFragment.Content() {
+        WelcomeScreen()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

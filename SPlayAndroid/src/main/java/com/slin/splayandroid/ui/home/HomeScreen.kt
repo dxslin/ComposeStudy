@@ -15,7 +15,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
  */
 
 @Composable
-fun HomePage() {
+fun HomeScreen() {
     val homeViewModel: HomeViewModel = viewModel()
 
     val name by homeViewModel.name.observeAsState()

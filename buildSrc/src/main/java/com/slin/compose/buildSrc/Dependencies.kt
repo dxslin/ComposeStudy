@@ -93,6 +93,7 @@ object Libs {
             private const val version = "2.3.1"
             private const val hiltVersion = "2.38.1"
             private const val hiltViewModelVersion = "1.0.0-alpha02"
+            private const val roomVersion = "2.2.5"
 
             const val livedata = "androidx.lifecycle:lifecycle-livedata:${version}"
             const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${version}"
@@ -103,6 +104,10 @@ object Libs {
             const val hiltViewModel =
                 "androidx.hilt:hilt-lifecycle-viewmodel:${hiltViewModelVersion}"
             const val hiltViewModelCompiler = "androidx.hilt:hilt-compiler:${hiltViewModelVersion}"
+
+            const val roomRuntime = "androidx.room:room-runtime:${roomVersion}"
+            const val roomKtx = "androidx.room:room-ktx:${roomVersion}"
+            const val roomCompiler = "androidx.room:room-compiler:${roomVersion}"
 
 
         }

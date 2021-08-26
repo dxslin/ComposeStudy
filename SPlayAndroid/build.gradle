@@ -85,6 +85,10 @@ dependencies {
     kapt Libs.AndroidX.Jetpack.hiltCompiler
     kapt Libs.AndroidX.Jetpack.hiltViewModelCompiler
 
+    implementation Libs.AndroidX.Jetpack.roomRuntime
+    implementation Libs.AndroidX.Jetpack.roomKtx
+    kapt Libs.AndroidX.Jetpack.roomCompiler
+
     implementation Libs.Coil.coilCompose
     implementation Libs.Accompanist.insets
 

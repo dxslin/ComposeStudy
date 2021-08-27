@@ -34,7 +34,7 @@ import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun NetworkImage(
-    url: String,
+    url: String?,
     contentDescription: String?,
     modifier: Modifier = Modifier,
     contentScale: ContentScale = ContentScale.Crop,

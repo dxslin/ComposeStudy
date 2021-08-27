@@ -22,6 +22,7 @@ class SplashFragment : ComposeFragment() {
 
     @Composable
     override fun ComposeFragment.Content() {
+        composeView?.fitsSystemWindows = false
         WelcomeScreen()
     }
 

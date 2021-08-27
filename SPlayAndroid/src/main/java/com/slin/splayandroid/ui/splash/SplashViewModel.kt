@@ -1,6 +1,7 @@
 package com.slin.splayandroid.ui.splash
 
 import androidx.lifecycle.viewModelScope
+import com.slin.splayandroid.BuildConfig
 import com.slin.splayandroid.base.BaseViewModel
 import com.slin.splayandroid.base.ViewState
 import kotlinx.coroutines.delay
@@ -15,7 +16,7 @@ import kotlinx.coroutines.flow.*
 const val TestImageUrl =
     "https://images.unsplash.com/photo-1629206896310-68433de7ded1?auto=format&fit=crop&w=500&q=60"
 
-const val COUNT_DOWN_NUM = 5
+val COUNT_DOWN_NUM = if (BuildConfig.DEBUG) 1 else 5
 
 data class SplashViewState(
     val skip: Boolean = false
@@ -23,6 +24,9 @@ data class SplashViewState(
 
 class SplashViewModel : BaseViewModel<SplashViewState>(SplashViewState()) {
 
+    /**
+     * 广告图
+     */
     val adImageUrl: StateFlow<String> = MutableStateFlow(TestImageUrl)
 
     /**

@@ -92,9 +92,13 @@ dependencies {
     implementation Libs.AndroidX.Jetpack.roomKtx
     kapt Libs.AndroidX.Jetpack.roomCompiler
 
-    implementation Libs.Coil.coilCompose
     implementation Libs.Accompanist.insets
+    implementation Libs.Accompanist.theme
+    implementation Libs.Accompanist.systemuicontroller
+    implementation Libs.Accompanist.flowlayout
+    implementation Libs.Accompanist.pager
 
+    implementation Libs.Coil.coilCompose
     implementation Libs.timber
 
     androidTestImplementation Libs.AndroidX.Activity.activityCompose

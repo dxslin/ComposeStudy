@@ -1,4 +1,4 @@
-package com.slin.splayandroid.ui.welcome
+package com.slin.splayandroid.ui.splash
 
 import android.os.Bundle
 import android.view.View
@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.collect
  * description:
  *
  */
-class WelcomeFragment : ComposeFragment() {
+class SplashFragment : ComposeFragment() {
 
-    private val viewModel: WelcomeViewModel by viewModels()
+    private val viewModel: SplashViewModel by viewModels()
 
     @Composable
     override fun ComposeFragment.Content() {
@@ -34,8 +34,7 @@ class WelcomeFragment : ComposeFragment() {
 
     private fun countDown() {
         lifecycleScope.launchWhenCreated {
-            viewModel.startCountDown()
-            viewModel.countDown.collect {
+            viewModel.countFlow.collect {
                 if (it <= 0) {
                     navigate(Screen.Home)
                 }

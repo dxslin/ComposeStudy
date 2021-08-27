@@ -1,7 +1,8 @@
 package com.slin.splayandroid.ui.home
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.slin.splayandroid.base.BaseViewModel
+import com.slin.splayandroid.base.ViewState
 import com.slin.splayandroid.data.bean.BannerBean
 import com.slin.splayandroid.ext.stateFlow
 import com.slin.splayandroid.ui.home.ds.HomeRepository
@@ -15,8 +16,13 @@ import javax.inject.Inject
  * description:
  *
  */
+data class HomeViewState(
+    val loading: Boolean = false
+) : ViewState
+
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val homeRepository: HomeRepository) : ViewModel() {
+class HomeViewModel @Inject constructor(private val homeRepository: HomeRepository) :
+    BaseViewModel<HomeViewState>(HomeViewState()) {
 
     val count: MutableLiveData<Int> = MutableLiveData(0)
 

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/welcome_fragment"
-        android:name="com.slin.splayandroid.ui.welcome.WelcomeFragment"
+        android:name="com.slin.splayandroid.ui.splash.SplashFragment"
         android:label="Welcome" />
 
     <fragment

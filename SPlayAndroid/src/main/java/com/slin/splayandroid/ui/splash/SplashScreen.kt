@@ -1,4 +1,4 @@
-package com.slin.splayandroid.ui.welcome
+package com.slin.splayandroid.ui.splash
 
 import android.content.Intent
 import android.net.Uri
@@ -37,10 +37,10 @@ fun WelcomeScreen() {
     val context = LocalContext.current
     val bottomBoxHeight = 200.dp
 
-    val welcomeViewModel: WelcomeViewModel = viewModel()
+    val splashViewModel: SplashViewModel = viewModel()
 
-    val adImageUrl by welcomeViewModel.adImageUrl.collectAsState()
-    val countDown by welcomeViewModel.countDown.collectAsState()
+    val adImageUrl by splashViewModel.adImageUrl.collectAsState()
+    val countDown by splashViewModel.countFlow.collectAsState()
 
 
     Box(modifier = Modifier) {
@@ -97,7 +97,7 @@ fun WelcomeScreen() {
 //                )
 
             Button(
-                onClick = { welcomeViewModel.exitCountDown() },
+                onClick = { splashViewModel.skipCountDown() },
                 modifier = Modifier
                     .padding(end = 8.dp)
                     .align(Alignment.CenterEnd),

@@ -38,6 +38,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
         useIR = true
+        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
     buildFeatures {
         compose true
@@ -80,7 +81,9 @@ dependencies {
     implementation Libs.AndroidX.Compose.tooling
     implementation Libs.AndroidX.Compose.livedata
 
+    implementation Libs.AndroidX.Jetpack.lifecycle
     implementation Libs.AndroidX.Jetpack.livedataKtx
+    implementation Libs.AndroidX.Jetpack.lifecycleViewModel
     implementation Libs.AndroidX.Jetpack.hilt
     kapt Libs.AndroidX.Jetpack.hiltCompiler
     kapt Libs.AndroidX.Jetpack.hiltViewModelCompiler

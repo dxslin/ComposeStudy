@@ -2,7 +2,12 @@ package com.slin.splayandroid.ui.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.slin.core.logger.logd
+import com.slin.splayandroid.data.bean.BannerBean
+import com.slin.splayandroid.ext.stateFlow
+import com.slin.splayandroid.ui.home.ds.HomeRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
 
 /**
  * author: slin
@@ -10,16 +15,20 @@ import com.slin.core.logger.logd
  * description:
  *
  */
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val homeRepository: HomeRepository) : ViewModel() {
 
     val count: MutableLiveData<Int> = MutableLiveData(0)
 
     val name: MutableLiveData<String> = MutableLiveData("slin")
 
-    init {
-        name.observeForever {
-            logd { "init name: $name" }
-        }
+//    val bannerLiveData:LiveData<List<BannerBean>> = liveData {
+//        emit(homeRepository.getBanner())
+//    }
+
+    val bannerFlow: StateFlow<List<BannerBean>> = stateFlow(listOf()) {
+        emit(homeRepository.getBanner())
     }
+
 
 }

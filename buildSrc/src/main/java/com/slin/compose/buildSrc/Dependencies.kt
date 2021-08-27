@@ -90,13 +90,15 @@ object Libs {
         }
 
         object Jetpack {
-            private const val version = "2.3.1"
+            private const val lifecycleVersion = "2.4.0-alpha03"
             private const val hiltVersion = "2.38.1"
             private const val hiltViewModelVersion = "1.0.0-alpha02"
             private const val roomVersion = "2.2.5"
 
-            const val livedata = "androidx.lifecycle:lifecycle-livedata:${version}"
-            const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${version}"
+            const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+            const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycleVersion}"
+            const val lifecycleViewModel =
+                "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
 
             const val hilt = "com.google.dagger:hilt-android:${hiltVersion}"
             const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${hiltVersion}"

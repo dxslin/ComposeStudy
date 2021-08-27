@@ -1,6 +1,7 @@
 package com.slin.splayandroid.data.db
 
 import androidx.room.Database
+import androidx.room.RoomDatabase
 import com.slin.splayandroid.data.bean.ChildrenBean
 
 /**
@@ -10,7 +11,7 @@ import com.slin.splayandroid.data.bean.ChildrenBean
  *
  */
 @Database(entities = [ChildrenBean::class], version = 1, exportSchema = false)
-abstract class SPlayAndroidDatabase {
+abstract class SPlayAndroidDatabase : RoomDatabase() {
 
     abstract fun channelDao(): ChannelDao
 

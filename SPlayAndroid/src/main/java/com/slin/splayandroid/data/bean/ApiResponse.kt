@@ -8,5 +8,10 @@ data class ApiResponse<T>(
 
     companion object {
         const val RESULT_SUCCESS = 0
+
     }
+}
+
+fun <T> ApiResponse<T>.isSuccessful(): Boolean {
+    return resultCode == ApiResponse.RESULT_SUCCESS
 }

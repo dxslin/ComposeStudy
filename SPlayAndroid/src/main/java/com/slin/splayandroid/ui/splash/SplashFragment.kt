@@ -29,11 +29,7 @@ class SplashFragment : ComposeFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        countDown()
-
-    }
-
-    private fun countDown() {
+        // 监听倒计时结束
         lifecycleScope.launchWhenCreated {
             viewModel.countFlow.collect {
                 if (it <= 0) {
@@ -41,6 +37,7 @@ class SplashFragment : ComposeFragment() {
                 }
             }
         }
+
     }
 
 }

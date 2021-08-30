@@ -33,7 +33,7 @@ abstract class ComposeFragment : CoreFragment() {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
-            fitsSystemWindows = true
+            fitsSystemWindows = false
             setContent {
                 AppTheme {
                     ProvideWindowInsets {

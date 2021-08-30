@@ -18,7 +18,7 @@ object Libs {
 
     object Slin {
         private const val snapshot = "score_snapshot"
-        private const val version = "1.1.0"
+        private const val version = "1.1.1-alpha01"
         const val score = "io.github.dxslin:Score:$version"
     }
 
@@ -38,6 +38,7 @@ object Libs {
             "com.google.accompanist:accompanist-systemuicontroller:$version"
         const val flowlayout = "com.google.accompanist:accompanist-flowlayout:$version"
         const val pager = "com.google.accompanist:accompanist-pager:$version"
+        const val pagerIndicators = "com.google.accompanist:accompanist-pager-indicators:$version"
     }
 
     object Kotlin {

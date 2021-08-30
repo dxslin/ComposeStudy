@@ -3,7 +3,7 @@ package com.slin.splayandroid.di
 import android.app.Application
 import android.content.Context
 import com.slin.core.config.CoreConfig
-import com.slin.core.config.DefaultConfig
+import com.slin.splayandroid.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +22,10 @@ import okhttp3.logging.HttpLoggingInterceptor
 object SPlayAndroidConfig {
 
     const val BASE_URL: String = "https://www.wanandroid.com/"
-    val HTTP_LOG_LEVEL: HttpLoggingInterceptor.Level = DefaultConfig.HTTP_LOG_LEVEL
+    val HTTP_LOG_LEVEL: HttpLoggingInterceptor.Level = when (BuildConfig.DEBUG) {
+        true -> HttpLoggingInterceptor.Level.BODY
+        false -> HttpLoggingInterceptor.Level.NONE
+    }
 
 }
 
@@ -39,7 +42,7 @@ object ConfigModule {
         return CoreConfig(
             application = context as Application,
             baseUrl = SPlayAndroidConfig.BASE_URL,
-            httpLogLevel = DefaultConfig.HTTP_LOG_LEVEL,
+            httpLogLevel = SPlayAndroidConfig.HTTP_LOG_LEVEL,
             customInterceptors = listOf(saveCookieInterceptor, addCookieInterceptor)
         )
     }

@@ -140,6 +140,7 @@ fun PagerScope.BannerItem(page: Int, banner: BannerBean) {
     }
 }
 
+
 @Preview
 @Composable
 fun PreviewBanner() {
@@ -148,6 +149,5 @@ fun PreviewBanner() {
     val banners: List<BannerBean> = bannersData.fromJsonArray()
     println("banners: $banners")
     Banner(banners = banners)
-
 }
 

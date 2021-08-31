@@ -7,13 +7,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -37,15 +36,17 @@ import com.slin.splayandroid.R
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun HomeScreen() {
-    val homeViewModel: HomeViewModel = viewModel()
 
-    val name by homeViewModel.name.observeAsState()
-    val count by homeViewModel.count.observeAsState()
-    val banners by homeViewModel.bannerFlow.collectAsState()
 
-    Scaffold(topBar = { SearchTopBar() }, modifier = Modifier.statusBarsPadding()) {
+    Scaffold(
+        topBar = { SearchTopBar() },
+        modifier = Modifier
+            .background(MaterialTheme.colors.primary)
+            .statusBarsPadding(),
+        backgroundColor = MaterialTheme.colors.background,
+    ) {
         Column(modifier = Modifier) {
-            val panelTitles = arrayOf("每日一问", "首页", "广场")
+            val panelTitles = stringArrayResource(id = R.array.array_home_tabs)
             val pagerState = rememberPagerState(pageCount = panelTitles.size, initialPage = 1)
             var selectTabPosition by remember { mutableStateOf(pagerState.currentPage) }
 
@@ -102,10 +103,19 @@ fun SearchTopBar() {
                     shape = RoundedCornerShape(24.dp)
                 )
         ) {
-            BasicTextField(value = searchText, onValueChange = { text -> searchText = text })
+            Row() {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_baseline_search_24),
+                    contentDescription = "Search",
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(end = 8.dp)
+                )
+                BasicTextField(value = searchText, onValueChange = { text -> searchText = text })
+            }
         }
         Image(
-            painter = painterResource(id = R.drawable.ic_baseline_message_24),
+            painter = painterResource(id = R.drawable.ic_baseline_mail_outline_24),
             contentDescription = "Message",
             modifier = Modifier
                 .height(48.dp)

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="array_home_tabs">
+        <item>@string/tab_daily_question</item>
+        <item>@string/tab_home</item>
+        <item>@string/tab_piazza</item>
+    </array>
+</resources>

@@ -1,40 +1,21 @@
 package com.slin.splayandroid.data.api
 
-import com.slin.splayandroid.data.bean.*
+import com.slin.splayandroid.data.bean.AccountInfo
+import com.slin.splayandroid.data.bean.ApiResponse
+import com.slin.splayandroid.data.bean.CollectBean
+import com.slin.splayandroid.data.bean.Page
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-
-interface ApiService {
-
-    /**
-     * 获取文章列表
-     * @param curPage 页码从0开始
-     * @return
-     */
-    @GET("article/list/{curPage}/json")
-    suspend fun getArticlesList(
-        @Path("curPage") curPage: Int,
-        @Query("cid") id: Int? = null
-    ): ApiResponse<Page<List<ArticleBean>>>
-
-    /**
-     * 首页Banner
-     * @ return
-     */
-    @GET("banner/json")
-    suspend fun getBanner(): ApiResponse<List<BannerBean>>
-
-
-    /**
-     * 知识体系
-     * @return
-     */
-    @GET("tree/json")
-    suspend fun getSystem(): ApiResponse<List<TreeBean>>
-
+/**
+ * author: slin
+ * date: 2021/8/31
+ * description:
+ *
+ */
+interface PrivateService {
 
     /**
      * 登陆
@@ -45,13 +26,11 @@ interface ApiService {
         @Query("password") password: String
     ): ApiResponse<AccountInfo>
 
-
     /**
      * 登出
      */
     @GET("user/logout/json")
     suspend fun logout(): ApiResponse<Any>
-
 
     /**
      * 获取收藏列表
@@ -61,18 +40,15 @@ interface ApiService {
     @GET("lg/collect/list/{page}/json")
     suspend fun getCollectList(@Path("page") page: Int): ApiResponse<Page<List<CollectBean>>>
 
-
     /**
      * 收藏
      */
     @POST("lg/collect/{id}/json")
     suspend fun toCollect(@Path("id") id: Int): ApiResponse<Any>
 
-
     /**
      * 取消收藏
      */
     @POST("lg/uncollect_originId/{id}/json")
     suspend fun cancelCollect(@Path("id") id: Int): ApiResponse<Any>
-
 }

@@ -11,12 +11,12 @@ package com.slin.splayandroid.data.bean
  * url : http://www.wanandroid.com/navi
  */
 data class BannerBean(
-    val desc: String? = null,
+    val desc: String = "",
     val id: Int = 0,
-    val imagePath: String? = null,
+    val imagePath: String = "",
     val isVisible: Int = 0,
     val order: Int = 0,
-    val title: String? = null,
+    val title: String = "",
     val type: Int = 0,
-    val url: String? = null
+    val url: String = ""
 )

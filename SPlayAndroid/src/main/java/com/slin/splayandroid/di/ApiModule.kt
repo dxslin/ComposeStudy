@@ -1,6 +1,8 @@
 package com.slin.splayandroid.di
 
-import com.slin.splayandroid.data.api.ApiService
+import com.slin.splayandroid.data.api.HomeService
+import com.slin.splayandroid.data.api.PrivateService
+import com.slin.splayandroid.data.api.ProjectService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,8 +22,20 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
+    fun provideHomeService(retrofit: Retrofit): HomeService {
+        return retrofit.create(HomeService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providePrivateService(retrofit: Retrofit): PrivateService {
+        return retrofit.create(PrivateService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProjectService(retrofit: Retrofit): ProjectService {
+        return retrofit.create(ProjectService::class.java)
     }
 
 

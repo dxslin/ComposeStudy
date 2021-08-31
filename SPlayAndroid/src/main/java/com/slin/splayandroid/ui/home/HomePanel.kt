@@ -1,13 +1,13 @@
 package com.slin.splayandroid.ui.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,10 +18,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.pager.*
 import com.slin.core.utils.fromJsonArray
+import com.slin.splayandroid.data.bean.ArticleBean
 import com.slin.splayandroid.data.bean.BannerBean
 import com.slin.splayandroid.widget.NetworkImage
+import com.slin.splayandroid.widget.PageList
 import kotlin.math.absoluteValue
 
 /**
@@ -35,21 +38,57 @@ import kotlin.math.absoluteValue
 fun HomePanel() {
     val homeViewModel: HomeViewModel = viewModel()
 
-    val name by homeViewModel.name.observeAsState()
-    val count by homeViewModel.count.observeAsState()
     val banners by homeViewModel.bannerFlow.collectAsState()
+    val homeArticles = homeViewModel.homeArticleFlow.collectAsLazyPagingItems()
 
-    Column(modifier = Modifier.fillMaxSize()) {
+
+    PageList(lazyPagingItems = homeArticles, headerContent = {
 
         Banner(banners = banners)
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text(text = "$name: $count")
+    }) { _, item ->
 
+        item?.let {
+            ArticleItem(articleBean = it)
+        }
     }
+
 }
 
+@Composable
+fun ArticleItem(articleBean: ArticleBean) {
+    Column(modifier = Modifier
+        .clickable { }
+        .padding(8.dp)) {
+        Text(text = articleBean.title, style = MaterialTheme.typography.body1)
+        Text(
+            text = articleBean.chapterName,
+            style = MaterialTheme.typography.body2,
+            modifier = Modifier.padding(vertical = 4.dp)
+        )
+        Row {
+            Text(
+                text = articleBean.author,
+                modifier = Modifier.weight(1f),
+                style = MaterialTheme.typography.caption
+            )
+            Text(
+                text = articleBean.niceDate,
+                modifier = Modifier,
+                style = MaterialTheme.typography.caption
+            )
+        }
+
+        Spacer(
+            modifier = Modifier
+                .height(1.dp)
+                .fillMaxWidth()
+                .background(MaterialTheme.colors.background)
+        )
+    }
+}
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -125,7 +164,7 @@ fun PagerScope.BannerItem(page: Int, banner: BannerBean) {
                 .align(Alignment.BottomCenter)
         ) {
             Text(
-                text = banner.title ?: "",
+                text = banner.title,
                 style = MaterialTheme.typography.caption,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,

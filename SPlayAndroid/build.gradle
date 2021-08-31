@@ -84,6 +84,8 @@ dependencies {
     implementation Libs.AndroidX.Jetpack.lifecycle
     implementation Libs.AndroidX.Jetpack.livedataKtx
     implementation Libs.AndroidX.Jetpack.lifecycleViewModel
+    implementation Libs.AndroidX.Jetpack.paging
+
     implementation Libs.AndroidX.Jetpack.hilt
     kapt Libs.AndroidX.Jetpack.hiltCompiler
     kapt Libs.AndroidX.Jetpack.hiltViewModelCompiler
@@ -94,10 +96,14 @@ dependencies {
 
     implementation Libs.Accompanist.insets
     implementation Libs.Accompanist.theme
-    implementation Libs.Accompanist.systemuicontroller
+    implementation Libs.Accompanist.systemUiController
     implementation Libs.Accompanist.flowlayout
     implementation Libs.Accompanist.pager
     implementation Libs.Accompanist.pagerIndicators
+    implementation Libs.Accompanist.swipeRefresh
+    implementation Libs.Accompanist.placeholder
+    implementation Libs.Accompanist.drawablePainter
+    implementation Libs.Accompanist.permissions
 
     implementation Libs.Coil.coilCompose
     implementation Libs.timber

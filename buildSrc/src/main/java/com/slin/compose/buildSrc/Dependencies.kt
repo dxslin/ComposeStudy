@@ -34,11 +34,15 @@ object Libs {
         private const val version = "0.16.0"
         const val insets = "com.google.accompanist:accompanist-insets:$version"
         const val theme = "com.google.accompanist:accompanist-appcompat-theme:$version"
-        const val systemuicontroller =
+        const val systemUiController =
             "com.google.accompanist:accompanist-systemuicontroller:$version"
         const val flowlayout = "com.google.accompanist:accompanist-flowlayout:$version"
         const val pager = "com.google.accompanist:accompanist-pager:$version"
         const val pagerIndicators = "com.google.accompanist:accompanist-pager-indicators:$version"
+        const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
+        const val placeholder = "com.google.accompanist:accompanist-placeholder-material:$version"
+        const val drawablePainter = "com.google.accompanist:accompanist-drawablepainter:$version"
+        const val permissions = "com.google.accompanist:accompanist-permissions:$version"
     }
 
     object Kotlin {
@@ -95,6 +99,7 @@ object Libs {
             private const val hiltVersion = "2.38.1"
             private const val hiltViewModelVersion = "1.0.0-alpha02"
             private const val roomVersion = "2.2.5"
+            private const val pagingVersion = "1.0.0-alpha12"
 
             const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
             const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycleVersion}"
@@ -112,6 +117,7 @@ object Libs {
             const val roomKtx = "androidx.room:room-ktx:${roomVersion}"
             const val roomCompiler = "androidx.room:room-compiler:${roomVersion}"
 
+            const val paging = "androidx.paging:paging-compose:${pagingVersion}"
 
         }
 

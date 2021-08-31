@@ -103,15 +103,21 @@ fun SearchTopBar() {
                     shape = RoundedCornerShape(24.dp)
                 )
         ) {
-            Row() {
+            Row(modifier = Modifier.fillMaxSize()) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_baseline_search_24),
                     contentDescription = "Search",
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
-                        .padding(end = 8.dp)
+                        .padding(horizontal = 8.dp)
                 )
-                BasicTextField(value = searchText, onValueChange = { text -> searchText = text })
+                BasicTextField(
+                    value = searchText,
+                    onValueChange = { text -> searchText = text },
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .fillMaxSize()
+                )
             }
         }
         Image(

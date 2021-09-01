@@ -20,7 +20,7 @@ import androidx.core.graphics.drawable.toBitmap
  * description:
  *
  */
-fun Modifier.background(@DrawableRes id: Int): Modifier =
+fun Modifier.backgroundRes(@DrawableRes id: Int): Modifier =
     composed(inspectorInfo = debugInspectorInfo {
         name = "background"
         properties["backgroundResId"] = id

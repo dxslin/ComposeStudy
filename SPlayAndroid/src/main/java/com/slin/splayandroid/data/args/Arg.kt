@@ -1,6 +1,6 @@
 package com.slin.splayandroid.data.args
 
-import com.slin.splayandroid.constants.PagingConst
+import com.slin.splayandroid.utils.PagingHelper
 
 /**
  * author: slin
@@ -13,7 +13,7 @@ import com.slin.splayandroid.constants.PagingConst
 /**
  * 起始页码
  */
-private const val START_PAGE_NUM = PagingConst.START_PAGE_NUM
+private const val START_PAGE_NUM = PagingHelper.START_PAGE_NUM
 
 sealed class Arg<A : Arg<A>>(val page: Int) {
 

@@ -27,4 +27,12 @@ class HomeRepository @Inject constructor(remoteDataSource: HomeDataSource) :
         return remoteDataSource.getHomeArticles(cid)
     }
 
+    fun getDailyQuestions(): Flow<PagingData<ArticleBean>> {
+        return remoteDataSource.getDailyQuestions()
+    }
+
+    fun getPiazzaList(): Flow<PagingData<ArticleBean>> {
+        return remoteDataSource.getPiazzaList()
+    }
+
 }

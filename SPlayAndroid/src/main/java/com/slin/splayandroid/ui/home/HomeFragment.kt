@@ -5,6 +5,7 @@ import android.view.View
 import androidx.compose.runtime.Composable
 import androidx.fragment.app.viewModels
 import com.slin.splayandroid.base.ComposeFragment
+import com.slin.splayandroid.ui.home.vm.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

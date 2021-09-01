@@ -1,4 +1,4 @@
-package com.slin.splayandroid.ui.home
+package com.slin.splayandroid.ui.home.vm
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -28,15 +28,34 @@ data class HomeViewState(
 class HomeViewModel @Inject constructor(private val homeRepository: HomeRepository) :
     BaseViewModel<HomeViewState>(HomeViewState()) {
 
+    // 已决定使用StateFlow做数据处理，放弃使用LiveData
 //    val bannerLiveData:LiveData<List<BannerBean>> = liveData {
 //        emit(homeRepository.getBanner())
 //    }
 
+    /**
+     * Banner
+     */
     val bannerFlow: StateFlow<List<BannerBean>> = stateFlow(listOf()) {
         emit(homeRepository.getBanner())
     }
 
+    /**
+     * 首页文章
+     */
     val homeArticleFlow: Flow<PagingData<ArticleBean>> =
         homeRepository.getHomeArticles(null).cachedIn(viewModelScope)
+
+    /**
+     * 每日一问
+     */
+    val dailyQuestionFlow: Flow<PagingData<ArticleBean>> =
+        homeRepository.getDailyQuestions().cachedIn(viewModelScope)
+
+    /**
+     * 广场
+     */
+    val piazzaDataFlow: Flow<PagingData<ArticleBean>> =
+        homeRepository.getPiazzaList().cachedIn(viewModelScope)
 
 }

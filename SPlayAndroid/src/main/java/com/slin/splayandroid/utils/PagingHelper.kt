@@ -1,4 +1,4 @@
-package com.slin.splayandroid.constants
+package com.slin.splayandroid.utils
 
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
@@ -15,7 +15,7 @@ import com.slin.splayandroid.data.bean.isSuccessful
  *
  */
 
-object PagingConst {
+object PagingHelper {
 
     /**
      * 起始页码，有些可能是从 1 开始的
@@ -36,6 +36,12 @@ object PagingConst {
 
     /**
      * 公用代码，直接将对应的网络请求转化为 Paging load 结果
+     *
+     * ```
+     * return PagingHelper.load(params.key) {
+     *     homeService.getArticlesList(it.page, it.arg1)
+     * }
+     * ```
      */
     suspend fun <Key : Arg<Key>, Value : Any> load(
         key: Key?,

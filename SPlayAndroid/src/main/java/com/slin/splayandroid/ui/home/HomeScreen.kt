@@ -51,7 +51,7 @@ fun HomeScreen() {
             var selectTabPosition by remember { mutableStateOf(pagerState.currentPage) }
 
             LaunchedEffect(key1 = selectTabPosition) {
-                pagerState.scrollToPage(page = selectTabPosition)
+                pagerState.animateScrollToPage(page = selectTabPosition)
             }
 
             TabRow(selectedTabIndex = pagerState.currentPage, indicator = { tabPositions ->

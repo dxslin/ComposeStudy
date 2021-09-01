@@ -1,7 +1,6 @@
 package com.slin.splayandroid.ui.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -21,8 +20,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.pager.*
 import com.slin.core.utils.fromJsonArray
-import com.slin.splayandroid.data.bean.ArticleBean
 import com.slin.splayandroid.data.bean.BannerBean
+import com.slin.splayandroid.ui.home.vm.HomeViewModel
 import com.slin.splayandroid.widget.NetworkImage
 import com.slin.splayandroid.widget.PageList
 import kotlin.math.absoluteValue
@@ -49,46 +48,12 @@ fun HomePanel() {
         Spacer(modifier = Modifier.height(16.dp))
 
     }) { _, item ->
-
-        item?.let {
-            ArticleItem(articleBean = it)
-        }
+        ArticleItem(articleBean = item)
     }
 
 }
 
-@Composable
-fun ArticleItem(articleBean: ArticleBean) {
-    Column(modifier = Modifier
-        .clickable { }
-        .padding(8.dp)) {
-        Text(text = articleBean.title, style = MaterialTheme.typography.body1)
-        Text(
-            text = articleBean.chapterName,
-            style = MaterialTheme.typography.body2,
-            modifier = Modifier.padding(vertical = 4.dp)
-        )
-        Row {
-            Text(
-                text = articleBean.author,
-                modifier = Modifier.weight(1f),
-                style = MaterialTheme.typography.caption
-            )
-            Text(
-                text = articleBean.niceDate,
-                modifier = Modifier,
-                style = MaterialTheme.typography.caption
-            )
-        }
 
-        Spacer(
-            modifier = Modifier
-                .height(1.dp)
-                .fillMaxWidth()
-                .background(MaterialTheme.colors.background)
-        )
-    }
-}
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -189,4 +154,3 @@ fun PreviewBanner() {
     println("banners: $banners")
     Banner(banners = banners)
 }
-

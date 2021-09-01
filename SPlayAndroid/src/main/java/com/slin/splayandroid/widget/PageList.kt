@@ -31,7 +31,8 @@ fun <T : Any> PageList(
     modifier: Modifier = Modifier,
     lazyPagingItems: LazyPagingItems<T>,
     headerContent: @Composable () -> Unit = {},
-    itemContent: @Composable (index: Int, item: T?) -> Unit,
+    emptyItemContent: @Composable (index: Int) -> Unit = {},
+    itemContent: @Composable (index: Int, item: T) -> Unit,
 ) {
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = true)
     SwipeRefresh(
@@ -46,7 +47,14 @@ fun <T : Any> PageList(
 
             // content
             for (i in 0 until lazyPagingItems.itemCount) {
-                item { itemContent(i, lazyPagingItems[i]) }
+                item {
+                    val item = lazyPagingItems[i]
+                    if (item == null) {
+                        emptyItemContent(i)
+                    } else {
+                        itemContent(i, item)
+                    }
+                }
             }
 
             // load state

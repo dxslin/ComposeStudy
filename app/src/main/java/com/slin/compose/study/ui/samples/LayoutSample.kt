@@ -632,7 +632,7 @@ private fun ImageTest() {
             Box(
                 modifier = Modifier
                     .size(100.dp)
-                    .background(id = R.drawable.img_cartoon_1)
+                    .backgroundRes(id = R.drawable.img_cartoon_1)
             ) {
                 Text(text = "Image Background")
 

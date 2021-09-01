@@ -19,6 +19,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import com.slin.splayandroid.R
+import com.slin.splayandroid.data.bean.ArticleBean
 
 
 /**
@@ -35,7 +36,7 @@ import com.slin.splayandroid.R
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(onItemClick: (ArticleBean) -> Unit) {
 
 
     Scaffold(

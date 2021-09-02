@@ -25,10 +25,10 @@ import com.slin.splayandroid.data.bean.ArticleBean
  */
 
 @Composable
-fun ArticleItem(articleBean: ArticleBean, onItemClick: () -> Unit = {}) {
+fun ArticleItem(articleBean: ArticleBean, onItemClick: (ArticleBean) -> Unit = {}) {
     Column(modifier = Modifier
         .background(MaterialTheme.colors.surface)
-        .clickable { onItemClick() }
+        .clickable { onItemClick(articleBean) }
         .padding(top = 16.dp, start = 16.dp, end = 16.dp)) {
 
         Text(text = articleBean.title, style = MaterialTheme.typography.subtitle1)

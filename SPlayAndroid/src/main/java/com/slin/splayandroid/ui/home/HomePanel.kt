@@ -20,6 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.pager.*
 import com.slin.core.utils.fromJsonArray
+import com.slin.splayandroid.data.bean.ArticleBean
 import com.slin.splayandroid.data.bean.BannerBean
 import com.slin.splayandroid.ui.home.vm.HomeViewModel
 import com.slin.splayandroid.widget.NetworkImage
@@ -34,7 +35,7 @@ import kotlin.math.absoluteValue
  */
 
 @Composable
-fun HomePanel() {
+fun HomePanel(onItemClick: (ArticleBean) -> Unit) {
     val homeViewModel: HomeViewModel = viewModel()
 
     val banners by homeViewModel.bannerFlow.collectAsState()
@@ -48,7 +49,7 @@ fun HomePanel() {
         Spacer(modifier = Modifier.height(16.dp))
 
     }) { _, item ->
-        ArticleItem(articleBean = item)
+        ArticleItem(articleBean = item, onItemClick = onItemClick)
     }
 
 }

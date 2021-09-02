@@ -2,16 +2,33 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/welcome_fragment">
+    app:startDestination="@id/splash_fragment">
 
     <fragment
-        android:id="@+id/welcome_fragment"
+        android:id="@+id/splash_fragment"
         android:name="com.slin.splayandroid.ui.splash.SplashFragment"
-        android:label="Welcome" />
+        android:label="Splash" />
 
     <fragment
         android:id="@+id/home_fragment"
         android:name="com.slin.splayandroid.ui.home.HomeFragment"
         android:label="Home" />
+
+    <fragment
+        android:id="@+id/article_detail_fragment"
+        android:name="com.slin.splayandroid.ui.detail.ArticleDetailFragment"
+        android:label="ArticleDetail">
+
+        <argument
+            android:name="url"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <argument
+            android:name="title"
+            android:defaultValue=""
+            app:argType="string" />
+
+    </fragment>
 
 </navigation>

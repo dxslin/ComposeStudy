@@ -34,7 +34,7 @@ class MainActivity : CoreActivity() {
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
                     R.id.home_fragment -> navView.show()
-                    R.id.welcome_fragment -> navView.hide(false)
+                    R.id.splash_fragment -> navView.hide(false)
                     else -> navView.hide()
                 }
             }

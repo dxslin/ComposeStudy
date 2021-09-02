@@ -41,9 +41,7 @@ fun HomeScreen(onItemClick: (ArticleBean) -> Unit) {
 
     Scaffold(
         topBar = { SearchTopBar() },
-        modifier = Modifier
-            .background(MaterialTheme.colors.primary)
-            .statusBarsPadding(),
+        modifier = Modifier,
         backgroundColor = MaterialTheme.colors.background,
     ) {
         Column(modifier = Modifier) {
@@ -73,9 +71,9 @@ fun HomeScreen(onItemClick: (ArticleBean) -> Unit) {
             }
             HorizontalPager(state = pagerState, modifier = Modifier.padding(top = 8.dp)) { page ->
                 when (page) {
-                    0 -> DailyQuestionPanel()
-                    1 -> HomePanel()
-                    2 -> PiazzaPanel()
+                    0 -> DailyQuestionPanel(onItemClick)
+                    1 -> HomePanel(onItemClick)
+                    2 -> PiazzaPanel(onItemClick)
                 }
             }
         }
@@ -92,7 +90,8 @@ fun SearchTopBar() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = MaterialTheme.colors.primary)
+            .background(MaterialTheme.colors.primary)
+            .statusBarsPadding()
     ) {
         Box(
             modifier = Modifier

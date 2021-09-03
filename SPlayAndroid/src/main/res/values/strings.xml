@@ -15,5 +15,8 @@
 
     <string name="chapter_">分类：</string>
     <string name="author_">分享人：</string>
+    <string name="empty_author">佚名</string>
+
+    <string name="exit_app">再按一次退出应用</string>
 
 </resources>

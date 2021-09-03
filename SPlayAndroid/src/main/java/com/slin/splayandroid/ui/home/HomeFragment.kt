@@ -2,11 +2,11 @@ package com.slin.splayandroid.ui.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.OnBackPressedCallback
 import androidx.compose.runtime.Composable
-import androidx.navigation.fragment.findNavController
-import com.slin.core.logger.logd
+import com.slin.splayandroid.R
 import com.slin.splayandroid.base.ComposeFragment
+import com.slin.splayandroid.ext.toast
 import com.slin.splayandroid.nav.Screen
 import com.slin.splayandroid.nav.navigate
 import com.slin.splayandroid.ui.detail.ArticleDetailFragment
@@ -21,7 +21,21 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : ComposeFragment() {
 
-//    private val homeViewModel: HomeViewModel by viewModels()
+    private var lastBackMills = 0L
+
+    private val onBackPressedCallback by lazy {
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (System.currentTimeMillis() - lastBackMills < 1000) {
+                    activity?.finish()
+                } else {
+                    lastBackMills = System.currentTimeMillis()
+                    toast { requireContext().getString(R.string.exit_app) }
+                }
+            }
+        }
+
+    }
 
     @Composable
     override fun ComposeFragment.Content() {
@@ -32,21 +46,12 @@ class HomeFragment : ComposeFragment() {
             }
             navigate(Screen.ArticleDetail(bundle))
         })
-        findNavController().setOnBackPressedDispatcher(OnBackPressedDispatcher {
-            logd { "" }
-        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        lifecycleScope.launch {
-//            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                homeViewModel.bannerFlow.collect {
-//                    log { "banner: ${it.joinToString()}" }
-//                }
-//            }
-//        }
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, onBackPressedCallback)
     }
 
 }

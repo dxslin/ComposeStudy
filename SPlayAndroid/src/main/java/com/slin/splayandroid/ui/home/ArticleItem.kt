@@ -51,7 +51,8 @@ fun ArticleItem(articleBean: ArticleBean, onItemClick: (ArticleBean) -> Unit = {
                 )
             }
             Text(
-                text = stringResource(id = R.string.author_) + articleBean.author,
+                text = stringResource(id = R.string.author_) +
+                        articleBean.author.ifEmpty { stringResource(id = R.string.empty_author) },
                 modifier = Modifier,
                 style = MaterialTheme.typography.caption
             )

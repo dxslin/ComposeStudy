@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,6 +26,9 @@ import com.slin.splayandroid.data.bean.BannerBean
 import com.slin.splayandroid.ui.home.vm.HomeViewModel
 import com.slin.splayandroid.widget.NetworkImage
 import com.slin.splayandroid.widget.PageList
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 /**
@@ -61,6 +65,17 @@ fun HomePanel(onItemClick: (ArticleBean) -> Unit) {
 fun Banner(banners: List<BannerBean>) {
     if (banners.isEmpty()) return
     val state = rememberPagerState(pageCount = banners.size, infiniteLoop = true)
+
+    LaunchedEffect(key1 = state) {
+        launch {
+            while (isActive) {
+                delay(3000L)
+                if (!state.isScrollInProgress) {
+                    state.animateScrollToPage((state.currentPage + 1) % state.pageCount)
+                }
+            }
+        }
+    }
 
     Box(modifier = Modifier) {
         HorizontalPager(

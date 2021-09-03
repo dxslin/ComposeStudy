@@ -20,6 +20,7 @@ import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import com.slin.splayandroid.R
 import com.slin.splayandroid.data.bean.ArticleBean
+import com.slin.splayandroid.ui.home.vm.HomeViewModel
 
 
 /**
@@ -36,9 +37,7 @@ import com.slin.splayandroid.data.bean.ArticleBean
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun HomeScreen(onItemClick: (ArticleBean) -> Unit) {
-
-
+fun HomeScreen(homeViewModel: HomeViewModel, onItemClick: (ArticleBean) -> Unit) {
     Scaffold(
         topBar = { SearchTopBar() },
         modifier = Modifier,
@@ -71,9 +70,9 @@ fun HomeScreen(onItemClick: (ArticleBean) -> Unit) {
             }
             HorizontalPager(state = pagerState, modifier = Modifier.padding(top = 8.dp)) { page ->
                 when (page) {
-                    0 -> DailyQuestionPanel(onItemClick)
-                    1 -> HomePanel(onItemClick)
-                    2 -> PiazzaPanel(onItemClick)
+                    0 -> DailyQuestionPanel(homeViewModel, onItemClick)
+                    1 -> HomePanel(homeViewModel, onItemClick)
+                    2 -> PiazzaPanel(homeViewModel, onItemClick)
                 }
             }
         }

@@ -17,7 +17,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.pager.*
 import com.slin.core.utils.fromJsonArray
@@ -39,8 +38,7 @@ import kotlin.math.absoluteValue
  */
 
 @Composable
-fun HomePanel(onItemClick: (ArticleBean) -> Unit) {
-    val homeViewModel: HomeViewModel = viewModel()
+fun HomePanel(homeViewModel: HomeViewModel, onItemClick: (ArticleBean) -> Unit) {
 
     val banners by homeViewModel.bannerFlow.collectAsState()
     val homeArticles = homeViewModel.homeArticleFlow.collectAsLazyPagingItems()

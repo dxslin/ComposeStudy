@@ -1,17 +1,16 @@
 package com.slin.splayandroid
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.accompanist.insets.ProvideWindowInsets
 import com.slin.core.ui.CoreActivity
-import com.slin.splayandroid.ext.hide
-import com.slin.splayandroid.ext.show
+import com.slin.splayandroid.nav.NavGraphs
 import com.slin.splayandroid.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,17 +24,15 @@ class MainActivity : CoreActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        setContentView(R.layout.activity_main)
-        val navView = findViewById<BottomNavigationView>(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
-        navView.setupWithNavController(navController)
 
-        lifecycleScope.launchWhenCreated {
-            navController.addOnDestinationChangedListener { _, destination, _ ->
-                when (destination.id) {
-                    R.id.home_fragment -> navView.show()
-                    R.id.splash_fragment -> navView.hide(false)
-                    else -> navView.hide()
+        setContent {
+
+            AppTheme {
+                ProvideWindowInsets {
+                    // A surface container using the 'background' color from the theme
+                    Surface(color = MaterialTheme.colors.background) {
+                        NavGraphs()
+                    }
                 }
             }
         }

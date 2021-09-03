@@ -27,7 +27,7 @@ class ArticleDetailFragment : ComposeFragment() {
 
     @Composable
     override fun ComposeFragment.Content() {
-        ArticleDetailScreen(mTitle = mTitle, mUrl = mUrl)
+//        ArticleDetailScreen(mTitle = mTitle, mUrl = mUrl)
     }
 
 

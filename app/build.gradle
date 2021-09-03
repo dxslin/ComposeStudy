@@ -84,6 +84,13 @@ dependencies {
     implementation Libs.Accompanist.systemUiController
     implementation Libs.Accompanist.flowlayout
     implementation Libs.Accompanist.pager
+    implementation Libs.Accompanist.pagerIndicators
+    implementation Libs.Accompanist.swipeRefresh
+    implementation Libs.Accompanist.placeholder
+    implementation Libs.Accompanist.drawablePainter
+    implementation Libs.Accompanist.permissions
+    implementation Libs.Accompanist.navMaterial
+    implementation Libs.Accompanist.navAnimation
 
     implementation Libs.timber
 

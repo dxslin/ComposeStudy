@@ -7,9 +7,6 @@ import androidx.compose.runtime.Composable
 import com.slin.splayandroid.R
 import com.slin.splayandroid.base.ComposeFragment
 import com.slin.splayandroid.ext.toast
-import com.slin.splayandroid.nav.Screen
-import com.slin.splayandroid.nav.navigate
-import com.slin.splayandroid.ui.detail.ArticleDetailFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -39,13 +36,13 @@ class HomeFragment : ComposeFragment() {
 
     @Composable
     override fun ComposeFragment.Content() {
-        HomeScreen(onItemClick = { article ->
-            val bundle = Bundle().apply {
-                putString(ArticleDetailFragment.ARG_TITLE, article.title)
-                putString(ArticleDetailFragment.ARG_URL, article.link)
-            }
-            navigate(Screen.ArticleDetail(bundle))
-        })
+//        HomeScreen(onItemClick = { article ->
+//            val bundle = Bundle().apply {
+//                putString(ArticleDetailFragment.ARG_TITLE, article.title)
+//                putString(ArticleDetailFragment.ARG_URL, article.link)
+//            }
+//            navigate(Screen.ArticleDetail(bundle))
+//        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -43,6 +43,8 @@ object Libs {
         const val placeholder = "com.google.accompanist:accompanist-placeholder-material:$version"
         const val drawablePainter = "com.google.accompanist:accompanist-drawablepainter:$version"
         const val permissions = "com.google.accompanist:accompanist-permissions:$version"
+        const val navMaterial = "com.google.accompanist:accompanist-navigation-material:$version"
+        const val navAnimation = "com.google.accompanist:accompanist-navigation-animation:$version"
     }
 
     object Kotlin {
@@ -112,6 +114,8 @@ object Libs {
             const val hiltViewModel =
                 "androidx.hilt:hilt-lifecycle-viewmodel:${hiltViewModelVersion}"
             const val hiltViewModelCompiler = "androidx.hilt:hilt-compiler:${hiltViewModelVersion}"
+            const val hiltNavigationCompose =
+                "androidx.hilt:hilt-navigation-compose:${hiltViewModelVersion}"
 
             const val roomRuntime = "androidx.room:room-runtime:${roomVersion}"
             const val roomKtx = "androidx.room:room-ktx:${roomVersion}"

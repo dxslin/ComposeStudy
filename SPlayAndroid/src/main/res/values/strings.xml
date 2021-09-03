@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">SPlayAndroid</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
 
     <string name="tab_daily_question">每日一问</string>
     <string name="tab_home">首页</string>

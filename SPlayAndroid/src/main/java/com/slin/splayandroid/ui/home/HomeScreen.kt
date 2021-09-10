@@ -13,6 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -37,7 +38,12 @@ import com.slin.splayandroid.ui.home.vm.HomeViewModel
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun HomeScreen(homeViewModel: HomeViewModel, onItemClick: (ArticleBean) -> Unit) {
+fun HomeScreen(
+    homeViewModel: HomeViewModel,
+    onItemClick: (ArticleBean) -> Unit,
+    homeArticles: LazyPagingItems<ArticleBean>
+) {
+
     Scaffold(
         topBar = { SearchTopBar() },
         modifier = Modifier,
@@ -71,7 +77,7 @@ fun HomeScreen(homeViewModel: HomeViewModel, onItemClick: (ArticleBean) -> Unit)
             HorizontalPager(state = pagerState, modifier = Modifier.padding(top = 8.dp)) { page ->
                 when (page) {
                     0 -> DailyQuestionPanel(homeViewModel, onItemClick)
-                    1 -> HomePanel(homeViewModel, onItemClick)
+                    1 -> HomePanel(homeViewModel, onItemClick, homeArticles)
                     2 -> PiazzaPanel(homeViewModel, onItemClick)
                 }
             }

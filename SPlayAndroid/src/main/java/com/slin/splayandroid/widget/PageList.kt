@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -32,9 +33,10 @@ fun <T : Any> PageList(
     lazyPagingItems: LazyPagingItems<T>,
     headerContent: @Composable () -> Unit = {},
     emptyItemContent: @Composable (index: Int) -> Unit = {},
+    content: LazyListScope.() -> Unit = {},
     itemContent: @Composable (index: Int, item: T) -> Unit,
 ) {
-    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = true)
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false)
     SwipeRefresh(
         modifier = modifier,
         state = swipeRefreshState,
@@ -43,9 +45,12 @@ fun <T : Any> PageList(
 
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
             // header
-            item { headerContent() }
+            item(key = "header") { headerContent() }
+
 
             // content
+            content()
+
             for (i in 0 until lazyPagingItems.itemCount) {
                 item {
                     val item = lazyPagingItems[i]
@@ -61,16 +66,16 @@ fun <T : Any> PageList(
             lazyPagingItems.loadState.let { loadState ->
                 when {
                     loadState.append is LoadState.Loading -> {
-                        item { LoadingItem() }
+                        item(key = "append_loading") { LoadingItem() }
                     }
                     loadState.append is LoadState.Error -> {
-                        item { ErrorItem { lazyPagingItems.retry() } }
+                        item(key = "append_error") { ErrorItem { lazyPagingItems.retry() } }
                     }
                     loadState.refresh is LoadState.Error -> {
                         if (lazyPagingItems.itemCount <= 0) {
-                            item { EmptyContent { lazyPagingItems.retry() } }
+                            item(key = "refresh_empty") { EmptyContent { lazyPagingItems.retry() } }
                         } else {
-                            item { ErrorItem { lazyPagingItems.retry() } }
+                            item(key = "refresh_error") { ErrorItem { lazyPagingItems.retry() } }
                         }
                     }
 

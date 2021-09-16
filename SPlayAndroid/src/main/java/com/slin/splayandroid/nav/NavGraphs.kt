@@ -1,6 +1,7 @@
 package com.slin.splayandroid.nav
 
 import android.net.Uri
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -8,14 +9,12 @@ import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.slin.core.logger.logd
 import com.slin.splayandroid.data.bean.ArticleBean
@@ -47,13 +46,11 @@ fun NavGraphs() {
 
     val actions: Actions = remember(navController) { Actions(navController) }
 
-    val homeViewModel: HomeViewModel = viewModel()
 
-    val homeArticles = homeViewModel.homeArticleFlow.collectAsLazyPagingItems()
     logd { "1 currentComposer: $currentComposer \t " }
     NavHost(
         navController = navController,
-        startDestination = MainDestinations.Splash,
+        startDestination = MainDestinations.Home,
         modifier = Modifier
     ) {
         composable(MainDestinations.Splash) {
@@ -62,11 +59,14 @@ fun NavGraphs() {
         }
 //        logd { "2 currentComposer: $currentComposer" }
         composable(MainDestinations.Home) {
-            logd { "3 currentComposer: $currentComposer \t ${currentComposer.changed(homeViewModel.homeArticleFlow)}" }
+
+
+            val homeViewModel: HomeViewModel = hiltViewModel()
+
+//            logd { "3 currentComposer: $currentComposer \t ${currentComposer.changed(homeViewModel.homeArticleFlow)}" }
             HomeScreen(
                 homeViewModel = homeViewModel,
                 onItemClick = actions.navigateToArticleDetail,
-                homeArticles
             )
         }
         composable(MainDestinations.Category) {
@@ -84,8 +84,12 @@ fun NavGraphs() {
             it.arguments?.apply {
                 ArticleDetailScreen(
                     mTitle = getString("title", ""),
-                    mUrl = Uri.decode(getString("url", ""))
+                    mUrl = Uri.decode(getString("url", "")),
+                    onBackPress = { navController.navigateUp() }
                 )
+            }
+            BackHandler {
+                navController.navigateUp()
             }
         }
     }

@@ -4,7 +4,6 @@ import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,8 +28,7 @@ import com.google.accompanist.insets.statusBarsPadding
  */
 
 @Composable
-fun ArticleDetailScreen(mTitle: String, mUrl: String) {
-    val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+fun ArticleDetailScreen(mTitle: String, mUrl: String, onBackPress: () -> Unit) {
     val rememberTitle = remember { mutableStateOf(mTitle) }
     var webView: WebView? = null
 
@@ -55,7 +53,7 @@ fun ArticleDetailScreen(mTitle: String, mUrl: String) {
                             if (webView?.canGoBack() == true) {
                                 webView?.goBack()
                             } else {
-                                onBackPressedDispatcher?.onBackPressed()
+                                onBackPress()
                             }
                         }
                         .padding(16.dp)

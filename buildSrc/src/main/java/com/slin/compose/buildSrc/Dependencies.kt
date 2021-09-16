@@ -101,7 +101,9 @@ object Libs {
             private const val hiltVersion = "2.38.1"
             private const val hiltViewModelVersion = "1.0.0-alpha02"
             private const val roomVersion = "2.2.5"
-            private const val pagingVersion = "1.0.0-alpha12"
+            private const val pagingComposeVersion = "1.0.0-alpha12"
+            private const val pagingVersion = "3.0.1"
+
 
             const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
             const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycleVersion}"
@@ -121,7 +123,8 @@ object Libs {
             const val roomKtx = "androidx.room:room-ktx:${roomVersion}"
             const val roomCompiler = "androidx.room:room-compiler:${roomVersion}"
 
-            const val paging = "androidx.paging:paging-compose:${pagingVersion}"
+            const val paging = "androidx.paging:paging-common:${pagingVersion}"
+            const val pagingCompose = "androidx.paging:paging-compose:${pagingComposeVersion}"
 
         }
 

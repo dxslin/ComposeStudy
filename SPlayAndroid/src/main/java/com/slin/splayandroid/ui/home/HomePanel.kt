@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.pager.*
 import com.slin.core.utils.fromJsonArray
 import com.slin.splayandroid.data.bean.ArticleBean
@@ -40,35 +40,24 @@ import kotlin.math.absoluteValue
 @Composable
 fun HomePanel(
     homeViewModel: HomeViewModel,
-    onItemClick: (ArticleBean) -> Unit,
-    homeArticles: LazyPagingItems<ArticleBean>
+    onItemClick: (ArticleBean) -> Unit
 ) {
 
+    val homeArticles = homeViewModel.homeArticleFlow.collectAsLazyPagingItems()
     val banners by homeViewModel.bannerFlow.collectAsState()
 
+    PageList(lazyPagingItems = homeArticles,
+        headerContent = {
 
-    PageList(lazyPagingItems = homeArticles, headerContent = {
+            Banner(banners = banners)
 
-        Banner(banners = banners)
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-    }, content = {
-        items(homeArticles.itemCount, key = {
-            homeArticles[it]?.id ?: it
-        }) {
-            val item = homeArticles[it]
-            item?.let {
-                ArticleItem(articleBean = item, onItemClick = onItemClick)
-            }
-        }
-
-    }) { _, item ->
-//        ArticleItem(articleBean = item, onItemClick = onItemClick)
+        }) { _, item ->
+        ArticleItem(articleBean = item, onItemClick = onItemClick)
     }
 
 }
-
 
 
 @OptIn(ExperimentalPagerApi::class)

@@ -1,5 +1,6 @@
 package com.slin.splayandroid.ui.home.vm
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -27,6 +28,10 @@ data class HomeViewState(
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val homeRepository: HomeRepository) :
     BaseViewModel<HomeViewState>(HomeViewState()) {
+
+    //首页列表状态
+    val homeLazyListState: LazyListState = LazyListState()
+    val dailyQuestionLazyListState: LazyListState = LazyListState()
 
     // 已决定使用StateFlow做数据处理，放弃使用LiveData
 //    val bannerLiveData:LiveData<List<BannerBean>> = liveData {

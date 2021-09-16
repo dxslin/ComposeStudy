@@ -14,11 +14,13 @@ import dagger.hilt.android.HiltAndroidApp
 @HiltAndroidApp
 class SPlayAndroidApplication : Application() {
 
+
     override fun onCreate() {
         super.onCreate()
 
         SCore.init(this)
         SCore.initLogger(BuildConfig.DEBUG)
+        SPlayAndroid.init(application = this)
     }
 
 

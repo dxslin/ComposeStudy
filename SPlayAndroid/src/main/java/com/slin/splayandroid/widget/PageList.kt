@@ -5,6 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -16,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.slin.splayandroid.R
@@ -31,60 +34,67 @@ import com.slin.splayandroid.R
 fun <T : Any> PageList(
     modifier: Modifier = Modifier,
     lazyPagingItems: LazyPagingItems<T>,
+    lazyListState: LazyListState = rememberLazyListState(),
     headerContent: @Composable () -> Unit = {},
     emptyItemContent: @Composable (index: Int) -> Unit = {},
     content: LazyListScope.() -> Unit = {},
     itemContent: @Composable (index: Int, item: T) -> Unit,
 ) {
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false)
+
     SwipeRefresh(
         modifier = modifier,
         state = swipeRefreshState,
         onRefresh = { lazyPagingItems.refresh() }) {
+
         swipeRefreshState.isRefreshing = lazyPagingItems.loadState.refresh is LoadState.Loading
 
-        LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            // header
-            item(key = "header") { headerContent() }
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth(),
+            state = lazyListState
+        ) {
 
+            // header
+//            item(key = -1) { headerContent() }
 
             // content
             content()
 
-            for (i in 0 until lazyPagingItems.itemCount) {
-                item {
-                    val item = lazyPagingItems[i]
-                    if (item == null) {
-                        emptyItemContent(i)
-                    } else {
-                        itemContent(i, item)
-                    }
+            itemsIndexed(lazyPagingItems) { index, item ->
+                if (item == null) {
+                    emptyItemContent(index)
+                } else {
+                    itemContent(index, item)
                 }
             }
 
             // load state
-            lazyPagingItems.loadState.let { loadState ->
-                when {
-                    loadState.append is LoadState.Loading -> {
-                        item(key = "append_loading") { LoadingItem() }
-                    }
-                    loadState.append is LoadState.Error -> {
-                        item(key = "append_error") { ErrorItem { lazyPagingItems.retry() } }
-                    }
-                    loadState.refresh is LoadState.Error -> {
-                        if (lazyPagingItems.itemCount <= 0) {
-                            item(key = "refresh_empty") { EmptyContent { lazyPagingItems.retry() } }
-                        } else {
-                            item(key = "refresh_error") { ErrorItem { lazyPagingItems.retry() } }
-                        }
-                    }
-
+            when (lazyPagingItems.loadState.append) {
+                is LoadState.Loading -> {
+                    item(key = "append_loading") { LoadingItem() }
                 }
+                is LoadState.Error -> {
+                    item(key = "append_error") { ErrorItem { lazyPagingItems.retry() } }
+                }
+                is LoadState.NotLoading -> {
+                }
+            }
+
+            when (lazyPagingItems.loadState.refresh) {
+                is LoadState.NotLoading -> {
+//                    if (lazyPagingItems.itemCount <= 0) {
+//                        item(key = "refresh_empty") { EmptyContent { lazyPagingItems.retry() } }
+//                    }
+                }
+                is LoadState.Error -> item(key = "refresh_error") { ErrorItem { lazyPagingItems.retry() } }
+
+                is LoadState.Loading -> item(key = "refresh_loading") { LoadingItem() }
 
             }
+
+
         }
     }
-
 }
 
 @Composable
@@ -110,12 +120,12 @@ fun ErrorItem(retry: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 32.dp)
+            .clickable { retry() }
     ) {
         Text(
             text = stringResource(id = R.string.retry),
             modifier = Modifier
-                .padding(start = 16.dp)
-                .clickable { retry() },
+                .padding(start = 16.dp),
             style = MaterialTheme.typography.body2,
         )
     }
@@ -124,7 +134,9 @@ fun ErrorItem(retry: () -> Unit) {
 @Composable
 fun EmptyContent(retry: () -> Unit) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .clickable { retry() },
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

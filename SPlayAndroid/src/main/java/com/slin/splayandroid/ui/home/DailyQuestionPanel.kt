@@ -17,7 +17,7 @@ fun DailyQuestionPanel(homeViewModel: HomeViewModel, onItemClick: (ArticleBean) 
 
     val lazyPagingItems = homeViewModel.dailyQuestionFlow.collectAsLazyPagingItems()
 
-    PageList(lazyPagingItems = lazyPagingItems) { _, article ->
+    PageList(items = lazyPagingItems) { _, article ->
         ArticleItem(articleBean = article, onItemClick = onItemClick)
     }
 

@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
@@ -33,11 +32,10 @@ import com.slin.splayandroid.R
 @Composable
 fun <T : Any> PageList(
     modifier: Modifier = Modifier,
-    lazyPagingItems: LazyPagingItems<T>,
-    lazyListState: LazyListState = rememberLazyListState(),
+    items: LazyPagingItems<T>,
+    listState: LazyListState = rememberLazyListState(),
     headerContent: @Composable () -> Unit = {},
-    emptyItemContent: @Composable (index: Int) -> Unit = {},
-    content: LazyListScope.() -> Unit = {},
+    nullItemContent: @Composable (index: Int) -> Unit = {},
     itemContent: @Composable (index: Int, item: T) -> Unit,
 ) {
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false)
@@ -45,48 +43,49 @@ fun <T : Any> PageList(
     SwipeRefresh(
         modifier = modifier,
         state = swipeRefreshState,
-        onRefresh = { lazyPagingItems.refresh() }) {
+        onRefresh = { items.refresh() }) {
 
-        swipeRefreshState.isRefreshing = lazyPagingItems.loadState.refresh is LoadState.Loading
+        swipeRefreshState.isRefreshing = items.loadState.refresh is LoadState.Loading
 
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
-            state = lazyListState
+            state = listState
         ) {
 
+            // 如果使用item在LazyColumn里面布局，那么跳转页面后列表滑动位置丢失，因此暂时将头部放置到item0中
             // header
-//            item(key = -1) { headerContent() }
+//            items(1) { headerContent() }
 
-            // content
-            content()
-
-            itemsIndexed(lazyPagingItems) { index, item ->
+            itemsIndexed(items) { index, item ->
+                if (index == 0) {
+                    headerContent()
+                }
                 if (item == null) {
-                    emptyItemContent(index)
+                    nullItemContent(index)
                 } else {
                     itemContent(index, item)
                 }
             }
 
             // load state
-            when (lazyPagingItems.loadState.append) {
+            when (items.loadState.append) {
                 is LoadState.Loading -> {
                     item(key = "append_loading") { LoadingItem() }
                 }
                 is LoadState.Error -> {
-                    item(key = "append_error") { ErrorItem { lazyPagingItems.retry() } }
+                    item(key = "append_error") { ErrorItem { items.retry() } }
                 }
                 is LoadState.NotLoading -> {
                 }
             }
 
-            when (lazyPagingItems.loadState.refresh) {
+            when (items.loadState.refresh) {
                 is LoadState.NotLoading -> {
 //                    if (lazyPagingItems.itemCount <= 0) {
 //                        item(key = "refresh_empty") { EmptyContent { lazyPagingItems.retry() } }
 //                    }
                 }
-                is LoadState.Error -> item(key = "refresh_error") { ErrorItem { lazyPagingItems.retry() } }
+                is LoadState.Error -> item(key = "refresh_error") { ErrorItem { items.retry() } }
 
                 is LoadState.Loading -> item(key = "refresh_loading") { LoadingItem() }
 

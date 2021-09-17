@@ -17,7 +17,7 @@ fun PiazzaPanel(homeViewModel: HomeViewModel, onItemClick: (ArticleBean) -> Unit
 
     val lazyPagingItems = homeViewModel.piazzaDataFlow.collectAsLazyPagingItems()
 
-    PageList(lazyPagingItems = lazyPagingItems) { _, article ->
+    PageList(items = lazyPagingItems) { _, article ->
         ArticleItem(articleBean = article, onItemClick = onItemClick)
     }
 

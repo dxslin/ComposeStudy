@@ -5,7 +5,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -16,13 +15,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
-import com.slin.core.logger.logd
 import com.slin.splayandroid.data.bean.ArticleBean
 import com.slin.splayandroid.ui.detail.ArticleDetailScreen
 import com.slin.splayandroid.ui.home.HomeScreen
 import com.slin.splayandroid.ui.home.vm.HomeViewModel
 import com.slin.splayandroid.ui.splash.SplashViewModel
 import com.slin.splayandroid.ui.splash.WelcomeScreen
+import com.slin.splayandroid.ui.test.TestScreen
 
 /**
  * author: slin
@@ -37,6 +36,7 @@ object MainDestinations {
     const val Project = "Project"
     const val Category = "Category"
     const val ArticleDetail = "ArticleDetail"
+    const val Test = "Test"
 }
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
@@ -46,26 +46,24 @@ fun NavGraphs() {
 
     val actions: Actions = remember(navController) { Actions(navController) }
 
-
-    logd { "1 currentComposer: $currentComposer \t " }
     NavHost(
         navController = navController,
-        startDestination = MainDestinations.Home,
+        startDestination = MainDestinations.Test,
         modifier = Modifier
     ) {
         composable(MainDestinations.Splash) {
             val splashViewModel: SplashViewModel = hiltViewModel()
             WelcomeScreen(splashViewModel = splashViewModel, startHome = actions.navigateToHome)
         }
-//        logd { "2 currentComposer: $currentComposer" }
         composable(MainDestinations.Home) {
-
-
             val homeViewModel: HomeViewModel = hiltViewModel()
-
-//            logd { "3 currentComposer: $currentComposer \t ${currentComposer.changed(homeViewModel.homeArticleFlow)}" }
             HomeScreen(
                 homeViewModel = homeViewModel,
+                onItemClick = actions.navigateToArticleDetail,
+            )
+        }
+        composable(MainDestinations.Test) {
+            TestScreen(
                 onItemClick = actions.navigateToArticleDetail,
             )
         }
@@ -76,14 +74,14 @@ fun NavGraphs() {
             Text(text = MainDestinations.Project, modifier = Modifier.fillMaxSize())
         }
         composable(
-            route = "${MainDestinations.ArticleDetail}/{title}/{url}",
+            route = "${MainDestinations.ArticleDetail}?title={title}&url={url}",
             arguments = listOf(
                 navArgument("url") { type = NavType.StringType },
                 navArgument("title") { type = NavType.StringType })
         ) {
             it.arguments?.apply {
                 ArticleDetailScreen(
-                    mTitle = getString("title", ""),
+                    mTitle = Uri.decode(getString("title", "")),
                     mUrl = Uri.decode(getString("url", "")),
                     onBackPress = { navController.navigateUp() }
                 )
@@ -104,11 +102,9 @@ class Actions(private val navController: NavController) {
 
     val navigateToArticleDetail: (ArticleBean) -> Unit = { article ->
         navController.navigate(
-            "${MainDestinations.ArticleDetail}/${article.title}/${
-                Uri.encode(
-                    article.link
-                )
-            }"
+            "${MainDestinations.ArticleDetail}?" +
+                    "title=${Uri.encode(article.title)}&" +
+                    "url=${Uri.encode(article.link)}"
         )
     }
 

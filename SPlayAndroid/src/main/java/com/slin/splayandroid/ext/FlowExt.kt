@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.Flow
 
 
 @Composable
-fun <T : Any> BaseViewModel<out ViewState>.collectCacheLazyPagingItems(flow: Flow<PagingData<T>>): LazyPagingItems<T> {
+inline fun <reified T : Any> BaseViewModel<out ViewState>.collectCacheLazyPagingItems(flow: Flow<PagingData<T>>): LazyPagingItems<T> {
     return getStateCache(flow) ?: flow.collectAsLazyPagingItems()
         .apply { putStateCache(flow, this) }
 }

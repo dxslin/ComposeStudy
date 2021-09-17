@@ -15,11 +15,11 @@ object SPlayAndroid {
 
     lateinit var application: SPlayAndroidApplication
 
-    lateinit var sPlayAndroidComponent: SPlayAndroidComponent
+    lateinit var component: SPlayAndroidComponent
 
     fun init(application: SPlayAndroidApplication) {
         this.application = application
-        this.sPlayAndroidComponent = DaggerSPlayAndroidComponent.builder()
+        this.component = DaggerSPlayAndroidComponent.builder()
             .sPlayAndroidDependencies(
                 EntryPointAccessors.fromApplication(
                     application,

@@ -1,6 +1,7 @@
 package com.slin.splayandroid.di
 
 import com.google.gson.Gson
+import com.slin.splayandroid.ui.test.TestRepository
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -16,5 +17,7 @@ import dagger.hilt.components.SingletonComponent
 interface SPlayAndroidComponentDependencies {
 
     fun gson(): Gson
+
+    fun testRepository(): TestRepository
 
 }

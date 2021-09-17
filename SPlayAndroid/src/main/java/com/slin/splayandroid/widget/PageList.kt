@@ -54,12 +54,12 @@ fun <T : Any> PageList(
 
             // 如果使用item在LazyColumn里面布局，那么跳转页面后列表滑动位置丢失，因此暂时将头部放置到item0中
             // header
-//            items(1) { headerContent() }
+//            item(key = -555) { Text(text = "Head") }
 
             itemsIndexed(items) { index, item ->
-                if (index == 0) {
-                    headerContent()
-                }
+//                if (index == 0) {
+//                    headerContent()
+//                }
                 if (item == null) {
                     nullItemContent(index)
                 } else {

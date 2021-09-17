@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 interface ViewState
 
+object EmptyViewState : ViewState
+
 
 open class BaseViewModel<VS : ViewState>(initialViewState: VS) : ViewModel() {
 
@@ -31,6 +33,11 @@ open class BaseViewModel<VS : ViewState>(initialViewState: VS) : ViewModel() {
 
     fun putStateCache(key: Any, value: Any) {
         stateCache[key] = value
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        stateCache.clear()
     }
 
 }

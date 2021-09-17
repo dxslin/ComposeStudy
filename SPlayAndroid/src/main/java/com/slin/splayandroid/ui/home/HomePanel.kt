@@ -43,10 +43,12 @@ fun HomePanel(
     onItemClick: (ArticleBean) -> Unit
 ) {
 
+
     val homeArticles = homeViewModel.homeArticleFlow.collectAsLazyPagingItems()
     val banners by homeViewModel.bannerFlow.collectAsState()
 
     PageList(items = homeArticles,
+        listState = homeViewModel.homeLazyListState,
         headerContent = {
 
             Banner(banners = banners)

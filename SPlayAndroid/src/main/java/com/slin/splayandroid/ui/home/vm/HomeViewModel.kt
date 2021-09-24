@@ -1,10 +1,8 @@
 package com.slin.splayandroid.ui.home.vm
 
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.compose.LazyPagingItems
 import com.slin.core.logger.logd
 import com.slin.splayandroid.base.BaseViewModel
 import com.slin.splayandroid.base.ViewState
@@ -31,17 +29,6 @@ data class HomeViewState(
 class HomeViewModel @Inject constructor(private val homeRepository: HomeRepository) :
     BaseViewModel<HomeViewState>(HomeViewState()) {
 
-    //首页列表状态
-    val homeLazyListState: LazyListState = LazyListState()
-    val dailyQuestionLazyListState: LazyListState = LazyListState()
-
-    var homeArticlesItem: LazyPagingItems<ArticleBean>? = null
-
-    // 已决定使用StateFlow做数据处理，放弃使用LiveData
-//    val bannerLiveData:LiveData<List<BannerBean>> = liveData {
-//        emit(homeRepository.getBanner())
-//    }
-
     /**
      * Banner
      */
@@ -55,17 +42,6 @@ class HomeViewModel @Inject constructor(private val homeRepository: HomeReposito
     val homeArticleFlow: Flow<PagingData<ArticleBean>> =
         homeRepository.getHomeArticles(null).cachedIn(viewModelScope)
 
-    /**
-     * 每日一问
-     */
-    val dailyQuestionFlow: Flow<PagingData<ArticleBean>> =
-        homeRepository.getDailyQuestions().cachedIn(viewModelScope)
-
-    /**
-     * 广场
-     */
-    val piazzaDataFlow: Flow<PagingData<ArticleBean>> =
-        homeRepository.getPiazzaList().cachedIn(viewModelScope)
 
     override fun onCleared() {
         super.onCleared()

@@ -22,7 +22,6 @@ import com.slin.core.logger.logd
 import com.slin.splayandroid.R
 import com.slin.splayandroid.data.bean.ArticleBean
 import com.slin.splayandroid.ui.home.vm.HomeViewModel
-import com.slin.splayandroid.ui.test.TestScreen
 
 
 /**
@@ -44,6 +43,7 @@ fun HomeScreen(
     onItemClick: (ArticleBean) -> Unit
 ) {
 
+    // 这里必须访问一下homeViewModel，不然后面数据加载会出现问题，具体原因暂时未知
     logd { "HomeScreen: $homeViewModel" }
 
     Scaffold(
@@ -82,12 +82,12 @@ fun HomeScreen(
             }
             HorizontalPager(state = pagerState, modifier = Modifier.padding(top = 8.dp)) { page ->
 
-                logd { "HorizontalPager: selected page = $page " }
+                logd { "HorizontalPager: selected page = $page" }
                 when (page) {
                     0 -> DailyQuestionPanel(onItemClick = onItemClick)
                     1 -> HomePanel(onItemClick = onItemClick)
                     2 -> PiazzaPanel(onItemClick = onItemClick)
-                    3 -> TestScreen(onItemClick = onItemClick)
+//                    3 -> TestScreen(onItemClick = onItemClick)
                 }
             }
         }

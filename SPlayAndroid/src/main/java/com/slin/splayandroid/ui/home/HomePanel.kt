@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.pager.*
-import com.slin.core.logger.logd
 import com.slin.core.utils.fromJsonArray
 import com.slin.splayandroid.data.bean.ArticleBean
 import com.slin.splayandroid.data.bean.BannerBean
@@ -44,12 +43,7 @@ import kotlin.math.absoluteValue
 fun HomePanel(
     onItemClick: (ArticleBean) -> Unit
 ) {
-
-
     val homeViewModel: HomeViewModel = hiltViewModel()
-
-    logd { "HomePanel: $homeViewModel" }
-
 
 //    val homeArticles = homeViewModel.homeArticleFlow.collectAsLazyPagingItems()
     val homeArticles =

@@ -1,7 +1,13 @@
 package com.slin.splayandroid.ext
 
+import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.slin.splayandroid.base.BaseViewModel
+import com.slin.splayandroid.base.ViewState
 import kotlinx.coroutines.flow.*
 import kotlin.experimental.ExperimentalTypeInference
 
@@ -59,3 +65,15 @@ fun <T> ViewModel.stateFlow(
             initialValue = initialValue
         )
 }
+
+/**
+ * 缓存Paging Items数据，防止跳转页面回来之后数据丢失
+ */
+@Composable
+inline fun <reified T : Any> BaseViewModel<out ViewState>.collectCacheLazyPagingItems(flow: Flow<PagingData<T>>): LazyPagingItems<T> {
+    return getStateCache(flow) ?: flow.collectAsLazyPagingItems()
+        .apply {
+            putStateCache(flow, this)
+        }
+}
+

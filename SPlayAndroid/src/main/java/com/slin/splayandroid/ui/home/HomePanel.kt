@@ -2,6 +2,7 @@ package com.slin.splayandroid.ui.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,11 +18,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.pager.*
+import com.slin.core.logger.logd
 import com.slin.core.utils.fromJsonArray
 import com.slin.splayandroid.data.bean.ArticleBean
 import com.slin.splayandroid.data.bean.BannerBean
+import com.slin.splayandroid.ext.collectCacheLazyPagingItems
 import com.slin.splayandroid.ui.home.vm.HomeViewModel
 import com.slin.splayandroid.widget.NetworkImage
 import com.slin.splayandroid.widget.PageList
@@ -39,16 +42,23 @@ import kotlin.math.absoluteValue
 
 @Composable
 fun HomePanel(
-    homeViewModel: HomeViewModel,
     onItemClick: (ArticleBean) -> Unit
 ) {
 
 
-    val homeArticles = homeViewModel.homeArticleFlow.collectAsLazyPagingItems()
-    val banners by homeViewModel.bannerFlow.collectAsState()
+    val homeViewModel: HomeViewModel = hiltViewModel()
 
+    logd { "HomePanel: $homeViewModel" }
+
+
+//    val homeArticles = homeViewModel.homeArticleFlow.collectAsLazyPagingItems()
+    val homeArticles =
+        homeViewModel.collectCacheLazyPagingItems(flow = homeViewModel.homeArticleFlow)
+
+    val banners by homeViewModel.bannerFlow.collectAsState()
+    val listState = rememberLazyListState()
     PageList(items = homeArticles,
-        listState = homeViewModel.homeLazyListState,
+        listState = listState,
         headerContent = {
 
             Banner(banners = banners)

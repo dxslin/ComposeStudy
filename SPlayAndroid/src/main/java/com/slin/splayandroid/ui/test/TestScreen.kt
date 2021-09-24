@@ -1,17 +1,12 @@
 package com.slin.splayandroid.ui.test
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.paging.compose.itemsIndexed
-import com.slin.core.logger.logd
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.slin.splayandroid.data.bean.ArticleBean
 import com.slin.splayandroid.ext.collectCacheLazyPagingItems
 import com.slin.splayandroid.ui.home.ArticleItem
+import com.slin.splayandroid.widget.PageList
 
 /**
  * author: slin
@@ -24,28 +19,34 @@ import com.slin.splayandroid.ui.home.ArticleItem
 fun TestScreen(
     onItemClick: (ArticleBean) -> Unit
 ) {
-    val testViewModel: TestViewModel = viewModel()
+    val testViewModel: TestViewModel = hiltViewModel()
 //    val items = testViewModel.testArticleFlow.collectAsLazyPagingItems()
     val items = testViewModel.collectCacheLazyPagingItems(flow = testViewModel.testArticleFlow)
+
+//    val homeViewModel:HomeViewModel = hiltViewModel()
+//    val items = homeViewModel.collectCacheLazyPagingItems(flow = homeViewModel.homeArticleFlow)
     val listState = rememberLazyListState()
 
 
-
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        state = listState
-    ) {
-
-        logd { "firstVisibleItemIndex=${listState.firstVisibleItemIndex} itemCount=${items.itemCount}" }
-
-
-        item { Text(text = "Header") }
-        itemsIndexed(items) { _, item ->
-            item?.let {
-                ArticleItem(articleBean = item, onItemClick = onItemClick)
-            }
-        }
+    PageList(items = items, listState = listState) { _, article ->
+        ArticleItem(articleBean = article, onItemClick = onItemClick)
     }
+
+//    LazyColumn(
+//        modifier = Modifier.fillMaxWidth(),
+//        state = listState
+//    ) {
+//
+//        logd { "firstVisibleItemIndex=${listState.firstVisibleItemIndex} itemCount=${items.itemCount}" }
+//
+//
+//        item { Text(text = "Header") }
+//        itemsIndexed(items) { _, item ->
+//            item?.let {
+//                ArticleItem(articleBean = item, onItemClick = onItemClick)
+//            }
+//        }
+//    }
 
 
 }

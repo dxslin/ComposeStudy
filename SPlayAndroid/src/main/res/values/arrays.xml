@@ -4,5 +4,6 @@
         <item>@string/tab_daily_question</item>
         <item>@string/tab_home</item>
         <item>@string/tab_piazza</item>
+<!--        <item>@string/tab_test</item>-->
     </array>
 </resources>

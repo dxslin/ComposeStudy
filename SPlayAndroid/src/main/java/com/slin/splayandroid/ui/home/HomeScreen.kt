@@ -18,9 +18,11 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
+import com.slin.core.logger.logd
 import com.slin.splayandroid.R
 import com.slin.splayandroid.data.bean.ArticleBean
 import com.slin.splayandroid.ui.home.vm.HomeViewModel
+import com.slin.splayandroid.ui.test.TestScreen
 
 
 /**
@@ -42,6 +44,8 @@ fun HomeScreen(
     onItemClick: (ArticleBean) -> Unit
 ) {
 
+    logd { "HomeScreen: $homeViewModel" }
+
     Scaffold(
         topBar = { SearchTopBar() },
         modifier = Modifier,
@@ -49,7 +53,11 @@ fun HomeScreen(
     ) {
         Column(modifier = Modifier) {
             val panelTitles = stringArrayResource(id = R.array.array_home_tabs)
-            val pagerState = rememberPagerState(pageCount = panelTitles.size, initialPage = 1)
+            val pagerState = rememberPagerState(
+                pageCount = panelTitles.size,
+                initialPage = 1,
+                initialOffscreenLimit = 2
+            )
             var selectTabPosition by remember { mutableStateOf(pagerState.currentPage) }
 
             LaunchedEffect(key1 = selectTabPosition) {
@@ -73,10 +81,13 @@ fun HomeScreen(
                 }
             }
             HorizontalPager(state = pagerState, modifier = Modifier.padding(top = 8.dp)) { page ->
+
+                logd { "HorizontalPager: selected page = $page " }
                 when (page) {
-                    0 -> DailyQuestionPanel(homeViewModel, onItemClick)
-                    1 -> HomePanel(homeViewModel, onItemClick)
-                    2 -> PiazzaPanel(homeViewModel, onItemClick)
+                    0 -> DailyQuestionPanel(onItemClick = onItemClick)
+                    1 -> HomePanel(onItemClick = onItemClick)
+                    2 -> PiazzaPanel(onItemClick = onItemClick)
+                    3 -> TestScreen(onItemClick = onItemClick)
                 }
             }
         }

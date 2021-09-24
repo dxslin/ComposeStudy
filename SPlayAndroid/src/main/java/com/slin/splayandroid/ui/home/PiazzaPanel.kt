@@ -1,8 +1,10 @@
 package com.slin.splayandroid.ui.home
 
 import androidx.compose.runtime.Composable
-import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.slin.core.logger.logd
 import com.slin.splayandroid.data.bean.ArticleBean
+import com.slin.splayandroid.ext.collectCacheLazyPagingItems
 import com.slin.splayandroid.ui.home.vm.HomeViewModel
 import com.slin.splayandroid.widget.PageList
 
@@ -13,11 +15,20 @@ import com.slin.splayandroid.widget.PageList
  *
  */
 @Composable
-fun PiazzaPanel(homeViewModel: HomeViewModel, onItemClick: (ArticleBean) -> Unit) {
+fun PiazzaPanel(onItemClick: (ArticleBean) -> Unit) {
 
-    val lazyPagingItems = homeViewModel.piazzaDataFlow.collectAsLazyPagingItems()
+//    val items = homeViewModel.piazzaDataFlow.collectAsLazyPagingItems()
 
-    PageList(items = lazyPagingItems) { _, article ->
+    val homeViewModel: HomeViewModel = hiltViewModel()
+    val items = homeViewModel.collectCacheLazyPagingItems(flow = homeViewModel.piazzaDataFlow)
+
+
+    logd { "PiazzaPanel: $homeViewModel" }
+
+//    val testViewModel: HomeViewModel = hiltViewModel()
+//    val items = testViewModel.collectCacheLazyPagingItems(flow = testViewModel.piazzaDataFlow)
+
+    PageList(items = items) { _, article ->
         ArticleItem(articleBean = article, onItemClick = onItemClick)
     }
 

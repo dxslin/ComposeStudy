@@ -10,8 +10,10 @@ import com.slin.splayandroid.base.BaseViewModel
 import com.slin.splayandroid.base.EmptyViewState
 import com.slin.splayandroid.base.ViewState
 import com.slin.splayandroid.data.bean.ArticleBean
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * author: slin
@@ -19,7 +21,9 @@ import kotlinx.coroutines.launch
  * description:
  *
  */
-class TestViewModel : BaseViewModel<ViewState>(EmptyViewState) {
+
+@HiltViewModel
+class TestViewModel @Inject constructor() : BaseViewModel<ViewState>(EmptyViewState) {
 
     private val testRepository: TestRepository = SPlayAndroid.component.testRepository()
 

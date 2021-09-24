@@ -12,7 +12,7 @@ object Versions {
 }
 
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.0-alpha11"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.0-alpha12"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
@@ -102,7 +102,7 @@ object Libs {
             private const val hiltViewModelVersion = "1.0.0-alpha02"
             private const val roomVersion = "2.2.5"
             private const val pagingComposeVersion = "1.0.0-alpha12"
-            private const val pagingVersion = "3.0.1"
+            private const val pagingVersion = "3.1.0-alpha03"
 
 
             const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"

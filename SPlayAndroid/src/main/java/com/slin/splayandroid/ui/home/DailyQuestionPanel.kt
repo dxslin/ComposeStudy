@@ -1,8 +1,10 @@
 package com.slin.splayandroid.ui.home
 
 import androidx.compose.runtime.Composable
-import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.slin.core.logger.logd
 import com.slin.splayandroid.data.bean.ArticleBean
+import com.slin.splayandroid.ext.collectCacheLazyPagingItems
 import com.slin.splayandroid.ui.home.vm.HomeViewModel
 import com.slin.splayandroid.widget.PageList
 
@@ -13,9 +15,13 @@ import com.slin.splayandroid.widget.PageList
  *
  */
 @Composable
-fun DailyQuestionPanel(homeViewModel: HomeViewModel, onItemClick: (ArticleBean) -> Unit) {
+fun DailyQuestionPanel(onItemClick: (ArticleBean) -> Unit) {
+    val homeViewModel: HomeViewModel = hiltViewModel()
+//    val lazyPagingItems = homeViewModel.dailyQuestionFlow.collectAsLazyPagingItems()
+    val lazyPagingItems =
+        homeViewModel.collectCacheLazyPagingItems(flow = homeViewModel.dailyQuestionFlow)
 
-    val lazyPagingItems = homeViewModel.dailyQuestionFlow.collectAsLazyPagingItems()
+    logd { "DailyQuestionPanel:  $homeViewModel" }
 
     PageList(items = lazyPagingItems) { _, article ->
         ArticleItem(articleBean = article, onItemClick = onItemClick)

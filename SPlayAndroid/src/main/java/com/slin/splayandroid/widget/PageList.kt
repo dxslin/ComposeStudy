@@ -52,14 +52,10 @@ fun <T : Any> PageList(
             state = listState
         ) {
 
-            // 如果使用item在LazyColumn里面布局，那么跳转页面后列表滑动位置丢失，因此暂时将头部放置到item0中
             // header
-//            item(key = -555) { Text(text = "Head") }
+            item(key = "header") { headerContent() }
 
             itemsIndexed(items) { index, item ->
-//                if (index == 0) {
-//                    headerContent()
-//                }
                 if (item == null) {
                     nullItemContent(index)
                 } else {
@@ -81,8 +77,8 @@ fun <T : Any> PageList(
 
             when (items.loadState.refresh) {
                 is LoadState.NotLoading -> {
-//                    if (lazyPagingItems.itemCount <= 0) {
-//                        item(key = "refresh_empty") { EmptyContent { lazyPagingItems.retry() } }
+//                    if (items.itemCount <= 0) {
+//                        item(key = "refresh_empty") { EmptyContent { items.retry() } }
 //                    }
                 }
                 is LoadState.Error -> item(key = "refresh_error") { ErrorItem { items.retry() } }

@@ -24,6 +24,7 @@ import com.slin.compose.study.ui.NavDestinations
 import com.slin.compose.study.ui.theme.ScaffoldWithCsAppBar
 import com.slin.compose.study.ui.theme.Size
 import com.slin.compose.study.ui.unite.NavigationTest
+import com.slin.compose.study.ui.unite.PagerTest
 import com.slin.compose.study.ui.unite.ViewModelTest
 
 
@@ -70,6 +71,13 @@ val samples = listOf(
         NavDestinations.ROUTE_VIEW_MODEL_TEST
     ) {
         ViewModelTest()
+    },
+    SamplePage(
+        "PagerTest",
+        R.drawable.img_cartoon_3,
+        NavDestinations.ROUTE_PAGER_TEST
+    ) {
+        PagerTest()
     },
 )
 

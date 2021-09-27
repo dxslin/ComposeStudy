@@ -3,7 +3,7 @@ package com.slin.compose.buildSrc
 object Versions {
 
 
-    const val androidSdk = 30
+    const val androidSdk = 31
     const val androidBuildTools = "30.0.3"
     const val androidMinSdk = 24
 
@@ -28,10 +28,10 @@ object Libs {
 
     /**
      * Google Compose 扩展库
-     * doc:https://google.github.io/accompanist/
+     * doc: https://google.github.io/accompanist/
      */
     object Accompanist {
-        private const val version = "0.16.0"
+        private const val version = "0.18.0"
         const val insets = "com.google.accompanist:accompanist-insets:$version"
         const val theme = "com.google.accompanist:accompanist-appcompat-theme:$version"
         const val systemUiController =

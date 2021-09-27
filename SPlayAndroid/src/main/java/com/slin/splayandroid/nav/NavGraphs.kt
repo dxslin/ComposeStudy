@@ -47,7 +47,7 @@ fun NavGraphs() {
 
     NavHost(
         navController = navController,
-        startDestination = MainDestinations.Test,
+        startDestination = MainDestinations.Home,
         modifier = Modifier
     ) {
         composable(MainDestinations.Splash) {

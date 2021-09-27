@@ -37,7 +37,8 @@ object NavDestinations {
     const val ROUTE_GESTURE = "route_gesture"
 
     const val ROUTE_NAV_TEST = "route_nav_test"
-    const val ROUTE_VIEW_MODEL_TEST = "ROUTE_VIEW_MODEL_TEST"
+    const val ROUTE_VIEW_MODEL_TEST = "route_view_model_test"
+    const val ROUTE_PAGER_TEST = "route_pager_test"
 
 }
 

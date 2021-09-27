@@ -1,16 +1,27 @@
 package com.slin.splayandroid.ui.test
 
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.LocalAbsoluteElevation
-import androidx.compose.material.LocalContentColor
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringArrayResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
+import com.slin.splayandroid.R
 import com.slin.splayandroid.data.bean.ArticleBean
 import com.slin.splayandroid.ext.collectCacheLazyPagingItems
 import com.slin.splayandroid.ui.home.ArticleItem
+import com.slin.splayandroid.ui.home.HomePanel
 import com.slin.splayandroid.widget.PageList
+import kotlin.random.Random
 
 /**
  * author: slin
@@ -19,47 +30,47 @@ import com.slin.splayandroid.widget.PageList
  *
  */
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun TestScreen(
     onItemClick: (ArticleBean) -> Unit
 ) {
 
-    val contentColor = LocalContentColor.current
-    val absoluteElevation = LocalAbsoluteElevation.current + 1.dp
+    // 含有CompositionLocalProvider和HorizontalPager的组合，如果使用到context相关的东西，容易导致绘制出现问题
+    // 比如下面使用到了stringArrayResource，
+    CompositionLocalProvider {
+        val panelTitles = stringArrayResource(id = R.array.array_home_tabs)
+        val pagerState = rememberPagerState(pageCount = panelTitles.size)
 
-    CompositionLocalProvider(
-//        LocalContentColor provides contentColor,
-//        LocalAbsoluteElevation provides absoluteElevation
-    ) {
-
-        val testViewModel: TestViewModel = hiltViewModel()
-//    val items = testViewModel.testArticleFlow.collectAsLazyPagingItems()
-        val items = testViewModel.collectCacheLazyPagingItems(flow = testViewModel.testArticleFlow)
-
-//    val homeViewModel:HomeViewModel = hiltViewModel()
-//    val items = homeViewModel.collectCacheLazyPagingItems(flow = homeViewModel.homeArticleFlow)
-        val listState = rememberLazyListState()
-
-        PageList(items = items, listState = listState) { _, article ->
-            ArticleItem(articleBean = article, onItemClick = onItemClick)
+        HorizontalPager(state = pagerState) { page ->
+            when (page) {
+                1 -> Test(onItemClick = onItemClick)
+                0 -> HomePanel(onItemClick = onItemClick)
+            }
         }
     }
+}
 
-//    LazyColumn(
-//        modifier = Modifier.fillMaxWidth(),
-//        state = listState
-//    ) {
-//
-//        logd { "firstVisibleItemIndex=${listState.firstVisibleItemIndex} itemCount=${items.itemCount}" }
-//
-//
-//        item { Text(text = "Header") }
-//        itemsIndexed(items) { _, item ->
-//            item?.let {
-//                ArticleItem(articleBean = item, onItemClick = onItemClick)
-//            }
-//        }
-//    }
+@Composable
+fun Test(onItemClick: (ArticleBean) -> Unit) {
+    val testViewModel: TestViewModel = hiltViewModel()
+//    val items = testViewModel.testArticleFlow.collectAsLazyPagingItems()
+    val items = testViewModel.collectCacheLazyPagingItems(flow = testViewModel.testArticleFlow)
 
+    PageList(items = items) { _, article ->
+        ArticleItem(articleBean = article, onItemClick = onItemClick)
+    }
 
+}
+
+@Composable
+private fun PageItem(index: Int) {
+    Box(modifier = Modifier
+        .background(Color(Random.nextInt()))
+        .fillMaxHeight()
+        .aspectRatio(1f),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = "Page: $index")
+    }
 }

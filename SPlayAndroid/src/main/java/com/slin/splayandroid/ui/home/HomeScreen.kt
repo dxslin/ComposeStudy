@@ -42,6 +42,7 @@ fun HomeScreen(
 ) {
     Column(modifier = Modifier) {
         SearchTopBar()
+
         val panelTitles = stringArrayResource(id = R.array.array_home_tabs)
         val pagerState = rememberPagerState(
             pageCount = panelTitles.size,

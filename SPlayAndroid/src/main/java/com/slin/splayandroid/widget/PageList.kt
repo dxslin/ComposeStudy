@@ -41,14 +41,14 @@ fun <T : Any> PageList(
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false)
 
     SwipeRefresh(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         state = swipeRefreshState,
         onRefresh = { items.refresh() }) {
 
         swipeRefreshState.isRefreshing = items.loadState.refresh is LoadState.Loading
 
         LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxSize(),
             state = listState
         ) {
 

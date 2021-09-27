@@ -51,7 +51,8 @@ fun HomePanel(
 
     val banners by homeViewModel.bannerFlow.collectAsState()
     val listState = rememberLazyListState()
-    PageList(items = homeArticles,
+    PageList(modifier = Modifier.fillMaxSize(),
+        items = homeArticles,
         listState = listState,
         headerContent = {
 

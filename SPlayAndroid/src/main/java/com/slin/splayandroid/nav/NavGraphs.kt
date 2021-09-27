@@ -15,11 +15,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
-import com.slin.core.logger.logd
 import com.slin.splayandroid.data.bean.ArticleBean
 import com.slin.splayandroid.ui.detail.ArticleDetailScreen
 import com.slin.splayandroid.ui.home.HomeScreen
-import com.slin.splayandroid.ui.home.vm.HomeViewModel
 import com.slin.splayandroid.ui.splash.SplashViewModel
 import com.slin.splayandroid.ui.splash.WelcomeScreen
 import com.slin.splayandroid.ui.test.TestScreen
@@ -49,7 +47,7 @@ fun NavGraphs() {
 
     NavHost(
         navController = navController,
-        startDestination = MainDestinations.Home,
+        startDestination = MainDestinations.Test,
         modifier = Modifier
     ) {
         composable(MainDestinations.Splash) {
@@ -57,11 +55,7 @@ fun NavGraphs() {
             WelcomeScreen(splashViewModel = splashViewModel, startHome = actions.navigateToHome)
         }
         composable(MainDestinations.Home) {
-            val homeViewModel: HomeViewModel = hiltViewModel()
-
-            logd { "composable: $homeViewModel" }
             HomeScreen(
-                homeViewModel = homeViewModel,
                 onItemClick = actions.navigateToArticleDetail,
             )
         }

@@ -12,15 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringArrayResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.slin.splayandroid.R
 import com.slin.splayandroid.data.bean.ArticleBean
-import com.slin.splayandroid.ext.collectCacheLazyPagingItems
 import com.slin.splayandroid.ui.home.ArticleItem
 import com.slin.splayandroid.ui.home.HomePanel
-import com.slin.splayandroid.widget.PageList
+import com.slin.splayandroid.widget.RefreshPageList
 import kotlin.random.Random
 
 /**
@@ -54,10 +54,10 @@ fun TestScreen(
 @Composable
 fun Test(onItemClick: (ArticleBean) -> Unit) {
     val testViewModel: TestViewModel = hiltViewModel()
-//    val items = testViewModel.testArticleFlow.collectAsLazyPagingItems()
-    val items = testViewModel.collectCacheLazyPagingItems(flow = testViewModel.testArticleFlow)
+    val items = testViewModel.testArticleFlow.collectAsLazyPagingItems()
+//    val items = testViewModel.collectCacheLazyPagingItems(flow = testViewModel.testArticleFlow)
 
-    PageList(items = items) { _, article ->
+    RefreshPageList(items = items) { _, article ->
         ArticleItem(articleBean = article, onItemClick = onItemClick)
     }
 

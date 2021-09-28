@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.slin.splayandroid.data.bean.ArticleBean
 import com.slin.splayandroid.ext.collectCacheLazyPagingItems
 import com.slin.splayandroid.ui.home.vm.PiazzaViewModel
-import com.slin.splayandroid.widget.PageList
+import com.slin.splayandroid.widget.RefreshPageList
 
 /**
  * author: slin
@@ -21,7 +21,7 @@ fun PiazzaPanel(onItemClick: (ArticleBean) -> Unit) {
     val items = piazzaViewModel.collectCacheLazyPagingItems(flow = piazzaViewModel.piazzaDataFlow)
 //    val items = piazzaViewModel.piazzaDataFlow.collectAsLazyPagingItems()
 
-    PageList(items = items) { _, article ->
+    RefreshPageList(items = items) { _, article ->
         ArticleItem(articleBean = article, onItemClick = onItemClick)
     }
 

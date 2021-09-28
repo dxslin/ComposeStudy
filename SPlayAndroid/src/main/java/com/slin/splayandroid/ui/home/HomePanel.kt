@@ -19,14 +19,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.pager.*
 import com.slin.core.utils.fromJsonArray
 import com.slin.splayandroid.data.bean.ArticleBean
 import com.slin.splayandroid.data.bean.BannerBean
-import com.slin.splayandroid.ext.collectCacheLazyPagingItems
 import com.slin.splayandroid.ui.home.vm.HomeViewModel
 import com.slin.splayandroid.widget.NetworkImage
-import com.slin.splayandroid.widget.PageList
+import com.slin.splayandroid.widget.RefreshPageList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -45,13 +45,13 @@ fun HomePanel(
 ) {
     val homeViewModel: HomeViewModel = hiltViewModel()
 
-//    val homeArticles = homeViewModel.homeArticleFlow.collectAsLazyPagingItems()
-    val homeArticles =
-        homeViewModel.collectCacheLazyPagingItems(flow = homeViewModel.homeArticleFlow)
+    val homeArticles = homeViewModel.homeArticleFlow.collectAsLazyPagingItems()
+//    val homeArticles =
+//        homeViewModel.collectCacheLazyPagingItems(flow = homeViewModel.homeArticleFlow)
 
     val banners by homeViewModel.bannerFlow.collectAsState()
     val listState = rememberLazyListState()
-    PageList(modifier = Modifier.fillMaxSize(),
+    RefreshPageList(modifier = Modifier.fillMaxSize(),
         items = homeArticles,
         listState = listState,
         headerContent = {

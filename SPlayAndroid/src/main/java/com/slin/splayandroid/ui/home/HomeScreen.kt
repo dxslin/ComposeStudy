@@ -18,7 +18,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
-import com.slin.core.logger.logd
 import com.slin.splayandroid.R
 import com.slin.splayandroid.data.bean.ArticleBean
 
@@ -75,10 +74,8 @@ fun HomeScreen(
             state = pagerState,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 8.dp)
         ) { page ->
 
-            logd { "HorizontalPager: selected page = $page" }
             when (page) {
                 0 -> DailyQuestionPanel(onItemClick = onItemClick)
                 1 -> HomePanel(onItemClick = onItemClick)

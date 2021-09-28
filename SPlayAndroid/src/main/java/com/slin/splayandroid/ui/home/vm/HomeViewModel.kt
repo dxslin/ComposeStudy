@@ -40,7 +40,7 @@ class HomeViewModel @Inject constructor(private val homeRepository: HomeReposito
      * 首页文章
      */
     val homeArticleFlow: Flow<PagingData<ArticleBean>> =
-        homeRepository.getHomeArticles(null).cachedIn(viewModelScope)
+        homeRepository.getHomeArticles(1000).cachedIn(viewModelScope)
 
 
     override fun onCleared() {

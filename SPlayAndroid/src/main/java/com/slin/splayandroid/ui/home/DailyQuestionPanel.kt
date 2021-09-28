@@ -2,10 +2,10 @@ package com.slin.splayandroid.ui.home
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.slin.splayandroid.data.bean.ArticleBean
-import com.slin.splayandroid.ext.collectCacheLazyPagingItems
 import com.slin.splayandroid.ui.home.vm.DailyQuestionViewModel
-import com.slin.splayandroid.widget.PageList
+import com.slin.splayandroid.widget.RefreshPageList
 
 /**
  * author: slin
@@ -16,11 +16,11 @@ import com.slin.splayandroid.widget.PageList
 @Composable
 fun DailyQuestionPanel(onItemClick: (ArticleBean) -> Unit) {
     val dailyQuestionViewModel: DailyQuestionViewModel = hiltViewModel()
-//    val lazyPagingItems = homeViewModel.dailyQuestionFlow.collectAsLazyPagingItems()
-    val lazyPagingItems =
-        dailyQuestionViewModel.collectCacheLazyPagingItems(flow = dailyQuestionViewModel.dailyQuestionFlow)
+    val lazyPagingItems = dailyQuestionViewModel.dailyQuestionFlow.collectAsLazyPagingItems()
+//    val lazyPagingItems =
+//        dailyQuestionViewModel.collectCacheLazyPagingItems(flow = dailyQuestionViewModel.dailyQuestionFlow)
 
-    PageList(items = lazyPagingItems) { _, article ->
+    RefreshPageList(items = lazyPagingItems) { _, article ->
         ArticleItem(articleBean = article, onItemClick = onItemClick)
     }
 

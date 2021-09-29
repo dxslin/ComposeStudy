@@ -37,52 +37,54 @@ import com.slin.splayandroid.data.bean.ArticleBean
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun HomeScreen(
-    onItemClick: (ArticleBean) -> Unit
+    onItemClick: (ArticleBean) -> Unit,
 ) {
-    Column(modifier = Modifier) {
-        SearchTopBar()
+    Scaffold(topBar = { SearchTopBar() }) {
 
-        val panelTitles = stringArrayResource(id = R.array.array_home_tabs)
-        val pagerState = rememberPagerState(
-            pageCount = panelTitles.size,
-            initialPage = 1,
-            initialOffscreenLimit = 2
-        )
-        var selectTabPosition by remember { mutableStateOf(pagerState.currentPage) }
-
-        LaunchedEffect(key1 = selectTabPosition) {
-            pagerState.animateScrollToPage(page = selectTabPosition)
-        }
-
-        TabRow(selectedTabIndex = pagerState.currentPage, indicator = { tabPositions ->
-            TabRowDefaults.Indicator(
-                modifier = Modifier.pagerTabIndicatorOffset(
-                    pagerState = pagerState,
-                    tabPositions
-                )
+        Column(modifier = Modifier) {
+            val panelTitles = stringArrayResource(id = R.array.array_home_tabs)
+            val pagerState = rememberPagerState(
+                pageCount = panelTitles.size,
+                initialPage = 1,
+                initialOffscreenLimit = 2
             )
-        }) {
-            panelTitles.forEachIndexed { index, title ->
-                Tab(
-                    text = { Text(title) },
-                    selected = pagerState.currentPage == index,
-                    onClick = { selectTabPosition = index },
-                )
-            }
-        }
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier
-                .fillMaxSize()
-        ) { page ->
+            var selectTabPosition by remember { mutableStateOf(pagerState.currentPage) }
 
-            when (page) {
-                0 -> DailyQuestionPanel(onItemClick = onItemClick)
-                1 -> HomePanel(onItemClick = onItemClick)
-                2 -> PiazzaPanel(onItemClick = onItemClick)
+            LaunchedEffect(key1 = selectTabPosition) {
+                pagerState.animateScrollToPage(page = selectTabPosition)
+            }
+
+            TabRow(selectedTabIndex = pagerState.currentPage, indicator = { tabPositions ->
+                TabRowDefaults.Indicator(
+                    modifier = Modifier.pagerTabIndicatorOffset(
+                        pagerState = pagerState,
+                        tabPositions
+                    )
+                )
+            }) {
+                panelTitles.forEachIndexed { index, title ->
+                    Tab(
+                        text = { Text(title) },
+                        selected = pagerState.currentPage == index,
+                        onClick = { selectTabPosition = index },
+                    )
+                }
+            }
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier
+                    .fillMaxSize()
+            ) { page ->
+
+                when (page) {
+                    0 -> DailyQuestionPanel(onItemClick = onItemClick)
+                    1 -> HomePanel(onItemClick = onItemClick)
+                    2 -> PiazzaPanel(onItemClick = onItemClick)
 //                    3 -> TestScreen(onItemClick = onItemClick)
+                }
             }
         }
+
     }
 }
 

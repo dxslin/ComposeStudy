@@ -79,8 +79,8 @@ fun <T : Any> RefreshPageList(
             items.refresh()
         }) {
 
-        logd { "refresh = ${items.loadState.refresh} ${items.loadState.append}  itemCount = ${items.itemCount} " }
-        logd { "RefreshPageList2: $refreshPageListState  isRefreshing = ${refreshState.isRefreshing}" }
+//        logd { "refresh = ${items.loadState.refresh} ${items.loadState.append}  itemCount = ${items.itemCount} " }
+//        logd { "RefreshPageList2: $refreshPageListState  isRefreshing = ${refreshState.isRefreshing}" }
 
         if (refreshState.isRefreshing && items.loadState.refresh !is LoadState.Loading) {
             refreshState.CancelRefreshDelay(refreshPageListState.startRefreshTime)

@@ -80,13 +80,14 @@ class HomeArticlesPagingSource(private val homeService: HomeService) :
     PagingSource<Arg1<Int>, ArticleBean>() {
 
     override fun getRefreshKey(state: PagingState<Arg1<Int>, ArticleBean>): Arg1<Int>? {
-        return state.pages.last().nextKey?.reset()
+        return null
     }
 
     override suspend fun load(params: LoadParams<Arg1<Int>>): LoadResult<Arg1<Int>, ArticleBean> {
         return PagingHelper.load(params.key) {
             homeService.getArticlesList(it.page, it.arg1)
         }
+
     }
 }
 
@@ -96,7 +97,7 @@ class HomeArticlesPagingSource(private val homeService: HomeService) :
 class DailyQuestionPagingSource(private val homeService: HomeService) :
     PagingSource<Arg0, ArticleBean>() {
     override fun getRefreshKey(state: PagingState<Arg0, ArticleBean>): Arg0? {
-        return state.pages.last().nextKey?.reset()
+        return null
     }
 
     override suspend fun load(params: LoadParams<Arg0>): LoadResult<Arg0, ArticleBean> {
@@ -111,7 +112,7 @@ class DailyQuestionPagingSource(private val homeService: HomeService) :
  */
 class PiazzaPagingSource(private val homeService: HomeService) : PagingSource<Arg0, ArticleBean>() {
     override fun getRefreshKey(state: PagingState<Arg0, ArticleBean>): Arg0? {
-        return state.pages.last().nextKey?.reset()
+        return null
     }
 
     override suspend fun load(params: LoadParams<Arg0>): LoadResult<Arg0, ArticleBean> {

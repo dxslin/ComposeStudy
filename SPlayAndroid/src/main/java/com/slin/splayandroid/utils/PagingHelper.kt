@@ -53,9 +53,10 @@ object PagingHelper {
             try {
                 val response = request(key)
                 if (response.isSuccessful()) {
+                    val data = response.data
                     PagingSource.LoadResult.Page(
-                        data = response.data?.datas!!,
-                        nextKey = key.next(),
+                        data = data?.datas ?: listOf(),
+                        nextKey = if (key.page < data?.pageCount ?: 0) key.next() else null,
                         prevKey = key.previous(),
                     )
                 } else {

@@ -21,7 +21,6 @@ import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.slin.core.logger.logd
 import com.slin.splayandroid.R
 import kotlinx.coroutines.delay
 
@@ -65,7 +64,7 @@ fun <T : Any> RefreshPageList(
         state = swipeRefreshState,
         onRefresh = { items.refresh() }) {
 
-        logd { "refresh = ${items.loadState.refresh} ${items.loadState.append}  itemCount = ${items.itemCount}  $showEmptyView" }
+//        logd { "refresh = ${items.loadState.refresh} ${items.loadState.append}  itemCount = ${items.itemCount}  $showEmptyView" }
 
         if (items.loadState.refresh !is LoadState.Loading) {
             swipeRefreshState.CancelRefreshDelay()
@@ -86,14 +85,16 @@ fun <T : Any> RefreshPageList(
                 is LoadState.NotLoading -> {
                     if (items.itemCount <= 0) {
                         if (showEmptyView) {
-                            item(key = "refresh_empty") { Empty { items.retry() } }
+                            item(key = "refresh_empty") {
+                                Empty(modifier = Modifier.fillMaxSize()) { items.refresh() }
+                            }
                         } else {
                             showEmptyView = true
                         }
                     }
                 }
                 is LoadState.Error -> item(key = "refresh_error") {
-                    Error(modifier = Modifier.fillMaxSize()) { items.retry() }
+                    Error(modifier = Modifier.fillMaxSize()) { items.refresh() }
                 }
 
                 is LoadState.Loading -> item(key = "refresh_loading") {
@@ -145,34 +146,42 @@ fun Loading(modifier: Modifier = Modifier) {
 @Composable
 fun Error(modifier: Modifier = Modifier, retry: () -> Unit) {
     Row(
+        modifier = modifier
+            .clickable { retry() }
+            .fillMaxWidth()
+            .padding(vertical = 32.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 32.dp)
-            .clickable { retry() }
     ) {
         Text(
             text = stringResource(id = R.string.retry),
-            modifier = Modifier
-                .padding(start = 16.dp),
+            modifier = Modifier.padding(start = 16.dp),
             style = MaterialTheme.typography.body2,
         )
     }
 }
 
+//@Preview
+//@Composable
+//fun PreviewEmpty() {
+//    Empty(Modifier.fillMaxSize()) {
+//
+//    }
+//}
+
 @Composable
 fun Empty(modifier: Modifier = Modifier, retry: () -> Unit) {
     Column(
         modifier = modifier
-            .fillMaxWidth()
-            .clickable { retry() },
+            .clickable { retry() }
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(modifier = Modifier.size(200.dp),
+        Image(modifier = Modifier.size(100.dp),
             painter = painterResource(id = R.drawable.ic_empty),
             contentDescription = "Empty")
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = stringResource(id = R.string.no_data),
             modifier = Modifier.padding(vertical = 8.dp)

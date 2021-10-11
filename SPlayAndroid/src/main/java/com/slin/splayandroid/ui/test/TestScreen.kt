@@ -40,9 +40,9 @@ fun TestScreen(
     // 比如下面使用到了stringArrayResource，
     CompositionLocalProvider {
         val panelTitles = stringArrayResource(id = R.array.array_home_tabs)
-        val pagerState = rememberPagerState(pageCount = panelTitles.size)
+        val pagerState = rememberPagerState()
 
-        HorizontalPager(state = pagerState) { page ->
+        HorizontalPager(state = pagerState, count = panelTitles.size) { page ->
             when (page) {
                 1 -> Test(onItemClick = onItemClick)
                 0 -> HomePanel(onItemClick = onItemClick)

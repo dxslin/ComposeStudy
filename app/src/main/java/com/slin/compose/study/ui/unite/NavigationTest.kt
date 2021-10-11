@@ -80,7 +80,7 @@ private fun NavigationToPage() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun BottomNavigationTest() {
-    val pagerState = rememberPagerState(pageCount = 3)
+    val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
     val animateToPage: (Int) -> Unit = { page ->
         coroutineScope.launch { pagerState.animateScrollToPage(page) }
@@ -88,7 +88,7 @@ private fun BottomNavigationTest() {
 
     Column(modifier = Modifier.height(300.dp)) {
         val colors = listOf(Color.Magenta, Color.Yellow, Color.Cyan)
-        HorizontalPager(state = pagerState, modifier = Modifier.weight(1f)) {
+        HorizontalPager(state = pagerState, modifier = Modifier.weight(1f), count = colors.size) {
             Text(
                 text = "当前处于第${pagerState.currentPage}页",
                 modifier = Modifier

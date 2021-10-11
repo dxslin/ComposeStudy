@@ -12,7 +12,7 @@ object Versions {
 }
 
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.0-alpha12"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.0-alpha13"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
@@ -31,7 +31,7 @@ object Libs {
      * doc: https://google.github.io/accompanist/
      */
     object Accompanist {
-        private const val version = "0.18.0"
+        private const val version = "0.19.0"
         const val insets = "com.google.accompanist:accompanist-insets:$version"
         const val theme = "com.google.accompanist:accompanist-appcompat-theme:$version"
         const val systemUiController =

@@ -84,9 +84,13 @@ class HomeArticlesPagingSource(private val homeService: HomeService) :
     }
 
     override suspend fun load(params: LoadParams<Arg1<Int>>): LoadResult<Arg1<Int>, ArticleBean> {
+//        if (params.key!!.page > 1) {
+//            return LoadResult.Page(listOf(), nextKey = null, prevKey = params.key?.previous())
+//        } else {
         return PagingHelper.load(params.key) {
             homeService.getArticlesList(it.page, it.arg1)
         }
+//        }
 
     }
 }

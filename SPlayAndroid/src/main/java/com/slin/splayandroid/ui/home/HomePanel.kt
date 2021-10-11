@@ -71,7 +71,7 @@ fun HomePanel(
 @Composable
 fun Banner(banners: List<BannerBean>) {
     if (banners.isEmpty()) return
-    val state = rememberPagerState(pageCount = banners.size, infiniteLoop = true)
+    val state = rememberPagerState()
 
     LaunchedEffect(key1 = state) {
         launch {
@@ -87,9 +87,10 @@ fun Banner(banners: List<BannerBean>) {
     Box(modifier = Modifier) {
         HorizontalPager(
             state = state,
+            count = banners.size,
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(1.8f)
+                .aspectRatio(1.8f),
         ) { page ->
             BannerItem(page = page, banner = banners[page])
         }

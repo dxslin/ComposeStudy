@@ -43,11 +43,7 @@ fun HomeScreen(
 
         Column(modifier = Modifier) {
             val panelTitles = stringArrayResource(id = R.array.array_home_tabs)
-            val pagerState = rememberPagerState(
-                pageCount = panelTitles.size,
-                initialPage = 1,
-                initialOffscreenLimit = 2
-            )
+            val pagerState = rememberPagerState(initialPage = 1)
             var selectTabPosition by remember { mutableStateOf(pagerState.currentPage) }
 
             LaunchedEffect(key1 = selectTabPosition) {
@@ -72,6 +68,7 @@ fun HomeScreen(
             }
             HorizontalPager(
                 state = pagerState,
+                count = panelTitles.size,
                 modifier = Modifier
                     .fillMaxSize()
             ) { page ->

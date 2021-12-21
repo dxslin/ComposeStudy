@@ -12,7 +12,7 @@ object Versions {
 }
 
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.0-alpha12"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.2.0-alpha06"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
@@ -48,7 +48,7 @@ object Libs {
     }
 
     object Kotlin {
-        private const val version = "1.5.21"
+        private const val version = "1.6.0"
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"

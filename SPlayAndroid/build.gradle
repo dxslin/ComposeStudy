@@ -58,7 +58,7 @@ dependencies {
     implementation Libs.Slin.score
 
     implementation Libs.Kotlin.stdlib
-    implementation Libs.Coroutines.android
+    implementation Libs.Kotlin.Coroutines.android
 
     implementation Libs.AndroidX.coreKtx
     implementation Libs.AndroidX.material

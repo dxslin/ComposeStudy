@@ -1,5 +1,7 @@
 package com.slin.compose.buildSrc
 
+import org.gradle.api.JavaVersion
+
 object Versions {
 
 
@@ -7,14 +9,16 @@ object Versions {
     const val androidBuildTools = "30.0.3"
     const val androidMinSdk = 24
 
+    val javaVersion = JavaVersion.VERSION_1_8
+
     const val ktlint = "0.40.0"
 
 }
 
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.1"
+    private const val agpVersion = "7.1.1"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:$agpVersion"
 
-    const val timber = "com.jakewharton.timber:timber:4.7.1"
 
     object Slin {
         private const val snapshot = "score_snapshot"
@@ -59,12 +63,6 @@ object Libs {
             const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
             const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
         }
-    }
-
-
-    object JUnit {
-        private const val version = "4.13"
-        const val junit = "junit:junit:$version"
     }
 
     object AndroidX {
@@ -143,25 +141,25 @@ object Libs {
 
 
             const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
-            const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycleVersion}"
+            const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
             const val lifecycleViewModel =
                 "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
 
-            const val hilt = "com.google.dagger:hilt-android:${hiltVersion}"
-            const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${hiltVersion}"
-            const val hiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:${hiltVersion}"
+            const val hilt = "com.google.dagger:hilt-android:$hiltVersion"
+            const val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
+            const val hiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
             const val hiltViewModel =
-                "androidx.hilt:hilt-lifecycle-viewmodel:${hiltViewModelVersion}"
-            const val hiltViewModelCompiler = "androidx.hilt:hilt-compiler:${hiltViewModelVersion}"
+                "androidx.hilt:hilt-lifecycle-viewmodel:$hiltViewModelVersion"
+            const val hiltViewModelCompiler = "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
             const val hiltNavigationCompose =
-                "androidx.hilt:hilt-navigation-compose:${hiltViewModelVersion}"
+                "androidx.hilt:hilt-navigation-compose:$hiltViewModelVersion"
 
-            const val roomRuntime = "androidx.room:room-runtime:${roomVersion}"
-            const val roomKtx = "androidx.room:room-ktx:${roomVersion}"
-            const val roomCompiler = "androidx.room:room-compiler:${roomVersion}"
+            const val roomRuntime = "androidx.room:room-runtime:$roomVersion"
+            const val roomKtx = "androidx.room:room-ktx:$roomVersion"
+            const val roomCompiler = "androidx.room:room-compiler:$roomVersion"
 
-            const val paging = "androidx.paging:paging-common:${pagingVersion}"
-            const val pagingCompose = "androidx.paging:paging-compose:${pagingComposeVersion}"
+            const val paging = "androidx.paging:paging-common:$pagingVersion"
+            const val pagingCompose = "androidx.paging:paging-compose:$pagingComposeVersion"
 
         }
 
@@ -184,19 +182,29 @@ object Libs {
                 "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
         }
 
-        object Test {
-            private const val version = "1.3.0"
-            const val core = "androidx.test:core:$version"
-            const val rules = "androidx.test:rules:$version"
-
-            object Ext {
-                private const val version = "1.1.2"
-                const val junit = "androidx.test.ext:junit-ktx:$version"
-            }
-
-            const val espressoCore = "androidx.test.espresso:espresso-core:3.3.0"
-        }
     }
 
+    object Logger {
+        /**
+         * https://github.com/JakeWharton/timber
+         */
+        const val timber = "com.jakewharton.timber:timber:5.0.1"
+    }
+
+    object Test {
+        private const val junit_version = "4.13"
+        private const val version = "1.3.0"
+
+        const val junit = "junit:junit:$junit_version"
+        const val core = "androidx.test:core:$version"
+        const val rules = "androidx.test:rules:$version"
+
+        object Ext {
+            private const val version = "1.1.2"
+            const val junit = "androidx.test.ext:junit-ktx:$version"
+        }
+
+        const val espressoCore = "androidx.test.espresso:espresso-core:3.3.0"
+    }
 
 }

@@ -92,14 +92,14 @@ dependencies {
     implementation Libs.Accompanist.navMaterial
     implementation Libs.Accompanist.navAnimation
 
-    implementation Libs.timber
+    implementation Libs.Logger.timber
 
     androidTestImplementation Libs.AndroidX.Activity.activityCompose
 
-    testImplementation Libs.JUnit.junit
-    androidTestImplementation Libs.AndroidX.Test.core
-    androidTestImplementation Libs.AndroidX.Test.espressoCore
-    androidTestImplementation Libs.AndroidX.Test.rules
-    androidTestImplementation Libs.AndroidX.Test.Ext.junit
+    testImplementation Libs.Test.junit
+    androidTestImplementation Libs.Test.core
+    androidTestImplementation Libs.Test.espressoCore
+    androidTestImplementation Libs.Test.rules
+    androidTestImplementation Libs.Test.Ext.junit
     androidTestImplementation Libs.AndroidX.Compose.uiTest
 }

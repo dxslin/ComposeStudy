@@ -22,7 +22,7 @@ object Libs {
 
     object Slin {
         private const val snapshot = "score_snapshot"
-        private const val version = "1.1.3"
+        private const val version = "1.1.4"
         const val score = "io.github.dxslin:Score:$version"
     }
 
@@ -52,7 +52,7 @@ object Libs {
     }
 
     object Kotlin {
-        private const val version = "1.6.21"
+        private const val version = "1.6.10"
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
@@ -66,11 +66,6 @@ object Libs {
     }
 
     object AndroidX {
-        /**
-         * https://developer.android.google.cn/jetpack/androidx/releases/core
-         */
-        const val coreKtx = "androidx.core:core-ktx:1.7.0"
-
         /**
          * https://github.com/material-components/material-components-android/releases
          */
@@ -125,8 +120,9 @@ object Libs {
              * https://dagger.dev/hilt/gradle-setup
              * https://developer.android.google.cn/jetpack/androidx/releases/hilt
              */
-            private const val hiltVersion = "2.41"
-            private const val hiltViewModelVersion = "1.0.0"
+            private const val hiltVersion = "2.42"
+            private const val hiltViewModelVersion = "1.0.0-alpha03"
+            private const val hiltComposeVersion = "1.0.0"
 
             /**
              * https://developer.android.google.cn/jetpack/androidx/releases/room
@@ -146,13 +142,15 @@ object Libs {
                 "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
 
             const val hilt = "com.google.dagger:hilt-android:$hiltVersion"
-            const val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
+            const val hiltCompiler = "com.google.dagger:hilt-compiler:$hiltVersion"
             const val hiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
-            const val hiltViewModel =
-                "androidx.hilt:hilt-lifecycle-viewmodel:$hiltViewModelVersion"
-            const val hiltViewModelCompiler = "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
             const val hiltNavigationCompose =
-                "androidx.hilt:hilt-navigation-compose:$hiltViewModelVersion"
+                "androidx.hilt:hilt-navigation-compose:$hiltComposeVersion"
+            const val hiltAndroidTesting = "com.google.dagger:hilt-android-testing:$hiltVersion"
+            const val hiltViewModel =
+                "androidx.hilt:hilt-lifecycle-viewmodel:${hiltViewModelVersion}"
+            const val hiltViewModelCompiler =
+                "androidx.hilt:hilt-compiler:${hiltViewModelVersion}"
 
             const val roomRuntime = "androidx.room:room-runtime:$roomVersion"
             const val roomKtx = "androidx.room:room-ktx:$roomVersion"

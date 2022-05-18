@@ -1,9 +1,9 @@
 package com.slin.splayandroid.di
 
 import android.content.Context
-import androidx.datastore.DataStore
-import androidx.datastore.preferences.Preferences
-import androidx.datastore.preferences.createDataStore
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,10 +21,12 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DataStoreModule {
 
+    var ds: DataStore<Preferences>? = null
+
     @Provides
     @Singleton
     fun provideDefaultDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
-        return context.createDataStore("default_local_data.xml")
+        return preferencesDataStore("default_local_data.xml").getValue(context, DataStoreModule::ds)
     }
 
 

@@ -57,7 +57,6 @@ dependencies {
     implementation Libs.Kotlin.stdlib
     implementation Libs.Kotlin.Coroutines.android
 
-    implementation Libs.AndroidX.coreKtx
     implementation Libs.AndroidX.material
     implementation Libs.AndroidX.appcompat
     implementation Libs.AndroidX.Activity.activityCompose

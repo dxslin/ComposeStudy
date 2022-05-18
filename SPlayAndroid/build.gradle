@@ -60,7 +60,6 @@ dependencies {
     implementation Libs.Kotlin.stdlib
     implementation Libs.Kotlin.Coroutines.android
 
-    implementation Libs.AndroidX.coreKtx
     implementation Libs.AndroidX.material
     implementation Libs.AndroidX.appcompat
     implementation Libs.AndroidX.Activity.activityCompose
@@ -90,7 +89,6 @@ dependencies {
     implementation Libs.AndroidX.Jetpack.hilt
     implementation Libs.AndroidX.Jetpack.hiltNavigationCompose
     kapt Libs.AndroidX.Jetpack.hiltCompiler
-    kapt Libs.AndroidX.Jetpack.hiltViewModelCompiler
 
     implementation Libs.AndroidX.Jetpack.roomRuntime
     implementation Libs.AndroidX.Jetpack.roomKtx

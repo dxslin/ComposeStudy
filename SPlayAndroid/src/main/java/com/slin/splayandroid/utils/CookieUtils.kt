@@ -1,8 +1,8 @@
 package com.slin.splayandroid.utils
 
-import androidx.datastore.DataStore
-import androidx.datastore.preferences.Preferences
-import androidx.datastore.preferences.preferencesKey
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.slin.splayandroid.ext.getValue
 import com.slin.splayandroid.ext.setValue
 import kotlinx.coroutines.flow.first
@@ -51,7 +51,7 @@ object CookieUtils {
         var res = ""
         runBlocking {
             domain ?: return@runBlocking
-            res = getValue(preferencesKey(domain), "").first()
+            res = getValue(stringPreferencesKey(domain), "").first()
         }
         return res
     }
@@ -63,9 +63,9 @@ object CookieUtils {
     ) {
         runBlocking {
             url ?: return@runBlocking
-            setValue(preferencesKey(url), cookies)
+            setValue(stringPreferencesKey(url), cookies)
             domain ?: return@runBlocking
-            setValue(preferencesKey(domain), cookies)
+            setValue(stringPreferencesKey(domain), cookies)
         }
 
     }

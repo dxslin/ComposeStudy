@@ -99,8 +99,8 @@ fun SimpleAnim() {
                     .wrapContentHeight(Alignment.CenterVertically)
                     .align(Alignment.CenterVertically),
                 visible = show.value,
-                enter = fadeIn(0.3f) + slideInHorizontally(),
-                exit = fadeOut(0.3f) + shrinkHorizontally() + slideOutHorizontally()
+                enter = fadeIn(initialAlpha = 0.3f) + slideInHorizontally(),
+                exit = fadeOut(targetAlpha = 0.3f) + shrinkHorizontally() + slideOutHorizontally()
             ) {
                 Text(text = "隐藏显示动画")
             }

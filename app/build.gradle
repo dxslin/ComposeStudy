@@ -35,6 +35,7 @@ android {
         useIR = true
         // Opt-in to experimental compose APIs
         freeCompilerArgs += '-Xopt-in=kotlin.RequiresOptIn'
+        freeCompilerArgs += '-Xuse-experimental=androidx.compose.material.ExperimentalMaterialApi'
     }
     buildFeatures {
         compose true

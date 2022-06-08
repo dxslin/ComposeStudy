@@ -4,6 +4,7 @@ import android.app.Application
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import com.slin.compose.study.weight.UnsplashSizingInterceptor
+import com.slin.core.BuildConfig
 import com.slin.core.logger.initLogger
 
 @Suppress("unused")

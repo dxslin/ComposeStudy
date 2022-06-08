@@ -17,4 +17,6 @@
 
     <string name="exit_app">再按一次退出应用</string>
 
+    <string name="param1">Param: %s</string>
+
 </resources>

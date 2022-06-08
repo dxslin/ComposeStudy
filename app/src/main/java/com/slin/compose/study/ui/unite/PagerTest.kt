@@ -45,9 +45,11 @@ fun PagerTest() {
 @Composable
 private fun HorizontalPagerTest() {
     val pagerState = rememberPagerState()
-    HorizontalPager(state = pagerState, modifier = Modifier
-        .fillMaxSize()
-        .height(200.dp)) { page ->
+    HorizontalPager(count = 3,
+        state = pagerState,
+        modifier = Modifier
+            .fillMaxSize()
+            .height(200.dp)) { page ->
         PageItem(index = page)
     }
 }
@@ -55,7 +57,7 @@ private fun HorizontalPagerTest() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun PagerSizeChangeTest() {
-    var count by remember { mutableStateOf(0) }
+    var count by remember { mutableStateOf(1) }
     val pagerState = rememberPagerState()
 
     Column(modifier = Modifier
@@ -64,7 +66,9 @@ private fun PagerSizeChangeTest() {
         Button(onClick = { count = count.inc() }) {
             Text(text = "Page Size")
         }
-        HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize()) { page ->
+        HorizontalPager(count = count,
+            state = pagerState,
+            modifier = Modifier.fillMaxSize()) { page ->
             PageItem(index = page)
         }
     }

@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.slin.core.logger.logd
 import com.slin.core.ui.CoreActivity
 import com.slin.splayandroid.nav.NavGraphs
 import com.slin.splayandroid.ui.theme.AppTheme
@@ -24,6 +25,8 @@ class MainActivity : CoreActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        logd { "strings: ${getString(R.string.param1, "11")}" }
 
         setContent {
 

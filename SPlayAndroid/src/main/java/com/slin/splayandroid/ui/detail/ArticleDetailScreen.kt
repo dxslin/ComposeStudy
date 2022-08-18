@@ -43,32 +43,36 @@ fun ArticleDetailScreen(mTitle: String, mUrl: String, onBackPress: () -> Unit) {
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.padding(end = 16.dp)
                     )
-            }, navigationIcon = {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "Back",
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clickable {
-                            if (webView?.canGoBack() == true) {
-                                webView?.goBack()
-                            } else {
-                                onBackPress()
+                },
+                navigationIcon = {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = "Back",
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clickable {
+                                if (webView?.canGoBack() == true) {
+                                    webView?.goBack()
+                                } else {
+                                    onBackPress()
+                                }
                             }
-                        }
-                        .padding(16.dp)
-                )
-                }, modifier = Modifier
+                            .padding(16.dp)
+                    )
+                },
+                modifier = Modifier
                     .background(MaterialTheme.colors.primary)
                     .statusBarsPadding(),
                 elevation = 0.dp
             )
-        }) {
+        }
+    ) {
         AndroidView(factory = { context ->
             WebView(context).apply {
                 webView = this
                 loadUrl(mUrl)
                 settings.javaScriptEnabled = true
+                settings.domStorageEnabled = true
                 webChromeClient = object : WebChromeClient() {
                     override fun onReceivedTitle(view: WebView?, title: String?) {
                         super.onReceivedTitle(view, title)
@@ -86,6 +90,6 @@ fun ArticleDetailScreen(mTitle: String, mUrl: String, onBackPress: () -> Unit) {
                     }
                 }
             }
-        })
+        }, modifier = Modifier.fillMaxSize())
     }
 }

@@ -26,7 +26,7 @@ import kotlin.random.Random
  *
  */
 
-@ExperimentalFoundationApi
+
 @OptIn(ExperimentalAnimationApi::class)
 @Preview
 @Composable

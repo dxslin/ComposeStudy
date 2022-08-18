@@ -39,7 +39,7 @@ val photos = listOf(
     R.drawable.img_prairie, R.drawable.img_ice_princess, R.drawable.img_fate_arthur,
 )
 
-@ExperimentalFoundationApi
+
 @Composable
 fun ListSample() {
 
@@ -123,7 +123,7 @@ fun LazyRowScroll() {
 
 }
 
-@ExperimentalFoundationApi
+
 @Preview
 @Composable
 fun ListWithHeader() {
@@ -154,7 +154,7 @@ fun ListWithHeader() {
 }
 
 
-@ExperimentalFoundationApi
+
 @Preview
 @Composable
 fun ListWithSticky() {
@@ -181,7 +181,7 @@ fun ListWithSticky() {
     }
 }
 
-@ExperimentalFoundationApi
+
 @Preview
 @Composable
 fun PhotoGrid() {

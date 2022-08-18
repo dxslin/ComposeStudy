@@ -39,14 +39,14 @@ object NavDestinations {
     const val ROUTE_NAV_TEST = "route_nav_test"
     const val ROUTE_VIEW_MODEL_TEST = "route_view_model_test"
     const val ROUTE_PAGER_TEST = "route_pager_test"
+    const val ROUTE_COMPOSE_TEST = "route_compose_test"
 
 }
 
 val LocalNavController = compositionLocalOf<NavController?> { null }
 
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
-@ExperimentalFoundationApi
+
+
 @Composable
 fun NavGraph(startDestination: String = NavDestinations.ROUTE_SAMPLES) {
     val navController = rememberNavController()

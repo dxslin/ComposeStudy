@@ -22,9 +22,8 @@ import com.slin.compose.study.ui.theme.ComposeStudyTheme
  *
  */
 
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
-@ExperimentalFoundationApi
+
+
 @Composable
 fun ComposeStudyUiRoot(backPressedDispatcher: OnBackPressedDispatcherOwner) {
     CompositionLocalProvider(LocalOnBackPressedDispatcherOwner provides backPressedDispatcher) {
@@ -40,9 +39,8 @@ fun Greeting(name: String) {
     Text(text = "Hello $name!")
 }
 
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
-@ExperimentalFoundationApi
+
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {

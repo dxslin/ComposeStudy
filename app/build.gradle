@@ -34,8 +34,12 @@ android {
         jvmTarget = '1.8'
         useIR = true
         // Opt-in to experimental compose APIs
-        freeCompilerArgs += '-Xopt-in=kotlin.RequiresOptIn'
-        freeCompilerArgs += '-Xuse-experimental=androidx.compose.material.ExperimentalMaterialApi'
+        freeCompilerArgs += [
+                '-Xopt-in=kotlin.RequiresOptIn',
+                '-Xopt-in=androidx.compose.material.ExperimentalMaterialApi',
+                '-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi',
+                '-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi'
+        ]
     }
     buildFeatures {
         compose true

@@ -33,9 +33,9 @@ import com.slin.core.logger.logd
  *
  */
 
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
-@ExperimentalFoundationApi
+
+
+
 @Preview
 @Composable
 fun ViewModelTest() {
@@ -47,9 +47,9 @@ fun ViewModelTest() {
     MultiTestPage(title = "ViewModelTest", testItems = testItems)
 }
 
-@ExperimentalFoundationApi
-@ExperimentalAnimationApi
-@ExperimentalMaterialApi
+
+
+
 @Preview
 @Composable
 fun UserModel() {

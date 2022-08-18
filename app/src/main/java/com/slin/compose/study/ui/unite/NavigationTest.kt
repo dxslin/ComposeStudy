@@ -40,7 +40,7 @@ import kotlinx.coroutines.launch
  */
 
 
-@ExperimentalFoundationApi
+
 @OptIn(ExperimentalAnimationApi::class)
 @Preview
 @Composable
@@ -123,9 +123,9 @@ private fun BottomNavigationTest() {
 }
 
 
-@ExperimentalAnimationApi
+
 @OptIn(ExperimentalMaterialApi::class)
-@ExperimentalFoundationApi
+
 @Composable
 private fun ListNavigation() {
 

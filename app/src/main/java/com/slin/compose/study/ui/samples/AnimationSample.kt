@@ -42,8 +42,7 @@ import kotlin.math.roundToInt
  *
  */
 
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
+
 //@Preview
 @Composable
 fun AnimationSample() {
@@ -84,7 +83,7 @@ fun AnimationSample() {
  * 2. Modifier.animateContentSize 这个大小改变时有动画
  * 3. Crossfade 淡入淡出动画
  */
-@ExperimentalAnimationApi
+
 @Composable
 fun SimpleAnim() {
     Column {
@@ -128,7 +127,6 @@ fun SimpleAnim() {
  * 包括 Float、Color、Dp、Size、Bounds、Offset、Rect、Int、IntOffset 和 IntSize <p>
  * 使用时只需传入可修改的对应值即可，后续修改该变量时，都会引起对应界面的变化
  */
-@ExperimentalMaterialApi
 //@Preview
 @Composable
 fun SimpleAnimAsState() {
@@ -533,7 +531,7 @@ fun Modifier.swipeToDismiss(
         .offset { IntOffset(offsetX.value.roundToInt(), 0) }
 }
 
-@ExperimentalMaterialApi
+
 @Preview
 @Composable
 fun SimpleSwipeToDismiss() {

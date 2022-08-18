@@ -41,9 +41,9 @@ import kotlin.math.sqrt
  * description: draw api试用
  *
  */
-@ExperimentalFoundationApi
-@ExperimentalAnimationApi
-@ExperimentalMaterialApi
+
+
+
 @Composable
 fun GraphicSample() {
     val testItems = listOf(

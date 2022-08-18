@@ -32,7 +32,7 @@ import kotlin.math.roundToInt
  * description: 手势事件
  *
  */
-@ExperimentalMaterialApi
+
 @Preview
 @Composable
 fun GestureSample() {
@@ -218,7 +218,7 @@ fun SimpleDrag2() {
     }
 }
 
-@ExperimentalMaterialApi
+
 @Preview
 @Composable
 fun SimpleSwipeable() {

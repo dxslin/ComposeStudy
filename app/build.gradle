@@ -8,8 +8,7 @@ import com.slin.compose.buildSrc.Libs
 
 android {
     compileSdkVersion Versions.androidSdk
-    buildToolsVersion Versions.androidBuildTools
-
+    namespace "com.slin.compose.study"
     defaultConfig {
         applicationId "com.slin.compose.study"
         minSdkVersion Versions.androidMinSdk
@@ -27,25 +26,24 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility Versions.javaVersion
+        targetCompatibility Versions.javaVersion
     }
     kotlinOptions {
-        jvmTarget = '1.8'
-        useIR = true
+        jvmTarget = Versions.javaVersion
         // Opt-in to experimental compose APIs
         freeCompilerArgs += [
-                '-Xopt-in=kotlin.RequiresOptIn',
-                '-Xopt-in=androidx.compose.material.ExperimentalMaterialApi',
-                '-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi',
-                '-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi'
+                '-opt-in=kotlin.RequiresOptIn',
+                '-opt-in=androidx.compose.material.ExperimentalMaterialApi',
+                '-opt-in=androidx.compose.animation.ExperimentalAnimationApi',
+                '-opt-in=androidx.compose.foundation.ExperimentalFoundationApi'
         ]
     }
     buildFeatures {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion Libs.AndroidX.Compose.version
+        kotlinCompilerExtensionVersion Libs.AndroidX.Compose.composeVersion
 //        kotlinCompilerVersion Libs.Kotlin.version
     }
     packagingOptions {
@@ -67,7 +65,7 @@ dependencies {
     implementation Libs.AndroidX.Activity.activityCompose
     implementation Libs.AndroidX.ConstraintLayout.constraintLayoutCompose
 
-    implementation Libs.AndroidX.Navigation.navigation
+    implementation Libs.AndroidX.Navigation.compose
 
     implementation Libs.AndroidX.Compose.runtime
     implementation Libs.AndroidX.Compose.foundation
@@ -76,9 +74,9 @@ dependencies {
     implementation Libs.AndroidX.Compose.uiUtil
     implementation Libs.AndroidX.Compose.material
     implementation Libs.AndroidX.Compose.animation
-    implementation Libs.AndroidX.Compose.iconsExtended
+//    implementation Libs.AndroidX.Compose.iconsExtended
     implementation Libs.AndroidX.Compose.tooling
-    implementation Libs.AndroidX.Compose.livedata
+//    implementation Libs.AndroidX.Compose.livedata
 
     implementation Libs.AndroidX.Jetpack.livedataKtx
 
@@ -105,5 +103,5 @@ dependencies {
     androidTestImplementation Libs.Test.espressoCore
     androidTestImplementation Libs.Test.rules
     androidTestImplementation Libs.Test.Ext.junit
-    androidTestImplementation Libs.AndroidX.Compose.uiTest
+//    androidTestImplementation Libs.AndroidX.Compose.uiTest
 }

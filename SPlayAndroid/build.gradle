@@ -10,8 +10,7 @@ import com.slin.compose.buildSrc.Libs
 
 android {
     compileSdkVersion Versions.androidSdk
-    buildToolsVersion Versions.androidBuildTools
-
+    namespace "com.slin.splayandroid"
     defaultConfig {
         applicationId "com.slin.splayandroid"
         minSdkVersion Versions.androidMinSdk
@@ -32,20 +31,19 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility Versions.javaVersion
+        targetCompatibility Versions.javaVersion
     }
     kotlinOptions {
-        jvmTarget = '1.8'
-        useIR = true
-        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+        jvmTarget = Versions.javaVersion
+        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
     }
     buildFeatures {
         compose true
+        buildConfig true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion Libs.AndroidX.Compose.version
-//        kotlinCompilerVersion Libs.Kotlin.version
+        kotlinCompilerExtensionVersion Libs.AndroidX.Compose.composeVersion
     }
     packagingOptions {
         exclude "META-INF/licenses/**"
@@ -67,7 +65,7 @@ dependencies {
 
     implementation Libs.AndroidX.Navigation.fragment
     implementation Libs.AndroidX.Navigation.uiKtx
-    implementation Libs.AndroidX.Navigation.navigation
+    implementation Libs.AndroidX.Navigation.compose
 
     implementation Libs.AndroidX.Compose.runtime
     implementation Libs.AndroidX.Compose.foundation
@@ -76,9 +74,9 @@ dependencies {
     implementation Libs.AndroidX.Compose.uiUtil
     implementation Libs.AndroidX.Compose.material
     implementation Libs.AndroidX.Compose.animation
-    implementation Libs.AndroidX.Compose.iconsExtended
+//    implementation Libs.AndroidX.Compose.iconsExtended
     implementation Libs.AndroidX.Compose.tooling
-    implementation Libs.AndroidX.Compose.livedata
+//    implementation Libs.AndroidX.Compose.livedata
 
     implementation Libs.AndroidX.Jetpack.lifecycle
     implementation Libs.AndroidX.Jetpack.livedataKtx
@@ -117,5 +115,5 @@ dependencies {
     androidTestImplementation Libs.Test.espressoCore
     androidTestImplementation Libs.Test.rules
     androidTestImplementation Libs.Test.Ext.junit
-    androidTestImplementation Libs.AndroidX.Compose.uiTest
+//    androidTestImplementation Libs.AndroidX.Compose.uiTest
 }

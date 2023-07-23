@@ -52,7 +52,7 @@ object Libs {
     }
 
     object Kotlin {
-        private const val version = "1.8.22"
+        private const val version = "1.8.10"
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
@@ -84,8 +84,8 @@ object Libs {
             /**
              * https://androidx.dev/storage/compose-compiler/repository
              */
-            const val composeVersion = "1.4.8"
-            const val version = "1.3.3"
+            const val composeVersion = "1.4.3"
+            const val version = "1.4.3"
 
             const val animation = "androidx.compose.animation:animation"
             const val foundation = "androidx.compose.foundation:foundation"

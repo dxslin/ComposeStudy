@@ -1,13 +1,34 @@
 package com.slin.compose.study.ui.samples
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.gestures.ScrollScope
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -19,8 +40,6 @@ import com.slin.compose.study.ui.theme.ComposeStudyTheme
 import com.slin.compose.study.ui.theme.ScaffoldWithCsAppBar
 import com.slin.compose.study.ui.theme.Size
 import com.slin.core.logger.logd
-
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
@@ -116,7 +135,7 @@ fun LazyRowScroll() {
             Text(text = fruit)
         }
     }
-    LaunchedEffect(listState){
+    LaunchedEffect(listState) {
         snapshotFlow { listState.firstVisibleItemIndex }
             .collect { logd { "listState.firstVisibleItemIndex = $it" } }
     }
@@ -154,7 +173,6 @@ fun ListWithHeader() {
 }
 
 
-
 @Preview
 @Composable
 fun ListWithSticky() {
@@ -186,7 +204,7 @@ fun ListWithSticky() {
 @Composable
 fun PhotoGrid() {
     LazyVerticalGrid(
-        cells = GridCells.Adaptive(96.dp),
+        columns = GridCells.Adaptive(96.dp),
         modifier = Modifier
             .fillMaxWidth()
             .height(160.dp)
